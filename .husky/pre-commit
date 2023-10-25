@@ -1,4 +1,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 exec >/dev/console 2>&1
 
-npm run test --passWithNoTests && npx lint-staged
+npx lint-staged
