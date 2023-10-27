@@ -1,32 +1,40 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './mainPage.module.scss';
-// import { Card } from '../../components/Card/Card';
-// import {
-//   AllCharacterSchema,
-//   CharacterSchema,
-// } from '../../app/providers/services/types/serviceTypes';
 import { Component } from 'react';
 import Service from '../../app/providers/services/service';
+import { GridTable } from '../../components/widgets/GridTable/GridTable';
+import { CharacterSchema } from '../../app/providers/services/types/serviceTypes';
+import { AboutPage } from '../about/AboutPage';
 
-export class MainPage extends Component {
-  getCards = async () => {
-    const cards = await Service.getAllCharacter();
-    console.log(cards);
-  };
+interface IMainPage {
+  cards: CharacterSchema[] | null;
+}
+
+export class MainPage extends Component<object, IMainPage> {
+  constructor(props: object) {
+    super(props);
+    this.state = {
+      cards: [],
+    };
+  }
 
   componentDidMount(): void {
-    this.getCards();
+    Service.getAllCharacter()
+      .then((cards) =>
+        cards ? this.setState({ cards }) : this.setState({ cards: null })
+      )
+      .catch((err) => console.log(err));
   }
 
   render() {
     return (
       <div className={classNames(cls.MainPage, {}, [])}>
         Main page
-        <div className={classNames(cls.grid, {}, [])}>
-          {/* {this.allCards.map((card: CharacterSchema) => (
-            <Card />
-          ))} */}
-        </div>
+        {this.state.cards ? (
+          <GridTable elements={this.state.cards} />
+        ) : (
+          <AboutPage />
+        )}
       </div>
     );
   }
