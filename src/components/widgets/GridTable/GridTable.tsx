@@ -16,7 +16,7 @@ export class GridTable extends Component<IGridTable> {
     return (
       <div className={classNames(cls.grid, {}, [])}>
         {this.props.elements.map((el) => (
-          <Card className={''} key={el.id} />
+          <Card key={el.id} cardData={el} />
         ))}
       </div>
     );
