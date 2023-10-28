@@ -5,6 +5,7 @@ import Service from '../../app/providers/services/service';
 import { GridTable } from '../../components/widgets/GridTable/GridTable';
 import { CharacterSchema } from '../../app/providers/services/types/serviceTypes';
 import { AboutPage } from '../about/AboutPage';
+import { SearchBar } from '../../components/widgets/SearchBar/SearchBar';
 
 interface IMainPage {
   cards: CharacterSchema[] | null;
@@ -18,8 +19,16 @@ export class MainPage extends Component<object, IMainPage> {
     };
   }
 
+  //добавить функцию для считывания инпута и отправки запроса
+  //  продумать поднятия значения инпута выше
+  // добавить проверку на дефолт значение в локале,
+  // исправить баг с ошибкой и текстом
+  onSubmit() {
+    console.log('submit');
+  }
+
   componentDidMount(): void {
-    Service.getAllCharacter()
+    Service.getAllCharacters()
       .then((cards) =>
         cards ? this.setState({ cards }) : this.setState({ cards: null })
       )
@@ -29,7 +38,7 @@ export class MainPage extends Component<object, IMainPage> {
   render() {
     return (
       <div className={classNames(cls.MainPage, {}, [])}>
-        Main page
+        <SearchBar onSubmit={this.onSubmit} />
         {this.state.cards ? (
           <GridTable elements={this.state.cards} />
         ) : (

@@ -5,18 +5,7 @@ export type CharacterSchema = {
   species: string;
   type: string;
   gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
   image: string;
-  episode: [string];
-  url: string;
-  created: string;
 };
 
 export type AllCharacterSchema = {
@@ -29,4 +18,6 @@ export type AllCharacterSchema = {
   results: Array<CharacterSchema>;
 };
 
-export const BASE_URL = 'https://rickandmortyapi.com/api/';
+export const BASE_URL = 'https://rickandmortyapi.com/api/character/';
+export const defaultPage = 'page=1';
+export const ERROR_MESSAGE = 'There is nothing here';

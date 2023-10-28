@@ -26,8 +26,8 @@ export class Card extends Component<ICard> {
           <span>{cardData.species}</span>
         </div>
         <div>
-          {'Type:'}
-          <span>{cardData.type}</span>
+          {'Status:'}
+          <span>{cardData.status}</span>
         </div>
       </div>
     );
