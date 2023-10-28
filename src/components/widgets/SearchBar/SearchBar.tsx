@@ -4,6 +4,7 @@ import cls from './SearchBar.module.scss';
 
 interface ISearchBar {
   onSubmit: () => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
 }
 
 export class SearchBar extends Component<ISearchBar> {
@@ -12,11 +13,16 @@ export class SearchBar extends Component<ISearchBar> {
   }
 
   render() {
+    const { onSubmit, onBlur } = this.props;
     return (
       <div className={cls.SearchBar}>
-        <input type="text" placeholder="Enter name" />
+        <input
+          type="text"
+          placeholder="Enter name"
+          onBlur={onBlur.bind(this)}
+        />
         <Button
-          onClick={this.props.onSubmit.bind(this)}
+          onClick={onSubmit.bind(this)}
           className={'j'}
           size={ButtonSize.M}
           theme={ButtonTheme.BACKGROUND_DARK}

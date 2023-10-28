@@ -6,9 +6,11 @@ import { GridTable } from '../../components/widgets/GridTable/GridTable';
 import { CharacterSchema } from '../../app/providers/services/types/serviceTypes';
 import { AboutPage } from '../about/AboutPage';
 import { SearchBar } from '../../components/widgets/SearchBar/SearchBar';
+import { SEARCH_LOCAL_STORAGE } from '../../utils/constants/Constants';
 
 interface IMainPage {
   cards: CharacterSchema[] | null;
+  inputValue: string | undefined;
 }
 
 export class MainPage extends Component<object, IMainPage> {
@@ -16,19 +18,29 @@ export class MainPage extends Component<object, IMainPage> {
     super(props);
     this.state = {
       cards: [],
+      inputValue: localStorage.getItem(SEARCH_LOCAL_STORAGE) || undefined,
     };
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
-  //добавить функцию для считывания инпута и отправки запроса
-  //  продумать поднятия значения инпута выше
-  // добавить проверку на дефолт значение в локале,
   // исправить баг с ошибкой и текстом
   onSubmit() {
-    console.log('submit');
+    Service.getCharacter(this.state.inputValue)
+      .then((cards) =>
+        cards ? this.setState({ cards }) : this.setState({ cards: null })
+      )
+      .catch((err) => console.log(err));
+    console.log('onSubmit', this.state.inputValue);
+  }
+
+  onBlur(e: React.FocusEvent<HTMLInputElement, Element>) {
+    this.setState({ inputValue: e.target.value });
+    console.log('Blur', e.target.value);
   }
 
   componentDidMount(): void {
-    Service.getAllCharacters()
+    Service.getAllCharacters(this.state.inputValue)
       .then((cards) =>
         cards ? this.setState({ cards }) : this.setState({ cards: null })
       )
@@ -38,7 +50,7 @@ export class MainPage extends Component<object, IMainPage> {
   render() {
     return (
       <div className={classNames(cls.MainPage, {}, [])}>
-        <SearchBar onSubmit={this.onSubmit} />
+        <SearchBar onSubmit={this.onSubmit} onBlur={this.onBlur} />
         {this.state.cards ? (
           <GridTable elements={this.state.cards} />
         ) : (
