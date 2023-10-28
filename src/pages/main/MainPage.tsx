@@ -4,9 +4,9 @@ import { Component } from 'react';
 import Service from '../../app/providers/services/service';
 import { GridTable } from '../../components/widgets/GridTable/GridTable';
 import { CharacterSchema } from '../../app/providers/services/types/serviceTypes';
-import { AboutPage } from '../about/AboutPage';
 import { SearchBar } from '../../components/widgets/SearchBar/SearchBar';
 import { SEARCH_LOCAL_STORAGE } from '../../utils/constants/Constants';
+import { NoResultsPage } from '../noResults/NoResultsPage';
 
 interface IMainPage {
   cards: CharacterSchema[] | null;
@@ -31,12 +31,10 @@ export class MainPage extends Component<object, IMainPage> {
         cards ? this.setState({ cards }) : this.setState({ cards: null })
       )
       .catch((err) => console.log(err));
-    console.log('onSubmit', this.state.inputValue);
   }
 
   onBlur(e: React.FocusEvent<HTMLInputElement, Element>) {
     this.setState({ inputValue: e.target.value });
-    console.log('Blur', e.target.value);
   }
 
   componentDidMount(): void {
@@ -54,7 +52,7 @@ export class MainPage extends Component<object, IMainPage> {
         {this.state.cards ? (
           <GridTable elements={this.state.cards} />
         ) : (
-          <AboutPage />
+          <NoResultsPage />
         )}
       </div>
     );
