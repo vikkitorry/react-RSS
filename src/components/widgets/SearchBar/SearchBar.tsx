@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ButtonSize, ButtonTheme } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
-import Input from '../../Input/Input';
+import Input from '../../Inputt/Inputt';
 
 interface ISearchBar {
   inputValue: undefined | string;
