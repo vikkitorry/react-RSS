@@ -1,5 +1,4 @@
 import React, { Component, InputHTMLAttributes } from 'react';
-import cls from './Input.module.scss';
 import { classNames } from '../../utils/libs/classNames/classNames';
 
 interface IInput
@@ -21,10 +20,10 @@ export class Input extends Component<IInput> {
   };
 
   render() {
-    const { className, theme, defaultValue, placeholder } = this.props;
+    const { className, defaultValue, placeholder } = this.props;
     return (
       <input
-        className={classNames(cls.AppLink, { [cls[theme]]: true }, [className])}
+        className={classNames('', {}, [className])}
         onBlur={this.onBlurHandler}
         defaultValue={defaultValue}
         placeholder={placeholder}

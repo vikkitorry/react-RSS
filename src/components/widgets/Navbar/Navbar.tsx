@@ -1,5 +1,5 @@
 import { classNames } from '../../../utils/libs/classNames/classNames';
-import { AppLink, AppLinkTheme } from '../../links/AppLink';
+import { AppLink, AppLinkTheme } from '../../Link/AppLink';
 import cls from './Navbar.module.scss';
 import { BugButton } from '../../../app/providers/ErrorBoundary/BugButton';
 import { RoutePath } from '../../../app/providers/router/routeConfig/routeConfig';

@@ -7,10 +7,12 @@ import { CharacterSchema } from '../../app/providers/services/types/serviceTypes
 import { SearchBar } from '../../components/widgets/SearchBar/SearchBar';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
 import { NoResultsPage } from '../noResults/NoResultsPage';
+import { Loader } from '../../components/widgets/Loader/Loader';
 
 interface IMainPage {
   cards: CharacterSchema[] | null;
   inputValue: string | undefined;
+  isLoading: boolean;
 }
 
 export class MainPage extends Component<object, IMainPage> {
@@ -19,17 +21,17 @@ export class MainPage extends Component<object, IMainPage> {
     this.state = {
       cards: [],
       inputValue: localStorage.getItem(SEARCH_LOCALSTORAGE_KEY) || undefined,
+      isLoading: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
-  // не сделан лаодер, саспенс фалбак
-  // поменять структуру, убрать роутер(он функционаленб убрать навбар)
-  // надо проверять есть ли в локале если нет, то вызывать разные методы в сервисе
-  onSubmit() {
-    Service.getCharacter(this.state.inputValue)
-      .then((cards) => (cards ? this.setState({ cards }) : 0))
-      .catch(() => this.setState({ cards: null }));
+
+  async onSubmit() {
+    this.setState({ isLoading: true });
+    await Service.getCharacter(this.state.inputValue)
+      .then((cards) => (cards ? this.setState({ cards, isLoading: false }) : 0))
+      .catch(() => this.setState({ cards: null, isLoading: false }));
   }
 
   onBlur(value: string) {
@@ -47,15 +49,18 @@ export class MainPage extends Component<object, IMainPage> {
   }
 
   render() {
+    const { cards, inputValue, isLoading } = this.state;
     return (
       <div className={classNames(cls.MainPage, {}, [])}>
         <SearchBar
           onSubmit={this.onSubmit}
           onBlur={this.onBlur}
-          inputValue={this.state.inputValue}
+          inputValue={inputValue}
         />
-        {this.state.cards ? (
-          <GridTable elements={this.state.cards} />
+        {isLoading ? (
+          <Loader />
+        ) : cards ? (
+          <GridTable elements={cards} />
         ) : (
           <NoResultsPage />
         )}

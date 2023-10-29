@@ -1,1 +1,1 @@
-export const SEARCH_LOCALSTORAGE_KEY = 'react-rss-vikkitorry9799g644fg89';
+export const SEARCH_LOCALSTORAGE_KEY = 'react-rss-vikkitorry-version.1.55557';
