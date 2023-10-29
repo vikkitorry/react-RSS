@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Button, ButtonSize, ButtonTheme } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
+import Input from '../../input/Input';
 
 interface ISearchBar {
+  inputValue: undefined | string;
   onSubmit: () => void;
-  onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
+  onBlur: (value: string) => void;
 }
 
 export class SearchBar extends Component<ISearchBar> {
@@ -13,17 +15,19 @@ export class SearchBar extends Component<ISearchBar> {
   }
 
   render() {
-    const { onSubmit, onBlur } = this.props;
+    const { inputValue, onSubmit, onBlur } = this.props;
     return (
       <div className={cls.SearchBar}>
-        <input
-          type="text"
+        <Input
+          className=""
+          theme=""
+          onBlur={onBlur}
+          defaultValue={inputValue ? inputValue : undefined}
           placeholder="Enter name"
-          onBlur={onBlur.bind(this)}
         />
         <Button
           onClick={onSubmit.bind(this)}
-          className={'j'}
+          className={''}
           size={ButtonSize.M}
           theme={ButtonTheme.BACKGROUND_DARK}
         >

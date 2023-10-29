@@ -4,14 +4,14 @@ import {
   BASE_URL_NAME,
 } from './types/serviceTypes';
 import { BASE_URL, ERROR_MESSAGE, defaultPage } from './types/serviceTypes';
-import { SEARCH_LOCAL_STORAGE } from '../../../utils/constants/Constants';
+import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 
 export default class Service {
   static async getCharacter(
     endpoint: string = ''
   ): Promise<CharacterSchema[] | undefined> {
     try {
-      localStorage.setItem(SEARCH_LOCAL_STORAGE, endpoint);
+      localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, endpoint);
       const resp = await fetch(`${BASE_URL_NAME}${endpoint}`);
       if (!resp.ok) {
         throw new Error();
@@ -19,7 +19,7 @@ export default class Service {
       const characters = (await resp.json()) as AllCharacterSchema;
       return characters.results;
     } catch (err) {
-      console.log(ERROR_MESSAGE);
+      throw new Error(ERROR_MESSAGE);
     }
   }
 
@@ -27,7 +27,6 @@ export default class Service {
     endpoint: string = defaultPage
   ): Promise<CharacterSchema[] | undefined> {
     try {
-      localStorage.setItem(SEARCH_LOCAL_STORAGE, endpoint);
       const resp = await fetch(`${BASE_URL}${endpoint}`);
       if (!resp.ok) {
         throw new Error();
