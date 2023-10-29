@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, ButtonSize, ButtonTheme } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
 import Input from '../../Input/Input';
+import { BugButton } from '../../../app/providers/ErrorBoundary/BugButton';
 
 interface ISearchBar {
   inputValue: undefined | string;
@@ -33,6 +34,7 @@ export class SearchBar extends Component<ISearchBar> {
         >
           Search
         </Button>
+        <BugButton />
       </div>
     );
   }
