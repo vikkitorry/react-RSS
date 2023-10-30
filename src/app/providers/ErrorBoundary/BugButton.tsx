@@ -1,39 +1,29 @@
-import { Component } from 'react';
 import {
   Button,
   ButtonSize,
   ButtonTheme,
 } from '../../../components/Button/Button';
+import { useEffect, useState } from 'react';
 
-interface IBugButton {
-  error: null | string;
-}
+export const BugButton = () => {
+  const [error, setError] = useState(false);
 
-export class BugButton extends Component<object, IBugButton> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      error: null,
-    };
-  }
-  componentDidUpdate = () => {
-    if (this.state.error) {
+  const onThrow = () => setError(true);
+
+  useEffect(() => {
+    if (error) {
       throw new Error('Test Error');
     }
-  };
-  onThrow = () => {
-    this.setState({ error: 'Test Error' });
-  };
-  render() {
-    return (
-      <Button
-        onClick={this.onThrow}
-        className={'j'}
-        size={ButtonSize.M}
-        theme={ButtonTheme.BACKGROUND_ERROR}
-      >
-        Throw error
-      </Button>
-    );
-  }
-}
+  }, [error]);
+
+  return (
+    <Button
+      onClick={onThrow}
+      className={'j'}
+      size={ButtonSize.M}
+      theme={ButtonTheme.BACKGROUND_ERROR}
+    >
+      Throw error
+    </Button>
+  );
+};

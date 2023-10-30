@@ -1,5 +1,5 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
-import { ButtonHTMLAttributes, Component } from 'react';
+import { ButtonHTMLAttributes, FC } from 'react';
 import cls from './Button.module.scss';
 
 export enum ButtonTheme {
@@ -22,25 +22,27 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: () => void;
 }
 
-export class Button extends Component<ButtonProps> {
-  constructor(props: ButtonProps) {
-    super(props);
-  }
+export const Button: FC<ButtonProps> = (props) => {
+  const {
+    className,
+    children,
+    theme,
+    size = ButtonSize.M,
+    ...otherProps
+  } = props;
 
-  mods: Record<string, boolean> = {
-    [cls[this.props.theme]]: true,
-    [cls[this.props.size]]: true,
+  const mods: Record<string, boolean> = {
+    [cls[theme]]: true,
+    [cls[size]]: true,
   };
 
-  render() {
-    return (
-      <button
-        type="button"
-        onClick={() => this.props.onClick()}
-        className={classNames(cls.Button, this.mods, [this.props.className])}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
-}
+  return (
+    <button
+      type="button"
+      className={classNames(cls.Button, mods, [className])}
+      {...otherProps}
+    >
+      {children}
+    </button>
+  );
+};

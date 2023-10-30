@@ -1,9 +1,26 @@
-.Loader {
+.LoaderContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 80vh;
-  background-color: rgba(0, 0, 0, 0.312);
-  font-size: 40px;
+}
+
+.Loader {
+  width: 70px;
+  height: 70px;
+  border: 5px solid var(--primary-color);
+  border-radius: 50%;
+  border-bottom-color: transparent;
+  box-sizing: border-box;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

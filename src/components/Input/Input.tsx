@@ -1,4 +1,5 @@
-import React, { Component, InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes } from 'react';
+import cls from './Input.module.scss';
 import { classNames } from '../../utils/libs/classNames/classNames';
 
 interface IInput
@@ -10,26 +11,21 @@ interface IInput
   placeholder?: string;
 }
 
-export class Input extends Component<IInput> {
-  constructor(props: IInput) {
-    super(props);
-  }
+export const Input = (props: IInput) => {
+  const { className, theme, defaultValue, placeholder, onBlur } = props;
 
-  onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    this.props.onBlur?.(e.target.value);
+  const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    onBlur?.(e.target.value);
   };
 
-  render() {
-    const { className, defaultValue, placeholder } = this.props;
-    return (
-      <input
-        className={classNames('', {}, [className])}
-        onBlur={this.onBlurHandler}
-        defaultValue={defaultValue}
-        placeholder={placeholder}
-      ></input>
-    );
-  }
-}
+  return (
+    <input
+      className={classNames(cls.AppLink, { [cls[theme]]: true }, [className])}
+      onBlur={onBlurHandler}
+      defaultValue={defaultValue}
+      placeholder={placeholder}
+    ></input>
+  );
+};
 
 export default Input;

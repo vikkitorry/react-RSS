@@ -1,5 +1,4 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
-import { Component } from 'react';
 import cls from './AppLink.module.scss';
 import { Link, LinkProps } from 'react-router-dom';
 
@@ -13,20 +12,22 @@ export enum AppLinkTheme {
   DARK = 'dark-link',
 }
 
-export class AppLink extends Component<AppLinkProps> {
-  constructor(props: AppLinkProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <Link
-        to={this.props.to}
-        className={classNames(cls.AppLink, { [cls[this.props.theme]]: true }, [
-          this.props.className,
-        ])}
-      >
-        {this.props.children}
-      </Link>
-    );
-  }
-}
+export const AppLink = (props: AppLinkProps) => {
+  const {
+    to,
+    className,
+    children,
+    theme = AppLinkTheme.DARK,
+    ...otherProps
+  } = props;
+
+  return (
+    <Link
+      to={to}
+      className={classNames(cls.AppLink, { [cls[theme]]: true }, [className])}
+      {...otherProps}
+    >
+      {children}
+    </Link>
+  );
+};

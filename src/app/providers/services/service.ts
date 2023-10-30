@@ -6,6 +6,8 @@ import {
 import { BASE_URL, ERROR_MESSAGE, defaultPage } from './types/serviceTypes';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 
+//it's not a react component, it's a part of service requests
+//it's a best practise to do it in class, I don't want to change it in functions
 export default class Service {
   static async getCharacter(
     endpoint: string = ''
