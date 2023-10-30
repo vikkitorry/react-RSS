@@ -1,4 +1,4 @@
-import { Button, ButtonSize, ButtonTheme } from '../../Button/Button';
+import { Button, ButtonSize } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
 import Input from '../../Input/Input';
 
@@ -20,12 +20,7 @@ export const SearchBar = (props: ISearchBar) => {
         defaultValue={inputValue ? inputValue : undefined}
         placeholder="Enter name"
       />
-      <Button
-        onClick={onSubmit.bind(this)}
-        className={''}
-        size={ButtonSize.M}
-        theme={ButtonTheme.BACKGROUND_DARK}
-      >
+      <Button onClick={onSubmit.bind(this)} className={''} size={ButtonSize.M}>
         Search
       </Button>
     </div>

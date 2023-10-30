@@ -17,7 +17,7 @@ export enum ButtonSize {
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className: string;
-  theme: ButtonTheme;
+  theme?: ButtonTheme;
   size: ButtonSize;
   onClick: () => void;
 }
@@ -26,7 +26,7 @@ export const Button: FC<ButtonProps> = (props) => {
   const {
     className,
     children,
-    theme,
+    theme = ButtonTheme.BACKGROUND_DARK,
     size = ButtonSize.M,
     ...otherProps
   } = props;
