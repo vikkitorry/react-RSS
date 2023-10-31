@@ -7,7 +7,6 @@ interface ICard {
 
 export const Card = (props: ICard) => {
   const { cardData } = props;
-
   return (
     <div className={cls.Card}>
       <img src={cardData.image} alt="character photo" className={cls.image} />

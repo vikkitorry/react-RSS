@@ -1,6 +1,6 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './mainPage.module.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Service from '../../app/providers/services/service';
 import { GridTable } from '../../components/widgets/GridTable/GridTable';
 import { AllCharacterSchema } from '../../app/providers/services/types/serviceTypes';
@@ -16,17 +16,17 @@ export const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<AllCharacterSchema | null>(null);
 
-  const onBlur = (value: string) => {
+  const onBlur = useCallback((value: string) => {
     setInputValue(value);
-  };
+  }, []);
 
-  const onSubmit = async () => {
+  const onSubmit = useCallback(() => {
     setIsLoading(true);
-    await Service.getCharacter(inputValue)
+    Service.getCharacter(inputValue)
       .then((data) => setData(data))
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  };
+  }, [inputValue]);
 
   useEffect(() => {
     setIsLoading(true);

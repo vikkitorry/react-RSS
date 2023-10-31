@@ -11,6 +11,7 @@ interface IGridTable {
 
 export const GridTable = (props: IGridTable) => {
   const { elements, pages } = props;
+  // console.log('render grid table');
 
   return (
     <div className={cls.gridContainer}>

@@ -1,6 +1,7 @@
 import { Button, ButtonSize } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
 import Input from '../../Input/Input';
+import { memo } from 'react';
 
 interface ISearchBar {
   inputValue: undefined | string;
@@ -8,9 +9,9 @@ interface ISearchBar {
   onBlur: (value: string) => void;
 }
 
-export const SearchBar = (props: ISearchBar) => {
+export const SearchBar = memo((props: ISearchBar) => {
   const { inputValue, onSubmit, onBlur } = props;
-
+  console.log('render search bar');
   return (
     <div className={cls.SearchBar}>
       <Input
@@ -20,9 +21,9 @@ export const SearchBar = (props: ISearchBar) => {
         defaultValue={inputValue ? inputValue : undefined}
         placeholder="Enter name"
       />
-      <Button onClick={onSubmit.bind(this)} className={''} size={ButtonSize.M}>
+      <Button onClick={onSubmit} className={''} size={ButtonSize.M}>
         Search
       </Button>
     </div>
   );
-};
+});

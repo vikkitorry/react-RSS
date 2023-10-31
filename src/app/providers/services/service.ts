@@ -36,16 +36,16 @@ export default class Service {
     }
   }
 
-  static async changePage(url: string): Promise<AllCharacterSchema> {
-    try {
-      const resp = await fetch(`${url}`);
-      if (!resp.ok) {
-        throw new Error();
-      }
-      const characters = (await resp.json()) as AllCharacterSchema;
-      return characters;
-    } catch (err) {
-      throw new Error(ERROR_MESSAGE);
-    }
-  }
+  // static async changePage(url: string): Promise<AllCharacterSchema> {
+  //   try {
+  //     const resp = await fetch(`${url}`);
+  //     if (!resp.ok) {
+  //       throw new Error();
+  //     }
+  //     const characters = (await resp.json()) as AllCharacterSchema;
+  //     return characters;
+  //   } catch (err) {
+  //     throw new Error(ERROR_MESSAGE);
+  //   }
+  // }
 }
