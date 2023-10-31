@@ -1,8 +1,4 @@
-import {
-  CharacterSchema,
-  AllCharacterSchema,
-  BASE_URL_NAME,
-} from './types/serviceTypes';
+import { AllCharacterSchema, BASE_URL_NAME } from './types/serviceTypes';
 import { BASE_URL, ERROR_MESSAGE, defaultPage } from './types/serviceTypes';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 
@@ -11,7 +7,7 @@ import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 export default class Service {
   static async getCharacter(
     endpoint: string = ''
-  ): Promise<CharacterSchema[] | undefined> {
+  ): Promise<AllCharacterSchema> {
     try {
       localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, endpoint);
       const resp = await fetch(`${BASE_URL_NAME}${endpoint}`);
@@ -19,7 +15,7 @@ export default class Service {
         throw new Error();
       }
       const characters = (await resp.json()) as AllCharacterSchema;
-      return characters.results;
+      return characters;
     } catch (err) {
       throw new Error(ERROR_MESSAGE);
     }
@@ -27,14 +23,27 @@ export default class Service {
 
   static async getAllCharacters(
     endpoint: string = defaultPage
-  ): Promise<CharacterSchema[] | undefined> {
+  ): Promise<AllCharacterSchema> {
     try {
       const resp = await fetch(`${BASE_URL}${endpoint}`);
       if (!resp.ok) {
         throw new Error();
       }
       const characters = (await resp.json()) as AllCharacterSchema;
-      return characters.results;
+      return characters;
+    } catch (err) {
+      throw new Error(ERROR_MESSAGE);
+    }
+  }
+
+  static async changePage(url: string): Promise<AllCharacterSchema> {
+    try {
+      const resp = await fetch(`${url}`);
+      if (!resp.ok) {
+        throw new Error();
+      }
+      const characters = (await resp.json()) as AllCharacterSchema;
+      return characters;
     } catch (err) {
       throw new Error(ERROR_MESSAGE);
     }

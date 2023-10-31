@@ -8,14 +8,16 @@ export type CharacterSchema = {
   image: string;
 };
 
+export type ResponseInfo = {
+  count: number;
+  pages: number;
+  next: null | string;
+  prev: null | string;
+};
+
 export type AllCharacterSchema = {
-  info: {
-    count: number;
-    pages: number;
-    next: null | string;
-    prev: null | string;
-  };
-  results: Array<CharacterSchema>;
+  info: ResponseInfo;
+  results: CharacterSchema[];
 };
 
 export const BASE_URL = 'https://rickandmortyapi.com/api/character/?';

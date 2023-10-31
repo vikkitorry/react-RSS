@@ -3,7 +3,7 @@ import cls from './mainPage.module.scss';
 import React, { useState, useEffect } from 'react';
 import Service from '../../app/providers/services/service';
 import { GridTable } from '../../components/widgets/GridTable/GridTable';
-import { CharacterSchema } from '../../app/providers/services/types/serviceTypes';
+import { AllCharacterSchema } from '../../app/providers/services/types/serviceTypes';
 import { SearchBar } from '../../components/widgets/SearchBar/SearchBar';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
 import { NoResultsPage } from '../noResults/NoResultsPage';
@@ -14,7 +14,7 @@ export const MainPage = () => {
     localStorage.getItem(SEARCH_LOCALSTORAGE_KEY) || undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [cards, setCards] = useState<CharacterSchema[] | null>([]);
+  const [data, setData] = useState<AllCharacterSchema | null>(null);
 
   const onBlur = (value: string) => {
     setInputValue(value);
@@ -23,8 +23,8 @@ export const MainPage = () => {
   const onSubmit = async () => {
     setIsLoading(true);
     await Service.getCharacter(inputValue)
-      .then((cards) => (cards ? setCards(cards) : 0))
-      .catch(() => setCards(null))
+      .then((data) => setData(data))
+      .catch(() => setData(null))
       .finally(() => setIsLoading(false));
   };
 
@@ -33,9 +33,10 @@ export const MainPage = () => {
     inputValue
       ? onSubmit()
       : Service.getAllCharacters(inputValue)
-          .then((cards) => (cards ? setCards(cards) : setCards(null)))
-          .catch(() => setCards(null))
+          .then((data) => setData(data))
+          .catch(() => setData(null))
           .finally(() => setIsLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,8 +44,8 @@ export const MainPage = () => {
       <SearchBar onSubmit={onSubmit} onBlur={onBlur} inputValue={inputValue} />
       {isLoading ? (
         <Loader />
-      ) : cards ? (
-        <GridTable elements={cards} />
+      ) : data?.results ? (
+        <GridTable elements={data.results} pages={data?.info.pages} />
       ) : (
         <NoResultsPage />
       )}
