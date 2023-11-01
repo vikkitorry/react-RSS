@@ -1,0 +1,15 @@
+.Results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+
+.full_screen {
+  width: 100%;
+}
+
+.left_screen {
+  width: 50%;
+}

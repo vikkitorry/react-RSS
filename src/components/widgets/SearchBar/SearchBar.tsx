@@ -11,7 +11,6 @@ interface ISearchBar {
 
 export const SearchBar = memo((props: ISearchBar) => {
   const { inputValue, onSubmit, onBlur } = props;
-  console.log('render search bar');
   return (
     <div className={cls.SearchBar}>
       <Input

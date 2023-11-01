@@ -20,7 +20,8 @@ export type AllCharacterSchema = {
   results: CharacterSchema[];
 };
 
-export const BASE_URL = 'https://rickandmortyapi.com/api/character/?';
 export const BASE_URL_NAME = 'https://rickandmortyapi.com/api/character/?name=';
-export const defaultPage = 'page=1';
+export const BASE_URL_PAGE = 'https://rickandmortyapi.com/api/character/?page=';
+export const NAME_ENDPOINT = '&name=';
+export const defaultPage = '1';
 export const ERROR_MESSAGE = 'There is nothing here';

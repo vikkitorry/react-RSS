@@ -1,5 +1,10 @@
-import { AllCharacterSchema, BASE_URL_NAME } from './types/serviceTypes';
-import { BASE_URL, ERROR_MESSAGE, defaultPage } from './types/serviceTypes';
+import {
+  AllCharacterSchema,
+  BASE_URL_NAME,
+  BASE_URL_PAGE,
+  NAME_ENDPOINT,
+} from './types/serviceTypes';
+import { ERROR_MESSAGE } from './types/serviceTypes';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 
 //it's not a react component, it's a part of service requests
@@ -21,11 +26,14 @@ export default class Service {
     }
   }
 
-  static async getAllCharacters(
-    endpoint: string = defaultPage
+  static async getPage(
+    page: number,
+    name: string = ''
   ): Promise<AllCharacterSchema> {
     try {
-      const resp = await fetch(`${BASE_URL}${endpoint}`);
+      const resp = await fetch(
+        `${BASE_URL_PAGE}${page}${NAME_ENDPOINT}${name}`
+      );
       if (!resp.ok) {
         throw new Error();
       }
@@ -35,17 +43,19 @@ export default class Service {
       throw new Error(ERROR_MESSAGE);
     }
   }
-
-  // static async changePage(url: string): Promise<AllCharacterSchema> {
-  //   try {
-  //     const resp = await fetch(`${url}`);
-  //     if (!resp.ok) {
-  //       throw new Error();
-  //     }
-  //     const characters = (await resp.json()) as AllCharacterSchema;
-  //     return characters;
-  //   } catch (err) {
-  //     throw new Error(ERROR_MESSAGE);
-  //   }
-  // }
 }
+
+// export const getPage = async (
+//   url: string | null
+// ): Promise<AllCharacterSchema> => {
+//   try {
+//     const resp = await fetch(`${url}`);
+//     if (!resp.ok) {
+//       throw new Error();
+//     }
+//     const characters = (await resp.json()) as AllCharacterSchema;
+//     return characters;
+//   } catch (err) {
+//     throw new Error(ERROR_MESSAGE);
+//   }
+// };
