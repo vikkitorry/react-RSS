@@ -1,12 +1,12 @@
 import cls from './mainPage.module.scss';
-import Results from '../results/Results';
+import Cards from '../../components/Cards/cards';
 // import { useState } from 'react';
 
 export const MainPage = () => {
   // const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(true);
   return (
     <div className={cls.MainPage}>
-      <Results />
+      <Cards />
     </div>
   );
 };

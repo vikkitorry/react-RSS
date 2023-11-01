@@ -1,36 +1,32 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
-import { useEffect, useState } from 'react';
+import { SetURLSearchParams } from 'react-router-dom';
 
 interface PaginationProps {
   totalPages: number | undefined;
-  getPage: (page: number) => void;
-  setQueryParam: (page: string) => void;
+  page: number;
+  setSearchParams: SetURLSearchParams;
 }
 
 export const Pagination = (props: PaginationProps) => {
-  const { totalPages, getPage, setQueryParam } = props;
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { totalPages, page, setSearchParams } = props;
 
   const prevPage = () => {
-    if (currentPage > 1) {
-      // setQueryParam((currentPage - 1).toString());
-      console.log(setQueryParam);
-      setCurrentPage(currentPage - 1);
-      getPage(currentPage - 1);
+    if (page > 1) {
+      setSearchParams((searchParams) => {
+        searchParams.set('page', (page - 1).toString());
+        return searchParams;
+      });
     }
   };
-  //есть баг с отображением страницы, если количество страниц одинаковое
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [totalPages]);
 
   const nextPage = () => {
-    if (totalPages && currentPage < totalPages) {
-      // setQueryParam((currentPage + 1).toString());
-      setCurrentPage(currentPage + 1);
-      getPage(currentPage + 1);
+    if (totalPages && page < totalPages) {
+      setSearchParams((searchParams) => {
+        searchParams.set('page', (page + 1).toString());
+        return searchParams;
+      });
     }
   };
 
@@ -40,7 +36,7 @@ export const Pagination = (props: PaginationProps) => {
         &#8701;
       </Button>
       <div>
-        Page <span>{currentPage}</span> / <span>{totalPages}</span>
+        Page <span>{page}</span> / <span>{totalPages}</span>
       </div>
       <Button className="" size={ButtonSize.M} onClick={nextPage}>
         &#8702;

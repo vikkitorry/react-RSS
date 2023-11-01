@@ -1,16 +1,34 @@
 import { Button, ButtonSize } from '../../Button/Button';
 import cls from './SearchBar.module.scss';
 import Input from '../../Input/Input';
-import { memo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
+import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
+import { useSearchParams } from 'react-router-dom';
 
 interface ISearchBar {
-  inputValue: undefined | string;
-  onSubmit: () => void;
-  onBlur: (value: string) => void;
+  setSearch: (value: string) => void;
 }
 
 export const SearchBar = memo((props: ISearchBar) => {
-  const { inputValue, onSubmit, onBlur } = props;
+  const { setSearch } = props;
+  const [inputValue, setInputValue] = useState<string | undefined>(
+    localStorage.getItem(SEARCH_LOCALSTORAGE_KEY) || undefined
+  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const onBlur = useCallback((value: string) => {
+    setInputValue(value);
+  }, []);
+
+  const onSubmit = () => {
+    console.log(searchParams);
+    setSearchParams((searchParams) => {
+      searchParams.set('page', '1');
+      return searchParams;
+    });
+    setSearch(inputValue ? inputValue : '');
+  };
+
   return (
     <div className={cls.SearchBar}>
       <Input
