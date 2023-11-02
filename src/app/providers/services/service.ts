@@ -10,6 +10,7 @@ import {
   RequestShow,
   ShowSchema,
   ResponseShow,
+  DetailedShowSchema,
 } from './types/serviceTypes';
 import { ERROR_MESSAGE } from './types/serviceTypes';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
@@ -52,7 +53,7 @@ export default class Service {
     }
   }
 
-  static async getShow(showId: number = 0): Promise<ShowSchema> {
+  static async getShow(showId: number = 0): Promise<DetailedShowSchema> {
     const body: RequestShow = {
       jsonrpc,
       method: METHOD.getShow,

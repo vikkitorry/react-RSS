@@ -5,13 +5,12 @@ import { SetURLSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
 
 interface IPaginationProps {
-  totalPages: number | undefined;
   page: number;
   setSearchParams: SetURLSearchParams;
 }
 
 export const Pagination = (props: IPaginationProps) => {
-  const { totalPages, page, setSearchParams } = props;
+  const { page, setSearchParams } = props;
 
   const prevPage = () => {
     if (page > 1) {
@@ -35,7 +34,7 @@ export const Pagination = (props: IPaginationProps) => {
         &#8701;
       </Button>
       <div>
-        Page <span>{page}</span> / <span>{totalPages}</span>
+        Page <span>{page}</span>
       </div>
       <Button className="" size={ButtonSize.M} onClick={nextPage}>
         &#8702;

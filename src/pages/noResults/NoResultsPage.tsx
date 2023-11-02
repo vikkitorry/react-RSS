@@ -4,7 +4,7 @@ export const NoResultsPage = () => {
   return (
     <div className={cls.NoResultsPage}>
       <div className={cls.error}></div>
-      <div>There is no character with such name</div>
+      <div>There is no show with such name</div>
     </div>
   );
 };

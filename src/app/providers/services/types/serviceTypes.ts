@@ -1,7 +1,7 @@
 export const ERROR_MESSAGE = 'There is nothing here';
 
 export const BASE_URL = 'https://api.myshows.me/v2/rpc/';
-export const defaultPageSize = 20;
+export const defaultPageSize = 18;
 export const lang = 'en';
 export const id = 1;
 export const jsonrpc = '2.0';
@@ -18,7 +18,7 @@ export type Response = {
 
 export type ResponseShow = {
   jsonrpc: string;
-  result: ShowSchema;
+  result: DetailedShowSchema;
 };
 
 export type RequestAllShows = {
@@ -42,6 +42,36 @@ export type RequestShow = {
     withEpisodes: boolean;
   };
   id: number;
+};
+
+export type DetailedShowSchema = {
+  id: number;
+  title?: string;
+  titleOriginal?: string;
+  description?: string;
+  totalSeasons?: number;
+  status?: string;
+  country?: string;
+  countryTitle?: string;
+  started?: string;
+  ended?: string;
+  year?: number;
+  kinopoiskId?: number;
+  kinopoiskRating?: number;
+  kinopoiskVoted?: number;
+  kinopoiskUrl?: string;
+  tvrageId?: number;
+  imdbId?: string;
+  imdbRating?: number;
+  imdbVoted?: number;
+  imdbUrl?: string;
+  watching?: number;
+  watchingTotal?: number;
+  voted?: number;
+  rating?: number;
+  runtime?: number;
+  runtimeTotal?: string;
+  image?: string;
 };
 
 export type ShowSchema = {

@@ -1,57 +1,79 @@
 import cls from './detailedCard.module.scss';
-import { ShowSchema } from '../../../app/providers/services/types/serviceTypes';
+import { DetailedShowSchema } from '../../../app/providers/services/types/serviceTypes';
 import { useSearchParams } from 'react-router-dom';
-// import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
 import Service from '../../../app/providers/services/service';
 import React, { useState, useEffect, memo } from 'react';
-import { Loader } from '../../widgets/Loader/Loader';
+import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
+import { Button, ButtonSize } from '../../Button/Button';
 
 interface IDetailedCard {
-  id: number;
+  id: string | null;
 }
 
 export const DetailedCard = memo((props: IDetailedCard) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { id } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [data, setData] = useState<ShowSchema | null>(null);
+  const [data, setData] = useState<DetailedShowSchema | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    Service.getShow(id)
-      .then((data) => setData(data))
-      .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
+    if (id) {
+      setIsLoading(true);
+      Service.getShow(+id)
+        .then((data) => setData(data))
+        .catch(() => setData(null))
+        .finally(() => setIsLoading(false));
+    }
   }, [id]);
 
   const onClick = async () => {
-    // const id = cardData.id || 0;
-    // setSearchParams((searchParams) => {
-    //   searchParams.set(MainPageRoutes.SHOW, id.toString());
-    //   return searchParams;
-    // });
+    searchParams.delete(MainPageRoutes.SHOW);
+    setSearchParams(searchParams);
   };
 
   return (
-    <div className={cls.DetailedCard} onClick={onClick}>
+    <div className={cls.DetailedCard}>
+      <Button
+        className={cls.btnPositionEnd}
+        size={ButtonSize.S}
+        onClick={onClick}
+      >
+        X
+      </Button>
       {isLoading ? (
-        <Loader />
+        <Loader color={LoaderTheme.BACKGROUND_LIGHT} />
       ) : (
         <div className={cls.Card}>
           <img src={data?.image} alt="character photo" className={cls.image} />
-          <div className={cls.name}>{data?.title}</div>
+          <div className={cls.title}>{data?.title}</div>
           <div>
-            {'Category:'}
-            <span>{data?.category}</span>
+            <div>
+              {'Year:'}
+              <span>{data?.year}</span>
+            </div>
+            {'Country:'}
+            <span>{data?.country}</span>
+          </div>
+          <div>
+            {'Started:'}
+            <span>{data?.started}</span>
+          </div>
+          <div>
+            {'Ended:'}
+            <span>{data?.ended}</span>
           </div>
           <div>
             {'Status:'}
             <span>{data?.status}</span>
           </div>
           <div>
-            {'Rating:'}
-            <span>{data?.rating}</span>
+            {'Imdb:'}
+            <span>{data?.imdbRating}</span>
+          </div>
+          <div>
+            {'Kinopoisk:'}
+            <span>{data?.kinopoiskRating}</span>
           </div>
         </div>
       )}

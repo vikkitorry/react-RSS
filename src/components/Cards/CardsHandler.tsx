@@ -6,7 +6,7 @@ import { GridTable } from '../widgets/GridTable/GridTable';
 import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
 import { SearchBar } from '../widgets/SearchBar/SearchBar';
 import { NoResultsPage } from '../../pages/noResults/NoResultsPage';
-import { Loader } from '../widgets/Loader/Loader';
+import { Loader, LoaderTheme } from '../widgets/Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
@@ -44,7 +44,6 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
 
   const getPage = useCallback(() => {
     setIsLoading(true);
-    console.log(4654654);
     Service.getPage(page, search)
       .then((data) => setData(data))
       .catch(() => setData(null))
@@ -59,15 +58,11 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
     <div className={classNames(cls.Cards, mods, [])}>
       <SearchBar setSearch={setSearch} setSearchParams={setSearchParams} />
       {isLoading ? (
-        <Loader />
+        <Loader color={LoaderTheme.BACKGROUND_DARK} />
       ) : data ? (
         <>
           <GridTable elements={data} />
-          <Pagination
-            totalPages={1}
-            page={page}
-            setSearchParams={setSearchParams}
-          />
+          <Pagination page={page} setSearchParams={setSearchParams} />
         </>
       ) : (
         <NoResultsPage />

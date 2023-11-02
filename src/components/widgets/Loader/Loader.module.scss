@@ -9,11 +9,19 @@
 .Loader {
   width: 70px;
   height: 70px;
-  border: 5px solid var(--primary-color);
+  border: 5px solid;
   border-radius: 50%;
   border-bottom-color: transparent;
   box-sizing: border-box;
   animation: rotate 1s linear infinite;
+}
+
+.light-loader {
+  border-color: var(--secondary-color);
+}
+
+.dark-loader {
+  border-color: var(--primary-color);
 }
 
 @keyframes rotate {
