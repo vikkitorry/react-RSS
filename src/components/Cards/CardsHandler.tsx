@@ -1,44 +1,42 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
-import cls from './cards.module.scss';
+import cls from './CardsHandler.module.scss';
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import Service from '../../app/providers/services/service';
 import { GridTable } from '../widgets/GridTable/GridTable';
-import { AllCharacterSchema } from '../../app/providers/services/types/serviceTypes';
+import { Response } from '../../app/providers/services/types/serviceTypes';
 import { SearchBar } from '../widgets/SearchBar/SearchBar';
 import { NoResultsPage } from '../../pages/noResults/NoResultsPage';
 import { Loader } from '../widgets/Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
-// import { Outlet } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
+import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
 
-export enum ResultsSize {
+export enum CardsHandlerSize {
   FULL = 'full_screen',
   LEFT_SCREEN = 'left_screen',
 }
 
-// interface ResultsProps {
-//   size: ResultsSize;
-// }
+interface CardsHandlerProps {
+  size: CardsHandlerSize;
+}
 
-const Cards = memo(() => {
-  // const { size } = props;
+const CardsHandler = memo((props: CardsHandlerProps) => {
+  const { size } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [data, setData] = useState<AllCharacterSchema | null>(null);
-  const isDetailedOpen = searchParams.get('cardId');
-  const pageQuery = searchParams.get('page');
+  const [data, setData] = useState<Response | null>(null);
+  const pageQuery = searchParams.get(MainPageRoutes.PAGE);
   const page = pageQuery ? +pageQuery : 1;
 
   const mods: Record<string, boolean> = {
-    [cls[ResultsSize.FULL]]: !isDetailedOpen,
-    [cls[ResultsSize.LEFT_SCREEN]]: !!isDetailedOpen,
+    [cls[size]]: true,
   };
 
   useEffect(() => {
     if (!pageQuery) {
       setSearchParams((searchParams) => {
-        searchParams.set('page', '1');
+        searchParams.set(MainPageRoutes.PAGE, '1');
         return searchParams;
       });
     }
@@ -46,12 +44,11 @@ const Cards = memo(() => {
 
   const getPage = useCallback(() => {
     setIsLoading(true);
-    Service.getPage(page, search)
+    const query = search || '';
+    Service.getPage(page, { query })
       .then((data) => setData(data))
       .catch(() => setData(null))
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   }, [page, search]);
 
   useEffect(() => {
@@ -63,11 +60,11 @@ const Cards = memo(() => {
       <SearchBar setSearch={setSearch} />
       {isLoading ? (
         <Loader />
-      ) : data?.results ? (
+      ) : data?.result ? (
         <>
-          <GridTable elements={data.results} />
+          <GridTable elements={data.result} />
           <Pagination
-            totalPages={data?.info.pages}
+            totalPages={1}
             page={page}
             setSearchParams={setSearchParams}
           />
@@ -79,4 +76,4 @@ const Cards = memo(() => {
   );
 });
 
-export default Cards;
+export default CardsHandler;

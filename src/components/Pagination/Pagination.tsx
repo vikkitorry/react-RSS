@@ -2,6 +2,7 @@ import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
 import { SetURLSearchParams } from 'react-router-dom';
+import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
 
 interface PaginationProps {
   totalPages: number | undefined;
@@ -15,19 +16,17 @@ export const Pagination = (props: PaginationProps) => {
   const prevPage = () => {
     if (page > 1) {
       setSearchParams((searchParams) => {
-        searchParams.set('page', (page - 1).toString());
+        searchParams.set(MainPageRoutes.PAGE, (page - 1).toString());
         return searchParams;
       });
     }
   };
 
   const nextPage = () => {
-    if (totalPages && page < totalPages) {
-      setSearchParams((searchParams) => {
-        searchParams.set('page', (page + 1).toString());
-        return searchParams;
-      });
-    }
+    setSearchParams((searchParams) => {
+      searchParams.set(MainPageRoutes.PAGE, (page + 1).toString());
+      return searchParams;
+    });
   };
 
   return (

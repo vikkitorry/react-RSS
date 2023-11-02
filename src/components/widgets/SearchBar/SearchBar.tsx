@@ -4,6 +4,7 @@ import Input from '../../Input/Input';
 import React, { useState, useCallback, memo } from 'react';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 import { useSearchParams } from 'react-router-dom';
+import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
 
 interface ISearchBar {
   setSearch: (value: string) => void;
@@ -23,7 +24,7 @@ export const SearchBar = memo((props: ISearchBar) => {
   const onSubmit = () => {
     console.log(searchParams);
     setSearchParams((searchParams) => {
-      searchParams.set('page', '1');
+      searchParams.set(MainPageRoutes.PAGE, '1');
       return searchParams;
     });
     setSearch(inputValue ? inputValue : '');
