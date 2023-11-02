@@ -4,13 +4,13 @@ import { Button, ButtonSize } from '../Button/Button';
 import { SetURLSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
 
-interface PaginationProps {
+interface IPaginationProps {
   totalPages: number | undefined;
   page: number;
   setSearchParams: SetURLSearchParams;
 }
 
-export const Pagination = (props: PaginationProps) => {
+export const Pagination = (props: IPaginationProps) => {
   const { totalPages, page, setSearchParams } = props;
 
   const prevPage = () => {

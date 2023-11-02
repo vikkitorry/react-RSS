@@ -3,12 +3,12 @@ import { ShowSchema } from '../../../app/providers/services/types/serviceTypes';
 import cls from './GridTable.module.scss';
 import { memo } from 'react';
 
-interface IGridTable {
+interface IGridTableProps {
   elements: ShowSchema[];
   // isLoading: boolean;
 }
 
-export const GridTable = memo((props: IGridTable) => {
+export const GridTable = memo((props: IGridTableProps) => {
   const { elements } = props;
   // console.log('render grid table');
   return (

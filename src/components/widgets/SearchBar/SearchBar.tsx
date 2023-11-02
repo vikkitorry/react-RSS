@@ -3,26 +3,25 @@ import cls from './SearchBar.module.scss';
 import Input from '../../Input/Input';
 import React, { useState, useCallback, memo } from 'react';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
-import { useSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
+import { SetURLSearchParams } from 'react-router-dom';
 
-interface ISearchBar {
+interface ISearchBarProps {
   setSearch: (value: string) => void;
+  setSearchParams: SetURLSearchParams;
 }
 
-export const SearchBar = memo((props: ISearchBar) => {
-  const { setSearch } = props;
+export const SearchBar = memo((props: ISearchBarProps) => {
+  const { setSearch, setSearchParams } = props;
   const [inputValue, setInputValue] = useState<string | undefined>(
     localStorage.getItem(SEARCH_LOCALSTORAGE_KEY) || undefined
   );
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const onBlur = useCallback((value: string) => {
     setInputValue(value);
   }, []);
 
   const onSubmit = () => {
-    console.log(searchParams);
     setSearchParams((searchParams) => {
       searchParams.set(MainPageRoutes.PAGE, '1');
       return searchParams;
@@ -37,7 +36,7 @@ export const SearchBar = memo((props: ISearchBar) => {
         theme=""
         onBlur={onBlur}
         defaultValue={inputValue ? inputValue : undefined}
-        placeholder="Enter name"
+        placeholder="Enter show"
       />
       <Button onClick={onSubmit} className={''} size={ButtonSize.M}>
         Search

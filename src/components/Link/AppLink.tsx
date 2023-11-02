@@ -2,7 +2,7 @@ import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './AppLink.module.scss';
 import { Link, LinkProps } from 'react-router-dom';
 
-interface AppLinkProps extends LinkProps {
+interface IAppLinkProps extends LinkProps {
   className: string;
   theme: string;
 }
@@ -12,7 +12,7 @@ export enum AppLinkTheme {
   DARK = 'dark-link',
 }
 
-export const AppLink = (props: AppLinkProps) => {
+export const AppLink = (props: IAppLinkProps) => {
   const {
     to,
     className,

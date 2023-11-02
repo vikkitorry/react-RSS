@@ -3,7 +3,7 @@ import cls from './Input.module.scss';
 import { classNames } from '../../utils/libs/classNames/classNames';
 import { memo } from 'react';
 
-interface IInput
+interface IInputProps
   extends Omit<InputHTMLAttributes<HTMLElement>, 'value' | 'onBlur'> {
   className: string;
   theme: string;
@@ -12,7 +12,7 @@ interface IInput
   placeholder?: string;
 }
 
-export const Input = memo((props: IInput) => {
+export const Input = memo((props: IInputProps) => {
   const { className, theme, defaultValue, placeholder, onBlur } = props;
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     onBlur?.(e.target.value);

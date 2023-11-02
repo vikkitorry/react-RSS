@@ -1,4 +1,3 @@
-import { classNames } from '../../../utils/libs/classNames/classNames';
 import { AppLink, AppLinkTheme } from '../../Link/AppLink';
 import cls from './Navbar.module.scss';
 import { BugButton } from '../../../app/providers/ErrorBoundary/BugButton';
@@ -6,7 +5,7 @@ import { RoutePath } from '../../../app/providers/router/routeConfig/routeConfig
 
 export const Navbar = () => {
   return (
-    <div className={classNames(cls.Navbar, {}, [])}>
+    <div className={cls.Navbar}>
       <AppLink
         to={RoutePath.main}
         className={cls.item}

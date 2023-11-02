@@ -16,14 +16,14 @@ export enum ButtonSize {
   XL = 'size_xl',
 }
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className: string;
   theme?: ButtonTheme;
   size: ButtonSize;
   onClick: () => void;
 }
 
-export const Button: FC<ButtonProps> = memo((props) => {
+export const Button: FC<IButtonProps> = memo((props) => {
   const {
     className,
     children,
