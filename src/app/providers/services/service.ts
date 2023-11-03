@@ -17,24 +17,25 @@ import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
 
 export default class Service {
   static async getPage(
-    page: number = 1,
-    search: string = '',
+    currentPage: number = 0,
+    query: string = '',
     pageSize: number = defaultPageSize
   ): Promise<ShowSchema[]> {
+    const page = !currentPage ? currentPage : currentPage - 1;
     const body: RequestAllShows = {
       jsonrpc,
       method: METHOD.getAllShows,
       params: {
         search: {
-          query: search,
+          query,
         },
         page,
         pageSize,
       },
-      id,
+      id: 1,
     };
     try {
-      localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, search);
+      localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, query);
       const resp = await fetch(BASE_URL, {
         method: METHOD.post,
         headers: {
@@ -45,7 +46,9 @@ export default class Service {
       });
       const results: Response = await resp.json();
       if (!results.result.length) {
-        throw new Error();
+        if (!results.result.length) {
+          throw new Error();
+        }
       }
       return results.result;
     } catch (err) {
