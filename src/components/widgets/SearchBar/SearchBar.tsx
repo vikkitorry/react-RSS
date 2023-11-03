@@ -25,15 +25,20 @@ export const SearchBar = memo((props: ISearchBarProps) => {
     setInputValue(value);
   }, []);
 
-  const onSubmit = () => {
+  const changeQuery = () => {
     setSearchParams((searchParams) => {
       searchParams.set(MainPageRoutes.PAGE, '1');
       return searchParams;
     });
+  };
+
+  const onSubmit = () => {
+    changeQuery();
     setSearch(inputValue ? inputValue : '');
   };
 
   const onChange = (value: string) => {
+    changeQuery();
     setNumOfItems(+value);
   };
 
