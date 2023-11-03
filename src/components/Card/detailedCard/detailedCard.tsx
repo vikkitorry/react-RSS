@@ -2,10 +2,10 @@ import cls from './detailedCard.module.scss';
 import { DetailedShowSchema } from '../../../app/providers/services/types/serviceTypes';
 import { useSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
-import Service from '../../../app/providers/services/service';
 import React, { useState, useEffect, memo } from 'react';
 import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
+import { getShow } from '../../../app/providers/services/service';
 
 export const DetailedCard = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +16,7 @@ export const DetailedCard = memo(() => {
     const id = searchParams.get(MainPageRoutes.SHOW);
     if (id) {
       setIsLoading(true);
-      Service.getShow(+id)
+      getShow(+id)
         .then((data) => setData(data))
         .catch(() => setData(null))
         .finally(() => setIsLoading(false));

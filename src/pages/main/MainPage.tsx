@@ -9,11 +9,11 @@ import { Outlet } from 'react-router-dom';
 export const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(false);
-  const showOpenId = searchParams.get(MainPageRoutes.SHOW);
+  const isShowOpen = searchParams.get(MainPageRoutes.SHOW);
 
   useEffect(() => {
-    setIsDetailedOpen(!!showOpenId);
-  }, [showOpenId]);
+    setIsDetailedOpen(!!isShowOpen);
+  }, [isShowOpen]);
 
   const closeDetailed = useCallback(() => {
     if (isDetailedOpen) {
@@ -26,9 +26,7 @@ export const MainPage = () => {
     <div className={cls.MainPage}>
       <CardsHandler
         onClick={closeDetailed}
-        size={
-          isDetailedOpen ? CardsHandlerSize.LEFT_SCREEN : CardsHandlerSize.FULL
-        }
+        size={isDetailedOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
       />
       {isDetailedOpen && <Outlet />}
     </div>

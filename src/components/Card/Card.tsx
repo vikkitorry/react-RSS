@@ -29,8 +29,8 @@ export const Card = memo((props: ICard) => {
       />
       <div className={cls.title}>{cardData.title}</div>
       <div>
-        {'Category:'}
-        <span> {cardData.category}</span>
+        {'Seasons:'}
+        <span> {cardData.totalSeasons}</span>
       </div>
       <div>
         {'Status:'}
