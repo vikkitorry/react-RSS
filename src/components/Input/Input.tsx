@@ -20,7 +20,7 @@ export const Input = memo((props: IInputProps) => {
 
   return (
     <input
-      className={classNames(cls.AppLink, { [cls[theme]]: true }, [className])}
+      className={classNames(cls.Input, { [cls[theme]]: true }, [className])}
       onBlur={onBlurHandler}
       defaultValue={defaultValue}
       placeholder={placeholder}

@@ -2,9 +2,9 @@ import { RouteProps } from 'react-router-dom';
 import { MainPage } from '../../../../pages/main/MainPage';
 import { AboutPage } from '../../../../pages/about/AboutPage';
 import NotFoundPage from '../../../../pages/notFound/NotFoundPage';
+import { DetailedCard } from '../../../../components/Card/detailedCard/detailedCard';
 
 export enum AppRoutes {
-  MAIN = 'main',
   ABOUT = 'about',
   NOT_FOUND = 'not_found',
 }
@@ -15,16 +15,12 @@ export enum MainPageRoutes {
 }
 
 export const RoutePath: Record<AppRoutes, string> = {
-  [AppRoutes.MAIN]: '/',
+  // [AppRoutes.MAIN]: '/',
   [AppRoutes.ABOUT]: '/about',
   [AppRoutes.NOT_FOUND]: '*',
 };
 
 export const routeConfig: Record<AppRoutes, RouteProps> = {
-  [AppRoutes.MAIN]: {
-    path: RoutePath.main,
-    element: <MainPage />,
-  },
   [AppRoutes.ABOUT]: {
     path: RoutePath.about,
     element: <AboutPage />,
@@ -33,4 +29,14 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
     path: RoutePath.not_found,
     element: <NotFoundPage />,
   },
+};
+
+export const Main = {
+  path: '/',
+  element: <MainPage />,
+};
+
+export const MainOutlet = {
+  path: '',
+  element: <DetailedCard />,
 };

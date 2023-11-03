@@ -7,17 +7,13 @@ import React, { useState, useEffect, memo } from 'react';
 import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
 
-interface IDetailedCard {
-  id: string | null;
-}
-
-export const DetailedCard = memo((props: IDetailedCard) => {
+export const DetailedCard = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { id } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<DetailedShowSchema | null>(null);
 
   useEffect(() => {
+    const id = searchParams.get(MainPageRoutes.SHOW);
     if (id) {
       setIsLoading(true);
       Service.getShow(+id)
@@ -25,7 +21,7 @@ export const DetailedCard = memo((props: IDetailedCard) => {
         .catch(() => setData(null))
         .finally(() => setIsLoading(false));
     }
-  }, [id]);
+  }, [searchParams]);
 
   const onClick = async () => {
     searchParams.delete(MainPageRoutes.SHOW);

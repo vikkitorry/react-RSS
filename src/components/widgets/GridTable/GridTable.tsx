@@ -10,7 +10,6 @@ interface IGridTableProps {
 
 export const GridTable = memo((props: IGridTableProps) => {
   const { elements } = props;
-  // console.log('render grid table');
   return (
     <div className={cls.gridContainer}>
       <div className={cls.grid}>

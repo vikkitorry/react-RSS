@@ -9,8 +9,7 @@ interface ICard {
 }
 
 export const Card = memo((props: ICard) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const { cardData } = props;
 
   const onClick = async () => {
@@ -23,19 +22,23 @@ export const Card = memo((props: ICard) => {
 
   return (
     <div className={cls.Card} onClick={onClick}>
-      <img src={cardData.image} alt="show photo" className={cls.image} />
+      <img
+        src={cardData.image}
+        alt={`${cardData.title} poster`}
+        className={cls.image}
+      />
       <div className={cls.title}>{cardData.title}</div>
       <div>
         {'Category:'}
-        <span>{cardData.category}</span>
+        <span> {cardData.category}</span>
       </div>
       <div>
         {'Status:'}
-        <span>{cardData.status}</span>
+        <span> {cardData.status}</span>
       </div>
       <div>
         {'Rating:'}
-        <span>{cardData.rating}</span>
+        <span> {cardData.rating} / 5</span>
       </div>
     </div>
   );
