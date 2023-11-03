@@ -24,7 +24,7 @@ export const Card = memo((props: ICard) => {
   return (
     <div className={cls.Card} onClick={onClick}>
       <img src={cardData.image} alt="show photo" className={cls.image} />
-      <div className={cls.name}>{cardData.title}</div>
+      <div className={cls.title}>{cardData.title}</div>
       <div>
         {'Category:'}
         <span>{cardData.category}</span>

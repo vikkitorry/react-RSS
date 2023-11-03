@@ -9,7 +9,7 @@
   background-color: var(--primary-color);
   cursor: pointer;
   transition: 0.3s;
-  max-width: 220px;
+  max-width: 270px;
   color: var(--secondary-color);
 }
 
@@ -17,13 +17,13 @@
   opacity: 0.8;
 }
 
-.name {
+.title {
   width: 100%;
   font-weight: 600;
   text-align: center;
 }
 
 .image {
-  width: 200px;
+  width: 250px;
   height: 200px;
 }

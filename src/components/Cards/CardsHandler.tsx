@@ -18,12 +18,14 @@ export enum CardsHandlerSize {
 
 interface ICardsHandlerProps {
   size: CardsHandlerSize;
+  onClick: () => void;
 }
 
 const CardsHandler = memo((props: ICardsHandlerProps) => {
-  const { size } = props;
+  const { size, onClick } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<string>('');
+  const [numOfItems, setNumOfItems] = useState<number>(30);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<ShowSchema[] | null>(null);
   const pageQuery = searchParams.get(MainPageRoutes.PAGE);
@@ -44,19 +46,23 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
 
   const getPage = useCallback(() => {
     setIsLoading(true);
-    Service.getPage(page, search)
+    Service.getPage(page, search, numOfItems)
       .then((data) => setData(data))
       .catch(() => setData(null))
       .finally(() => setIsLoading(false));
-  }, [page, search]);
+  }, [page, search, numOfItems]);
 
   useEffect(() => {
     getPage();
   }, [getPage]);
 
   return (
-    <div className={classNames(cls.Cards, mods, [])}>
-      <SearchBar setSearch={setSearch} setSearchParams={setSearchParams} />
+    <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
+      <SearchBar
+        setSearch={setSearch}
+        setSearchParams={setSearchParams}
+        setNumOfItems={setNumOfItems}
+      />
       {isLoading ? (
         <Loader color={LoaderTheme.BACKGROUND_DARK} />
       ) : data ? (
