@@ -1,13 +1,14 @@
-import { Button, ButtonSize } from '../../Button/Button';
+import { Button, ButtonSize } from '../Button/Button';
 import cls from './SearchBar.module.scss';
-import Input from '../../Input/Input';
+import Input from '../Input/Input';
 import React, { useState, useCallback, memo } from 'react';
-import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
-import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
+import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
+import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
 import { SetURLSearchParams } from 'react-router-dom';
-import { DropDown } from '../../DropDown/DropDown';
+import { DropDown } from '../DropDown/DropDown';
+import { defaultPageSize } from '../../app/providers/services/types/serviceTypes';
 
-const NUM_OF_ITEMS_VALUES = ['30', '20', '10', '5'];
+const NUM_OF_ITEMS_VALUES = [defaultPageSize.toString(), '20', '10', '5'];
 
 interface ISearchBarProps {
   setSearch: (value: string) => void;
@@ -37,7 +38,7 @@ export const SearchBar = memo((props: ISearchBarProps) => {
     setSearch(inputValue ? inputValue : '');
   };
 
-  const onChange = (value: string) => {
+  const onSelectNumOfItems = (value: string) => {
     changeQuery();
     setNumOfItems(+value);
   };
@@ -54,7 +55,7 @@ export const SearchBar = memo((props: ISearchBarProps) => {
       <Button onClick={onSubmit} className={''} size={ButtonSize.M}>
         Search
       </Button>
-      <DropDown values={NUM_OF_ITEMS_VALUES} onChange={onChange} />
+      <DropDown values={NUM_OF_ITEMS_VALUES} onChange={onSelectNumOfItems} />
     </div>
   );
 });

@@ -12,31 +12,26 @@ interface IPaginationProps {
 export const Pagination = (props: IPaginationProps) => {
   const { page, setSearchParams } = props;
 
-  const prevPage = () => {
-    if (page > 1) {
-      setSearchParams((searchParams) => {
-        searchParams.set(MainPageRoutes.PAGE, (page - 1).toString());
-        return searchParams;
-      });
-    }
-  };
-
-  const nextPage = () => {
+  const changePage = (switcher: number) => {
     setSearchParams((searchParams) => {
-      searchParams.set(MainPageRoutes.PAGE, (page + 1).toString());
+      searchParams.set(MainPageRoutes.PAGE, (page + switcher).toString());
       return searchParams;
     });
   };
 
   return (
     <div className={classNames(cls.Pagination, {}, [])}>
-      <Button className="" size={ButtonSize.M} onClick={prevPage}>
+      <Button
+        className=""
+        size={ButtonSize.M}
+        onClick={() => page > 1 && changePage(-1)}
+      >
         &#8701;
       </Button>
       <div>
         Page <span>{page}</span>
       </div>
-      <Button className="" size={ButtonSize.M} onClick={nextPage}>
+      <Button className="" size={ButtonSize.M} onClick={() => changePage(1)}>
         &#8702;
       </Button>
     </div>

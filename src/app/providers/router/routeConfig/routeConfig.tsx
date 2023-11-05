@@ -30,6 +30,8 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   },
 };
 
+//added it according to the task, then I’ll remove it (I can use size mods for cardHandler(with prop: cardID) without Outlet)
+
 export const Main = {
   path: '/',
   element: <MainPage />,

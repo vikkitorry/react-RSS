@@ -1,6 +1,5 @@
 import { ChangeEvent, useMemo, memo } from 'react';
 import cls from './DropDown.module.scss';
-import { classNames } from '../../utils/libs/classNames/classNames';
 
 interface IDropDownProps {
   values?: string[];
@@ -27,7 +26,7 @@ export const DropDown = memo((props: IDropDownProps) => {
   );
 
   return (
-    <div className={classNames(cls.DropDown, {}, [])}>
+    <div className={cls.DropDown}>
       <select className={cls.select} onChange={onChangeHandler}>
         {optionsList}
       </select>

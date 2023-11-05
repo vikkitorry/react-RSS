@@ -3,7 +3,7 @@ import cls from './CardsHandler.module.scss';
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { GridTable } from '../widgets/GridTable/GridTable';
 import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
-import { SearchBar } from '../widgets/SearchBar/SearchBar';
+import { SearchBar } from '../SearchBar/SearchBar';
 import { NoResultsPage } from '../../pages/noResults/NoResultsPage';
 import { Loader, LoaderTheme } from '../widgets/Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
