@@ -1,0 +1,47 @@
+.DetailedCard {
+  align-self: flex-start;
+  position: fixed;
+  top: 120px;
+  right: 0;
+  width: 50%;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.title {
+  margin-top: 5px;
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+  font-size: var(--font-size-l);
+}
+
+.btnPositionEnd {
+  align-self: flex-end;
+}
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 10px;
+  border: 2px solid var(--bg-color);
+  cursor: pointer;
+  transition: 0.3s;
+  max-width: 320px;
+  margin-bottom: 20px;
+}
+
+.image {
+  margin: 0 auto;
+  max-width: 300px;
+  height: 200px;
+}

@@ -1,0 +1,43 @@
+.NotFoundPage {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.errorContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 170px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  color: #721666;
+  text-align: center;
+  letter-spacing: 5px;
+  text-shadow:
+    0 2px 2px #ff0000,
+    -2px 5px 0 #ff7f00,
+    -4px 10px 0 #ffff00,
+    -8px 15px 0 #00ff00,
+    -12px 20px 0 #0000ff,
+    -16px 25px 0 #4b0082,
+    -20px 30px 0 #9400d3;
+}
+
+.error {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  margin-left: -10px;
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: url(./assets/Rick.jpg) no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+  }
+}
