@@ -1,8 +1,8 @@
 import { RouteProps } from 'react-router-dom';
-import { MainPage } from '../../../../pages/main/MainPage';
-import { AboutPage } from '../../../../pages/about/AboutPage';
-import NotFoundPage from '../../../../pages/notFound/NotFoundPage';
-import { DetailedCard } from '../../../../components/Card/detailedCard/detailedCard';
+import { MainPage } from '../../../pages/main/MainPage';
+import { AboutPage } from '../../../pages/about/AboutPage';
+import NotFoundPage from '../../../pages/notFound/NotFoundPage';
+import { DetailedCard } from '../../../components/Card/Detailed/Detailed';
 
 export enum AppRoutes {
   ABOUT = 'about',

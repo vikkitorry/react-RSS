@@ -1,8 +1,8 @@
 import cls from './Card.module.scss';
-import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
+import { ShowSchema } from '../../app/services/types/serviceTypes';
 import { memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
 
 interface ICard {
   cardData: ShowSchema;
@@ -29,15 +29,15 @@ export const Card = memo((props: ICard) => {
       />
       <div className={cls.title}>{cardData.title}</div>
       <div>
-        {'Seasons:'}
+        Seasons:
         <span> {cardData.totalSeasons}</span>
       </div>
       <div>
-        {'Status:'}
+        Status:
         <span> {cardData.status}</span>
       </div>
       <div>
-        {'Rating:'}
+        Rating:
         <span> {cardData.rating} / 5</span>
       </div>
     </div>

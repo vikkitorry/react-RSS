@@ -2,14 +2,14 @@ import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './CardsHandler.module.scss';
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { GridTable } from '../widgets/GridTable/GridTable';
-import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
+import { ShowSchema } from '../../app/services/types/serviceTypes';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { NoResultsPage } from '../../pages/noResults/NoResultsPage';
 import { Loader, LoaderTheme } from '../widgets/Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
-import { getPageData } from '../../app/providers/services/service';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+import { getPageData } from '../../app/services/service';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
 
 export enum CardsHandlerSize {

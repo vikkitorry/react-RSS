@@ -1,11 +1,11 @@
-import cls from './detailedCard.module.scss';
-import { DetailedShowSchema } from '../../../app/providers/services/types/serviceTypes';
+import cls from './Detailed.module.scss';
+import { DetailedShowSchema } from '../../../app/services/types/serviceTypes';
 import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../../app/router/routeConfig/routeConfig';
 import React, { useState, useEffect, memo } from 'react';
 import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
-import { getShow } from '../../../app/providers/services/service';
+import { getShow } from '../../../app/services/service';
 
 export const DetailedCard = memo(() => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,30 +45,30 @@ export const DetailedCard = memo(() => {
           <div className={cls.title}>{data?.title}</div>
           <div>
             <div>
-              {'Year:'}
+              Year:
               <span>{data?.year}</span>
             </div>
-            {'Country:'}
+            Country:
             <span>{data?.country}</span>
           </div>
           <div>
-            {'Started:'}
+            Started:
             <span>{data?.started}</span>
           </div>
           <div>
-            {'Ended:'}
+            Ended:
             <span>{data?.ended}</span>
           </div>
           <div>
-            {'Status:'}
+            Status:
             <span>{data?.status}</span>
           </div>
           <div>
-            {'Imdb:'}
+            Imdb:
             <span>{data?.imdbRating}</span>
           </div>
           <div>
-            {'Kinopoisk:'}
+            Kinopoisk:
             <span>{data?.kinopoiskRating}</span>
           </div>
         </div>

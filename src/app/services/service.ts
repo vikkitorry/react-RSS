@@ -3,17 +3,19 @@ import {
   id,
   jsonrpc,
   METHOD,
-  Response,
   defaultPageSize,
   lang,
+  ERROR_MESSAGE,
+} from './variables/variables';
+import {
+  Response,
   RequestAllShows,
   RequestShow,
   ShowSchema,
   ResponseShow,
   DetailedShowSchema,
 } from './types/serviceTypes';
-import { ERROR_MESSAGE } from './types/serviceTypes';
-import { SEARCH_LOCALSTORAGE_KEY } from '../../../utils/constants/Constants';
+import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
 
 export const getShow = async (
   showId: number = 0

@@ -2,7 +2,7 @@ import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
 import { SetURLSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
 
 interface IPaginationProps {
   page: number;
