@@ -34,6 +34,7 @@ export const SearchBar = (props: ISearchBarProps) => {
   }, [setSearchParams]);
 
   const onSubmit = () => {
+    localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, inputValue ? inputValue : '');
     changeQuery();
     setSearch(inputValue ? inputValue : '');
   };
@@ -49,13 +50,19 @@ export const SearchBar = (props: ISearchBarProps) => {
   return (
     <div className={cls.SearchBar}>
       <Input
+        data-testid="input"
         className=""
         theme=""
         onBlur={onBlur}
         defaultValue={inputValue ? inputValue : undefined}
         placeholder="Enter show"
       />
-      <Button onClick={onSubmit} className={''} size={ButtonSize.M}>
+      <Button
+        onClick={onSubmit}
+        className={''}
+        size={ButtonSize.M}
+        data-testid="btn"
+      >
         Search
       </Button>
       <DropDown values={NUM_OF_ITEMS_VALUES} onChange={onSelectNumOfItems} />

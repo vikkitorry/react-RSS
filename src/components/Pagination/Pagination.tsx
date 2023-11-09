@@ -22,6 +22,7 @@ export const Pagination = (props: IPaginationProps) => {
   return (
     <div className={classNames(cls.Pagination, {}, [])}>
       <Button
+        data-testid="prev-btn"
         className=""
         size={ButtonSize.M}
         onClick={() => page > 1 && changePage(-1)}
@@ -31,7 +32,12 @@ export const Pagination = (props: IPaginationProps) => {
       <div>
         Page <span>{page}</span>
       </div>
-      <Button className="" size={ButtonSize.M} onClick={() => changePage(1)}>
+      <Button
+        data-testid="next-btn"
+        className=""
+        size={ButtonSize.M}
+        onClick={() => changePage(1)}
+      >
         &#8702;
       </Button>
     </div>
