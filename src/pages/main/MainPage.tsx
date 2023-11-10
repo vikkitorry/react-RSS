@@ -23,7 +23,7 @@ export const MainPage = () => {
   }, [isDetailedOpen, setSearchParams, searchParams]);
 
   return (
-    <div className={cls.MainPage}>
+    <div className={cls.MainPage} data-testid={'mainPage'}>
       <CardsHandler
         onClick={closeDetailed}
         size={isDetailedOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}

@@ -29,7 +29,7 @@ export const DetailedCard = memo(() => {
   };
 
   return (
-    <div className={cls.DetailedCard}>
+    <div className={cls.DetailedCard} data-testid={'detailedCard'}>
       <Button
         className={cls.btnPositionEnd}
         size={ButtonSize.S}
@@ -41,36 +41,41 @@ export const DetailedCard = memo(() => {
         <Loader color={LoaderTheme.BACKGROUND_LIGHT} />
       ) : (
         <div className={cls.Card}>
-          <img src={data?.image} alt="character photo" className={cls.image} />
+          <img
+            src={data?.image}
+            alt="character photo"
+            data-testid={'load'}
+            className={cls.image}
+          />
           <div className={cls.title}>{data?.title}</div>
-          <div>
-            <div>
-              Year:
-              <span>{data?.year}</span>
-            </div>
+          <p>
+            Year:
+            <span>{data?.year}</span>
+          </p>
+          <p>
             Country:
             <span>{data?.country}</span>
-          </div>
-          <div>
+          </p>
+          <p>
             Started:
             <span>{data?.started}</span>
-          </div>
-          <div>
+          </p>
+          <p>
             Ended:
             <span>{data?.ended}</span>
-          </div>
-          <div>
+          </p>
+          <p>
             Status:
             <span>{data?.status}</span>
-          </div>
-          <div>
+          </p>
+          <p>
             Imdb:
             <span>{data?.imdbRating}</span>
-          </div>
-          <div>
+          </p>
+          <p>
             Kinopoisk:
             <span>{data?.kinopoiskRating}</span>
-          </div>
+          </p>
         </div>
       )}
     </div>

@@ -85,12 +85,10 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
         {isLoading ? (
           <Loader color={LoaderTheme.BACKGROUND_DARK} />
         ) : (
-          <CardsList />
+          <CardsList setSearchParams={setSearchParams} />
         )}
 
-        {!isLoading && data && (
-          <Pagination page={page} setSearchParams={setSearchParams} />
-        )}
+        {!isLoading && data && <Pagination page={page} />}
       </div>
     </Context.Provider>
   );
