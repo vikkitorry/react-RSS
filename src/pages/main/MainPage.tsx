@@ -1,9 +1,9 @@
 import cls from './mainPage.module.scss';
-import CardsHandler from '../../components/Cards/CardsHandler';
+import CardsHandler from '../../components/CardsHandler/CardsHandler';
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
-import { CardsHandlerSize } from '../../components/Cards/CardsHandler';
+import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { Outlet } from 'react-router-dom';
 
 export const MainPage = () => {

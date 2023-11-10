@@ -15,6 +15,7 @@ export const Loader = (props: ILoader) => {
   return (
     <div
       className={classNames(cls.LoaderContainer, { [cls[color]]: true }, [])}
+      data-testid={'loader'}
     >
       <div className={cls.Loader}></div>
     </div>
