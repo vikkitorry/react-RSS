@@ -1,9 +1,9 @@
 import cls from './mainPage.module.scss';
-import CardsHandler from '../../components/Cards/CardsHandler';
+import CardsHandler from '../../components/CardsHandler/CardsHandler';
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
-import { CardsHandlerSize } from '../../components/Cards/CardsHandler';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { Outlet } from 'react-router-dom';
 
 export const MainPage = () => {
@@ -12,7 +12,7 @@ export const MainPage = () => {
   const isShowOpen = searchParams.get(MainPageRoutes.SHOW);
 
   useEffect(() => {
-    setIsDetailedOpen(!!isShowOpen);
+    setIsDetailedOpen(Boolean(isShowOpen));
   }, [isShowOpen]);
 
   const closeDetailed = useCallback(() => {
@@ -23,9 +23,10 @@ export const MainPage = () => {
   }, [isDetailedOpen, setSearchParams, searchParams]);
 
   return (
-    <div className={cls.MainPage}>
+    <div className={cls.MainPage} data-testid={'mainPage'}>
       <CardsHandler
         onClick={closeDetailed}
+        data-testid={'cardsHandler'}
         size={isDetailedOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
       />
       {isDetailedOpen && <Outlet />}

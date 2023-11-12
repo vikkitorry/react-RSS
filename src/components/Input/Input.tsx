@@ -13,7 +13,8 @@ interface IInputProps
 }
 
 export const Input = memo((props: IInputProps) => {
-  const { className, theme, defaultValue, placeholder, onBlur } = props;
+  const { className, theme, defaultValue, placeholder, onBlur, ...otherProps } =
+    props;
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     onBlur?.(e.target.value);
   };
@@ -24,6 +25,7 @@ export const Input = memo((props: IInputProps) => {
       onBlur={onBlurHandler}
       defaultValue={defaultValue}
       placeholder={placeholder}
+      {...otherProps}
     ></input>
   );
 });

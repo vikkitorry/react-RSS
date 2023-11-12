@@ -1,16 +1,16 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
-import { SetURLSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+import { useSearchParams } from 'react-router-dom';
 
 interface IPaginationProps {
   page: number;
-  setSearchParams: SetURLSearchParams;
 }
 
 export const Pagination = (props: IPaginationProps) => {
-  const { page, setSearchParams } = props;
+  const { page } = props;
+  const [, setSearchParams] = useSearchParams();
 
   const changePage = (switcher: number) => {
     setSearchParams((searchParams) => {
@@ -22,6 +22,7 @@ export const Pagination = (props: IPaginationProps) => {
   return (
     <div className={classNames(cls.Pagination, {}, [])}>
       <Button
+        data-testid="prev-btn"
         className=""
         size={ButtonSize.M}
         onClick={() => page > 1 && changePage(-1)}
@@ -31,7 +32,12 @@ export const Pagination = (props: IPaginationProps) => {
       <div>
         Page <span>{page}</span>
       </div>
-      <Button className="" size={ButtonSize.M} onClick={() => changePage(1)}>
+      <Button
+        data-testid="next-btn"
+        className=""
+        size={ButtonSize.M}
+        onClick={() => changePage(1)}
+      >
         &#8702;
       </Button>
     </div>

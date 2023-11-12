@@ -1,8 +1,4 @@
-import {
-  Button,
-  ButtonSize,
-  ButtonTheme,
-} from '../../../components/Button/Button';
+import { Button, ButtonSize, ButtonTheme } from '../Button';
 import { useEffect, useState } from 'react';
 
 export const BugButton = () => {

@@ -1,10 +1,7 @@
 import { AppLink, AppLinkTheme } from '../../Link/AppLink';
 import cls from './Navbar.module.scss';
-import { BugButton } from '../../../app/providers/ErrorBoundary/BugButton';
-import {
-  RoutePath,
-  Main,
-} from '../../../app/providers/router/routeConfig/routeConfig';
+import { BugButton } from '../../Button/BugButton/BugButton';
+import { RoutePath, Main } from '../../../app/router/routeConfig/routeConfig';
 
 export const Navbar = () => {
   return (

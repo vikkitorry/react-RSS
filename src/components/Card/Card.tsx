@@ -1,16 +1,16 @@
 import cls from './Card.module.scss';
-import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
+import { ShowSchema } from '../../app/services/types/serviceTypes';
 import { memo } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+import { SetURLSearchParams } from 'react-router-dom';
 
 interface ICard {
   cardData: ShowSchema;
+  setSearchParams: SetURLSearchParams;
 }
 
 export const Card = memo((props: ICard) => {
-  const [, setSearchParams] = useSearchParams();
-  const { cardData } = props;
+  const { cardData, setSearchParams } = props;
 
   const onClick = async () => {
     const id = cardData.id || 0;
@@ -21,25 +21,25 @@ export const Card = memo((props: ICard) => {
   };
 
   return (
-    <div className={cls.Card} onClick={onClick}>
+    <div className={cls.Card} onClick={onClick} data-testid={'card'}>
       <img
         src={cardData.image}
         alt={`${cardData.title} poster`}
         className={cls.image}
       />
       <div className={cls.title}>{cardData.title}</div>
-      <div>
-        {'Seasons:'}
+      <p>
+        Seasons:
         <span> {cardData.totalSeasons}</span>
-      </div>
-      <div>
-        {'Status:'}
+      </p>
+      <p>
+        Status:
         <span> {cardData.status}</span>
-      </div>
-      <div>
-        {'Rating:'}
+      </p>
+      <p>
+        Rating:
         <span> {cardData.rating} / 5</span>
-      </div>
+      </p>
     </div>
   );
 });

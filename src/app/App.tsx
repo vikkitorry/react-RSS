@@ -1,6 +1,6 @@
 import { Navbar } from '../components/widgets/Navbar/Navbar';
 import React, { Suspense } from 'react';
-import AppRouter from './providers/router/AppRouter';
+import AppRouter from './router/AppRouter';
 import { classNames } from '../utils/libs/classNames/classNames';
 
 function App() {

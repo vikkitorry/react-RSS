@@ -1,16 +1,31 @@
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './CardsHandler.module.scss';
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import { GridTable } from '../widgets/GridTable/GridTable';
-import { ShowSchema } from '../../app/providers/services/types/serviceTypes';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  memo,
+  createContext,
+} from 'react';
+import { CardsList } from '../widgets/CardsList/CardsList';
+import { ShowSchema } from '../../app/services/types/serviceTypes';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { NoResultsPage } from '../../pages/noResults/NoResultsPage';
 import { Loader, LoaderTheme } from '../widgets/Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../app/providers/router/routeConfig/routeConfig';
-import { getPageData } from '../../app/providers/services/service';
+import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+import { getPageData } from '../../app/services/service';
 import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
+
+type ContextType = {
+  shows: ShowSchema[] | null;
+  search: string;
+};
+
+export const Context = createContext<ContextType>({
+  shows: [],
+  search: '',
+});
 
 export enum CardsHandlerSize {
   FULL = 'full_screen',
@@ -60,23 +75,22 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
   }, [getPage]);
 
   return (
-    <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
-      <SearchBar
-        setSearch={setSearch}
-        setSearchParams={setSearchParams}
-        setNumOfItems={setNumOfItems}
-      />
-      {isLoading ? (
-        <Loader color={LoaderTheme.BACKGROUND_DARK} />
-      ) : data ? (
-        <>
-          <GridTable elements={data} />
-          <Pagination page={page} setSearchParams={setSearchParams} />
-        </>
-      ) : (
-        <NoResultsPage />
-      )}
-    </div>
+    <Context.Provider value={{ search, shows: data }}>
+      <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
+        <SearchBar
+          setSearch={setSearch}
+          setSearchParams={setSearchParams}
+          setNumOfItems={setNumOfItems}
+        />
+        {isLoading ? (
+          <Loader color={LoaderTheme.BACKGROUND_DARK} />
+        ) : (
+          <CardsList setSearchParams={setSearchParams} />
+        )}
+
+        {!isLoading && data && <Pagination page={page} />}
+      </div>
+    </Context.Provider>
   );
 });
 
