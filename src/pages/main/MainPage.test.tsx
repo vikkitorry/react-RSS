@@ -17,5 +17,6 @@ describe('MainPage', () => {
     );
 
     expect(screen.getByTestId('mainPage')).toBeInTheDocument();
+    expect(screen.getByTestId('input')).toBeInTheDocument();
   });
 });

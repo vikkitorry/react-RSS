@@ -13,7 +13,7 @@ describe('BugButton', () => {
   console.log = vi.fn();
   console.error = vi.fn();
 
-  test('renders without bugs', () => {
+  test('renders error page', () => {
     render(
       <BrowserRouter>
         <ErrorBoundary>

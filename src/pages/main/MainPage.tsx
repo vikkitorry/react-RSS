@@ -26,6 +26,7 @@ export const MainPage = () => {
     <div className={cls.MainPage} data-testid={'mainPage'}>
       <CardsHandler
         onClick={closeDetailed}
+        data-testid={'cardsHandler'}
         size={isDetailedOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
       />
       {isDetailedOpen && <Outlet />}

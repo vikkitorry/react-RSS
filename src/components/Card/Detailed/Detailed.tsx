@@ -14,13 +14,11 @@ export const DetailedCard = memo(() => {
 
   useEffect(() => {
     const id = searchParams.get(MainPageRoutes.SHOW);
-    if (id) {
-      setIsLoading(true);
-      getShow(+id)
-        .then((data) => setData(data))
-        .catch(() => setData(null))
-        .finally(() => setIsLoading(false));
-    }
+    setIsLoading(true);
+    getShow(id ? +id : 0)
+      .then((data) => setData(data))
+      .catch(() => setData(null))
+      .finally(() => setIsLoading(false));
   }, [searchParams]);
 
   const onClick = async () => {
