@@ -19,4 +19,29 @@ describe('MainPage', () => {
     expect(screen.getByTestId('mainPage')).toBeInTheDocument();
     expect(screen.getByTestId('input')).toBeInTheDocument();
   });
+
+  test('updates URL query parameter when detailed card was opened', async () => {
+    const initialPage = 3;
+
+    vi.mock('react-router-dom', async () => {
+      const mod = (await vi.importActual('react-router-dom')) as object;
+      return {
+        ...mod,
+        useParams: () => ({
+          page: initialPage,
+          show: 1,
+        }),
+      };
+    });
+
+    render(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>
+    );
+
+    await (() => {
+      expect(location.search).toBe(`?page=${initialPage}&show=1`);
+    });
+  });
 });

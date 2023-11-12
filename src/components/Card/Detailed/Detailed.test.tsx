@@ -82,4 +82,52 @@ describe('Detailed', () => {
       expect(screen.getByTestId('detailedCard')).toBeInTheDocument();
     });
   });
+
+  test('updates URL query parameter when close detailed card', async () => {
+    const initialPage = 3;
+
+    vi.mock('react-router-dom', async () => {
+      const mod = (await vi.importActual('react-router-dom')) as object;
+      return {
+        ...mod,
+        useParams: () => ({
+          page: initialPage,
+          show: 1,
+        }),
+      };
+    });
+
+    render(
+      <BrowserRouter>
+        <DetailedCard />
+      </BrowserRouter>
+    );
+    const closeButton = screen.getByText<HTMLButtonElement>('X');
+
+    await act(async () => {
+      fireEvent.click(closeButton);
+    });
+
+    await (() => {
+      expect(location.search).toBe(`?page=${initialPage}`);
+    });
+  });
+
+  test('error ocured while fetch data', async () => {
+    vi.mock('../../../app/services/getShow', () => ({
+      getShow: vi.fn().mockImplementationOnce(() => {
+        throw new Error();
+      }),
+    }));
+
+    render(
+      <BrowserRouter>
+        <DetailedCard />
+      </BrowserRouter>
+    );
+
+    await (() => {
+      expect(screen.getByTestId('detailedCard')).toBeInTheDocument();
+    });
+  });
 });
