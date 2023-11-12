@@ -17,7 +17,7 @@ describe('Detailed', () => {
     country: 'country',
     started: 'started',
     ended: 'ended',
-    year: 1000,
+    year: 2000,
     kinopoiskRating: 5,
     imdbRating: 6,
   };
