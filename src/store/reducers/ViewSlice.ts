@@ -1,24 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface IViewState {
-  page: number;
-  detailed: string;
+  showId: number | null;
 }
 
 const initialState: IViewState = {
-  page: 1,
-  detailed: '1',
+  showId: null,
 };
 
 export const viewSlice = createSlice({
   name: 'view',
   initialState,
   reducers: {
-    changePage(state, action: PayloadAction<number>) {
-      state.page = action.payload;
-    },
-    changeDetailed(state, action: PayloadAction<string>) {
-      state.detailed = action.payload;
+    setShowId(state, action: PayloadAction<number | null>) {
+      state.showId = action.payload;
     },
   },
 });
