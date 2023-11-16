@@ -1,9 +1,9 @@
 import { Card } from '../../Card/Card';
 import cls from './CardsList.module.scss';
-import { memo, useContext } from 'react';
+import { memo } from 'react';
 import { NoResultsPage } from '../../../pages/noResults/NoResultsPage';
-import { Context } from '../../CardsHandler/CardsHandler';
 import { SetURLSearchParams } from 'react-router-dom';
+import { useAppSelector } from '../../../store/hooks/redux';
 
 interface ICardsList {
   setSearchParams: SetURLSearchParams;
@@ -11,7 +11,8 @@ interface ICardsList {
 
 export const CardsList = memo((props: ICardsList) => {
   const { setSearchParams } = props;
-  const { shows } = useContext(Context);
+  const { shows } = useAppSelector((state) => state.showsReducer);
+
   return (
     <>
       {shows ? (

@@ -6,20 +6,24 @@ import React, { useState, useEffect, memo } from 'react';
 import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
 import { getShow } from '../../../app/services/service';
+import { useAppSelector, useAppDispatch } from '../../../store/hooks/redux';
+import { loadSlice } from '../../../store/reducers/LoadSlice';
 
 export const DetailedCard = memo(() => {
+  const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
+  const dispatch = useAppDispatch();
+  const { setisDetaledLoad } = loadSlice.actions;
   const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<DetailedShowSchema | null>(null);
 
   useEffect(() => {
     const id = searchParams.get(MainPageRoutes.SHOW);
-    setIsLoading(true);
+    dispatch(setisDetaledLoad(true));
     getShow(id ? +id : 0)
       .then((data) => setData(data))
       .catch(() => setData(null))
-      .finally(() => setIsLoading(false));
-  }, [searchParams]);
+      .finally(() => dispatch(setisDetaledLoad(false)));
+  }, [searchParams, dispatch, setisDetaledLoad]);
 
   const onClick = async () => {
     searchParams.delete(MainPageRoutes.SHOW);
@@ -35,7 +39,7 @@ export const DetailedCard = memo(() => {
       >
         X
       </Button>
-      {isLoading ? (
+      {isDetaledLoad ? (
         <Loader color={LoaderTheme.BACKGROUND_LIGHT} />
       ) : (
         <div className={cls.Card}>
