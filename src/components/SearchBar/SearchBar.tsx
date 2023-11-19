@@ -36,11 +36,11 @@ export const SearchBar = (props: ISearchBarProps) => {
     });
   }, [setSearchParams]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, inputValue ? inputValue : '');
     changeQuery();
     dispatch(setSearch(inputValue ? inputValue : ''));
-  };
+  }, [changeQuery, setSearch, dispatch, inputValue]);
 
   const onSelectNumOfItems = useCallback(
     (value: string) => {
