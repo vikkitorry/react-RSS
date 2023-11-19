@@ -7,20 +7,23 @@ import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
 import { SetURLSearchParams } from 'react-router-dom';
 import { DropDown } from '../DropDown/DropDown';
 import { defaultPageSize } from '../../app/services/variables/variables';
+import { searchSlice } from '../../store/reducers/SearchSlice';
+import { showsSlice } from '../../store/reducers/ShowsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks/redux';
 
 const NUM_OF_ITEMS_VALUES = [defaultPageSize.toString(), '20', '10', '5'];
 
 interface ISearchBarProps {
-  setSearch: (value: string) => void;
   setSearchParams: SetURLSearchParams;
-  setNumOfItems: (value: number) => void;
 }
 
 export const SearchBar = (props: ISearchBarProps) => {
-  const { setSearch, setSearchParams, setNumOfItems } = props;
-  const [inputValue, setInputValue] = useState<string | undefined>(
-    localStorage.getItem(SEARCH_LOCALSTORAGE_KEY) || undefined
-  );
+  const { setSearchParams } = props;
+  const dispatch = useAppDispatch();
+  const { search } = useAppSelector((state) => state.searchReducer);
+  const { setSearch } = searchSlice.actions;
+  const { setNumOfShows } = showsSlice.actions;
+  const [inputValue, setInputValue] = useState<string | undefined>(search);
 
   const onBlur = useCallback((value: string) => {
     setInputValue(value);
@@ -33,18 +36,18 @@ export const SearchBar = (props: ISearchBarProps) => {
     });
   }, [setSearchParams]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     localStorage.setItem(SEARCH_LOCALSTORAGE_KEY, inputValue ? inputValue : '');
     changeQuery();
-    setSearch(inputValue ? inputValue : '');
-  };
+    dispatch(setSearch(inputValue ? inputValue : ''));
+  }, [changeQuery, setSearch, dispatch, inputValue]);
 
   const onSelectNumOfItems = useCallback(
     (value: string) => {
       changeQuery();
-      setNumOfItems(+value);
+      dispatch(setNumOfShows(+value));
     },
-    [changeQuery, setNumOfItems]
+    [changeQuery, setNumOfShows, dispatch]
   );
 
   return (
@@ -54,7 +57,7 @@ export const SearchBar = (props: ISearchBarProps) => {
         className=""
         theme=""
         onBlur={onBlur}
-        defaultValue={inputValue ? inputValue : undefined}
+        defaultValue={search ? search : undefined}
         placeholder="Enter show"
       />
       <Button

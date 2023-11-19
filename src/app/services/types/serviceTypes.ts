@@ -75,3 +75,13 @@ export type ShowSchema = {
   promoUrl?: string;
   category?: string;
 };
+
+export interface IShowsQueryParams {
+  page: number;
+  query: string;
+  pageSize: number;
+}
+
+export interface IShowQueryParams {
+  showId: number | null;
+}

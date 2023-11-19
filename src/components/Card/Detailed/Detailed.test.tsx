@@ -1,13 +1,23 @@
 import React from 'react';
-import { render, screen, act, fireEvent } from '@testing-library/react';
+import { screen, act, fireEvent } from '@testing-library/react';
 import { DetailedCard } from './Detailed';
-import { expect, vi, test, describe, beforeEach } from 'vitest';
+import { expect, vi, test, describe, beforeEach, beforeAll } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../../utils/helpers/test/test-utils';
+import { service } from '../../../app/services/service';
 
 describe('Detailed', () => {
   beforeEach(() => {
     vi.clearAllTimers();
     vi.clearAllMocks();
+  });
+
+  beforeAll(async () => {
+    vi.spyOn(service, 'useGetPageDataQuery').mockReturnValue({
+      data: mockCardData,
+      isLoading: true,
+      refetch: vi.fn(),
+    });
   });
 
   const mockCardData = {
@@ -28,10 +38,16 @@ describe('Detailed', () => {
 
   test('detailed card component correctly displays the detailed card data', async () => {
     await act(async () => {
-      render(
+      renderWithProviders(
         <BrowserRouter>
           <DetailedCard />
-        </BrowserRouter>
+        </BrowserRouter>,
+        {
+          preloadedState: {
+            loadReducer: { isDetaledLoad: false, isListLoad: false },
+            viewReducer: { showId: 1 },
+          },
+        }
       );
     });
 
@@ -51,10 +67,16 @@ describe('Detailed', () => {
 
   test('clicking the close button hides the component', async () => {
     await act(async () => {
-      render(
+      renderWithProviders(
         <BrowserRouter>
           <DetailedCard />
-        </BrowserRouter>
+        </BrowserRouter>,
+        {
+          preloadedState: {
+            loadReducer: { isDetaledLoad: false, isListLoad: false },
+            viewReducer: { showId: 1 },
+          },
+        }
       );
     });
 
@@ -70,10 +92,16 @@ describe('Detailed', () => {
   });
 
   test('displays loading indicator while fetching data', async () => {
-    const wrapper = render(
+    const wrapper = renderWithProviders(
       <BrowserRouter>
         <DetailedCard />
-      </BrowserRouter>
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          loadReducer: { isDetaledLoad: false, isListLoad: false },
+          viewReducer: { showId: 1 },
+        },
+      }
     );
 
     expect(wrapper.getByTestId('loader')).toBeInTheDocument();
@@ -97,10 +125,16 @@ describe('Detailed', () => {
       };
     });
 
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <DetailedCard />
-      </BrowserRouter>
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          loadReducer: { isDetaledLoad: false, isListLoad: false },
+          viewReducer: { showId: 1 },
+        },
+      }
     );
     const closeButton = screen.getByText<HTMLButtonElement>('X');
 
@@ -114,16 +148,22 @@ describe('Detailed', () => {
   });
 
   test('error ocured while fetch data', async () => {
-    vi.mock('../../../app/services/getShow', () => ({
-      getShow: vi.fn().mockImplementationOnce(() => {
-        throw new Error();
-      }),
-    }));
+    vi.spyOn(service, 'useGetPageDataQuery').mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      refetch: vi.fn(),
+    });
 
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <DetailedCard />
-      </BrowserRouter>
+      </BrowserRouter>,
+      {
+        preloadedState: {
+          loadReducer: { isDetaledLoad: false, isListLoad: false },
+          viewReducer: { showId: 1 },
+        },
+      }
     );
 
     await (() => {

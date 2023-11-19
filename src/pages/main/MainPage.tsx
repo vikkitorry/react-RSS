@@ -5,15 +5,20 @@ import { useSearchParams } from 'react-router-dom';
 import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
 import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { Outlet } from 'react-router-dom';
+import { viewSlice } from '../../store/reducers/ViewSlice';
+import { useAppDispatch } from '../../store/hooks/redux';
 
 export const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(false);
   const isShowOpen = searchParams.get(MainPageRoutes.SHOW);
+  const dispatch = useAppDispatch();
+  const { setShowId } = viewSlice.actions;
 
   useEffect(() => {
     setIsDetailedOpen(Boolean(isShowOpen));
-  }, [isShowOpen]);
+    Boolean(isShowOpen) && dispatch(setShowId(isShowOpen ? +isShowOpen : null));
+  }, [isShowOpen, dispatch, setShowId]);
 
   const closeDetailed = useCallback(() => {
     if (isDetailedOpen) {

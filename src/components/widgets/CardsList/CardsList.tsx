@@ -1,23 +1,24 @@
 import { Card } from '../../Card/Card';
 import cls from './CardsList.module.scss';
-import { memo, useContext } from 'react';
+import { memo } from 'react';
 import { NoResultsPage } from '../../../pages/noResults/NoResultsPage';
-import { Context } from '../../CardsHandler/CardsHandler';
 import { SetURLSearchParams } from 'react-router-dom';
+import { ShowSchema } from '../../../app/services/types/serviceTypes';
 
 interface ICardsList {
   setSearchParams: SetURLSearchParams;
+  shows: ShowSchema[] | undefined;
 }
 
 export const CardsList = memo((props: ICardsList) => {
-  const { setSearchParams } = props;
-  const { shows } = useContext(Context);
+  const { setSearchParams, shows } = props;
+
   return (
     <>
-      {shows ? (
+      {shows?.length ? (
         <div className={cls.gridContainer}>
           <div className={cls.grid} data-testid={'grid'}>
-            {shows.map((el) => (
+            {shows?.map((el) => (
               <Card
                 key={el.id}
                 cardData={el}
