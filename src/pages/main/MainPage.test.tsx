@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { MainPage } from './MainPage';
 import { expect, vi, test, describe, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
+import { renderWithProviders } from '../../utils/helpers/test/test-utils';
 
 describe('MainPage', () => {
   beforeEach(() => {
@@ -10,7 +11,7 @@ describe('MainPage', () => {
   });
 
   test('renders without bugs', () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <MainPage />
       </BrowserRouter>
@@ -34,7 +35,7 @@ describe('MainPage', () => {
       };
     });
 
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <MainPage />
       </BrowserRouter>
