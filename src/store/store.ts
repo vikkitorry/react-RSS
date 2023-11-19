@@ -2,16 +2,22 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import loadReducer from './reducers/LoadSlice';
 import searchReducer from './reducers/SearchSlice';
 import showsReducer from './reducers/ShowsSlice';
+import viewReducer from './reducers/ViewSlice';
+import { service } from '../app/services/service';
 
 const rootReducer = combineReducers({
   loadReducer,
   searchReducer,
   showsReducer,
+  viewReducer,
+  [service.reducerPath]: service.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(service.middleware),
   });
 };
 
