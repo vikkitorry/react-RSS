@@ -3,7 +3,7 @@ import loadReducer from './reducers/LoadSlice';
 import searchReducer from './reducers/SearchSlice';
 import showsReducer from './reducers/ShowsSlice';
 import viewReducer from './reducers/ViewSlice';
-import { service } from '../app/services/service';
+import { service } from '../services/service';
 
 const rootReducer = combineReducers({
   loadReducer,

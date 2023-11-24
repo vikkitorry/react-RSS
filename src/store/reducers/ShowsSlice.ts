@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { defaultPageSize } from '../../app/services/variables/variables';
+import { defaultPageSize } from '@/src/services/variables/variables';
 
 interface IShowsState {
   numOfShows: number;
