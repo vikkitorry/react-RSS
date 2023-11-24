@@ -1,28 +1,23 @@
 import cls from './Detailed.module.scss';
-// import { useSearchParams } from 'react-router-dom';
-// import { MainPageRoutes } from '../../../app/router/routeConfig/routeConfig';
 import React, { memo } from 'react';
 import { Loader, LoaderTheme } from '@/components/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
 import { service } from '@/src/services/service';
 import { useAppSelector } from '@/src/store/hooks/redux';
-import { DetailedShowSchema } from '@/src/services/types/serviceTypes';
+import { MainPageRoutes } from '@/src/pages';
+import { useSearchParams } from 'next/navigation';
 
-interface IDetailedCard {
-  data: DetailedShowSchema
-}
-
-export const DetailedCard = (props: IDetailedCard) => {
-  const {data} = props;
+export const DetailedCard = () => {
   const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
-  const { showId } = useAppSelector((state) => state.viewReducer);
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const { data } = service.useGetShowQuery({
-  //   showId,
-  // });
+  const searchParams = useSearchParams();
+  const showId = searchParams.get(MainPageRoutes.show);
+  console.log(showId);
+  const { data } = service.useGetShowQuery({
+    showId: showId ? +showId : null,
+  });
 
   const onClick = async () => {
-    // searchParams.delete(MainPageRoutes.SHOW);
+    //searchParams.delete(MainPageRoutes.SHOW);
     // setSearchParams(searchParams);
   };
 
@@ -40,39 +35,39 @@ export const DetailedCard = (props: IDetailedCard) => {
       ) : (
         <div className={cls.Card}>
           <img
-            src={data?.image}
+            src={data?.result?.image}
             alt="character photo"
             data-testid={'load'}
             className={cls.image}
           />
-          <div className={cls.title}>{data?.title}</div>
+          <div className={cls.title}>{data?.result?.title}</div>
           <p>
             Year:
-            <span>{data?.year}</span>
+            <span>{data?.result?.year}</span>
           </p>
           <p>
             Country:
-            <span>{data?.country}</span>
+            <span>{data?.result?.country}</span>
           </p>
           <p>
             Started:
-            <span>{data?.started}</span>
+            <span>{data?.result?.started}</span>
           </p>
           <p>
             Ended:
-            <span>{data?.ended}</span>
+            <span>{data?.result?.ended}</span>
           </p>
           <p>
             Status:
-            <span>{data?.status}</span>
+            <span>{data?.result?.status}</span>
           </p>
           <p>
             Imdb:
-            <span>{data?.imdbRating}</span>
+            <span>{data?.result?.imdbRating}</span>
           </p>
           <p>
             Kinopoisk:
-            <span>{data?.kinopoiskRating}</span>
+            <span>{data?.result?.kinopoiskRating}</span>
           </p>
         </div>
       )}

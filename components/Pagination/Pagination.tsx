@@ -1,8 +1,7 @@
 import { classNames } from '@/src/utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
-// import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
-// import { useSearchParams } from 'react-router-dom';
+import { MainPageRoutes } from '@/src/pages';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
 
@@ -17,8 +16,7 @@ export const Pagination = (props: IPaginationProps) => {
   const pathname = usePathname()
 
   const changePage = (switcher: number) => {
-    console.log('page', page);
-    router.push(pathname + '?' + createQueryString('page', `${page}`))
+    router.push(pathname + '?' + createQueryString(MainPageRoutes.page, `${page + switcher}`))
   };
 
   return (

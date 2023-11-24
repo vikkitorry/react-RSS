@@ -32,7 +32,6 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
   const { search } = useAppSelector((state) => state.searchReducer);
   const { isListLoad } = useAppSelector((state) => state.loadReducer);
   const { numOfShows } = useAppSelector((state) => state.showsReducer);
-  // const [searchParams, setSearchParams] = useSearchParams();
   const searchParams = useSearchParams();
   const router = useRouter()
   const pathname = usePathname()
