@@ -6,19 +6,22 @@ import { service } from '@/src/services/service';
 import { useAppSelector } from '@/src/store/hooks/redux';
 import { MainPageRoutes } from '@/src/pages';
 import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 export const DetailedCard = () => {
   const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
   const searchParams = useSearchParams();
   const showId = searchParams.get(MainPageRoutes.show);
-  console.log(showId);
+  const router = useRouter();
   const { data } = service.useGetShowQuery({
     showId: showId ? +showId : null,
   });
 
   const onClick = async () => {
-    //searchParams.delete(MainPageRoutes.SHOW);
-    // setSearchParams(searchParams);
+    const { pathname, query } = router;
+    delete query.show;
+    const updatedUrl = { pathname, query };
+    router.replace(updatedUrl);
   };
 
   return (

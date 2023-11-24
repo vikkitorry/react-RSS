@@ -78,7 +78,7 @@ export type ShowSchema = {
 
 export interface IShowsQueryParams {
   page: number;
-  query: string;
+  query: string | undefined | string[];
   pageSize: number;
 }
 

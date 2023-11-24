@@ -2,7 +2,6 @@ import cls from './Card.module.scss';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
 import React, { memo, useCallback } from 'react';
 import { MainPageRoutes } from '@/src/pages';
-// import { SetURLSearchParams } from 'react-router-dom';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
@@ -11,7 +10,6 @@ import { viewSlice } from '@/src/store/reducers/ViewSlice';
 
 interface ICard {
   cardData: ShowSchema;
-  // setSearchParams: SetURLSearchParams;
 }
 
 export const Card = memo((props: ICard) => {
@@ -35,10 +33,6 @@ export const Card = memo((props: ICard) => {
     const id = cardData.id || 0;
     router.push(pathname + '?' + createQueryString(MainPageRoutes.show, `${id}`))
     dispatch(setShowId(id))
-    // setSearchParams((searchParams) => {
-    //   searchParams.set(MainPageRoutes.SHOW, id.toString());
-    //   return searchParams;
-    // });
   };
 
   return (

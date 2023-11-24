@@ -28,7 +28,6 @@ interface ICardsHandlerProps {
 
 const CardsHandler = memo((props: ICardsHandlerProps) => {
   const { size, onClick, dataCards } = props;
-
   const { search } = useAppSelector((state) => state.searchReducer);
   const { isListLoad } = useAppSelector((state) => state.loadReducer);
   const { numOfShows } = useAppSelector((state) => state.showsReducer);
@@ -57,23 +56,22 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
     }
   }, [pageQuery]);
 
-  const { data } = service.useGetPageDataQuery({
-    page,
-    query: search,
-    pageSize: numOfShows,
-  });
+//запрос на ртк квери не работает
+  // const { data } = service.useGetPageDataQuery({
+  //   page,
+  //   query: search,
+  //   pageSize: numOfShows,
+  // });
 
   return (
     <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
-      <SearchBar />
-      <CardsList shows={dataCards} />
-      <Pagination page={page} createQueryString={createQueryString} />
-      {/* {isListLoad ? (
+      <SearchBar createQueryString={createQueryString}/>
+      {isListLoad ? (
         <Loader color={LoaderTheme.BACKGROUND_DARK} />
       ) : (
-        <CardsList shows={data?.result} />
+        <CardsList shows={dataCards} />
       )}
-      {!isListLoad && data?.result.length && <Pagination page={page} createQueryString={createQueryString}/>} */}
+      {!isListLoad && <Pagination page={page} createQueryString={createQueryString} />}
     </div>
   );
 });

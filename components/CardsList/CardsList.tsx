@@ -1,11 +1,9 @@
 import { Card } from '../Card/Card'
 import cls from './CardsList.module.scss';
 import { memo } from 'react';
-// import { SetURLSearchParams } from 'react-router-dom';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
 
 interface ICardsList {
-  // setSearchParams: SetURLSearchParams;
   shows: ShowSchema[] | undefined;
 }
 
@@ -21,7 +19,6 @@ export const CardsList = memo((props: ICardsList) => {
               <Card
                 key={el.id}
                 cardData={el}
-                // setSearchParams={setSearchParams}
               />
             ))}
           </div>

@@ -17,7 +17,9 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const enum MainPageRoutes {
   show = 'show',
-  page = 'page'
+  page = 'page',
+  query = 'query',
+  limit = 'limit'
 }
 
 type MainPageProps = {
@@ -29,10 +31,10 @@ type MainPageProps = {
 
 export const getServerSideProps: GetServerSideProps<MainPageProps> = async (context) => {
   // Получаем данные из строки запроса
-  const { page, showId } = context.query
+  const { query, page, showId, limit } = context.query
 
   const showData: DetailedShowSchema | null = showId ? await fetchShowData(Number(showId)) : null
-  const allShowsData: ShowSchema[] = await fetchAllShowsData({page: Number(page), query: '', pageSize: 30})
+  const allShowsData: ShowSchema[] = await fetchAllShowsData({page: Number(page), query, pageSize: Number(limit) || 30})
 
   // Передаем данные на страницу через объект props
   return { props: { data: {
@@ -65,8 +67,11 @@ const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) =>
   // }, [isDetailedOpen, setSearchParams, searchParams]);
 
   const closeDetailed = () => {
-    if (showData) {
-      console.log('click')
+    if (isShowOpen) {
+      const { pathname, query } = router;
+      delete query.show;
+      const updatedUrl = { pathname, query };
+      router.replace(updatedUrl);
     }
   }
 
