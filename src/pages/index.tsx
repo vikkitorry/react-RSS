@@ -11,6 +11,7 @@ import { fetchShowData } from '../services/getShow';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { DetailedShowSchema, ShowSchema } from '../services/types/serviceTypes';
 import { DetailedCard } from '@/components/Card/Detailed/Detailed';
+import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ type MainPageProps = {
 export const getServerSideProps: GetServerSideProps<MainPageProps> = async (context) => {
   // Получаем данные из строки запроса
   const { page, showId } = context.query
+  console.log('context.query', context.query)
 
   const showData: DetailedShowSchema | null = showId ? await fetchShowData(Number(showId)) : null
   const allShowsData: ShowSchema[] = await fetchAllShowsData({page: Number(page), query: '', pageSize: 30})
@@ -59,12 +61,15 @@ const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) =>
   // }, [isDetailedOpen, setSearchParams, searchParams]);
 
   const closeDetailed = () => {
-    console.log('click')
+    if (showData) {
+      console.log('click')
+    }
   }
 
   return (
     <div className={cls.MainPage} data-testid={'mainPage'}>
       <CardsHandler
+        dataCards={allShowsData}
         onClick={closeDetailed}
         data-testid={'cardsHandler'}
         size={showData ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}

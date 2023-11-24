@@ -3,20 +3,22 @@ import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
 // import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
 // import { useSearchParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 interface IPaginationProps {
   page: number;
+  createQueryString: (name: string, value: string) => void
 }
 
 export const Pagination = (props: IPaginationProps) => {
-  const { page } = props;
-  // const [, setSearchParams] = useSearchParams();
+  const { page, createQueryString } = props;
+  const router = useRouter()
+  const pathname = usePathname()
 
   const changePage = (switcher: number) => {
-    // setSearchParams((searchParams) => {
-    //   searchParams.set(MainPageRoutes.PAGE, (page + switcher).toString());
-    //   return searchParams;
-    // });
+    console.log('page', page);
+    router.push(pathname + '?' + createQueryString('page', `${page}`))
   };
 
   return (
