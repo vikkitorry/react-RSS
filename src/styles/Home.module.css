@@ -7,6 +7,12 @@
   min-height: 100vh;
 }
 
+.MainPage {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;

@@ -1,23 +1,23 @@
 import cls from './Card.module.scss';
-import { ShowSchema } from '../../app/services/types/serviceTypes';
+import { ShowSchema } from '@/src/services/types/serviceTypes';
 import { memo } from 'react';
-import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
-import { SetURLSearchParams } from 'react-router-dom';
+// import { MainPageRoutes } from '../../app/router/routeConfig/routeConfig';
+// import { SetURLSearchParams } from 'react-router-dom';
 
 interface ICard {
   cardData: ShowSchema;
-  setSearchParams: SetURLSearchParams;
+  // setSearchParams: SetURLSearchParams;
 }
 
 export const Card = memo((props: ICard) => {
-  const { cardData, setSearchParams } = props;
+  const { cardData } = props;
 
   const onClick = async () => {
     const id = cardData.id || 0;
-    setSearchParams((searchParams) => {
-      searchParams.set(MainPageRoutes.SHOW, id.toString());
-      return searchParams;
-    });
+    // setSearchParams((searchParams) => {
+    //   searchParams.set(MainPageRoutes.SHOW, id.toString());
+    //   return searchParams;
+    // });
   };
 
   return (

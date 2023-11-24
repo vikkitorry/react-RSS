@@ -1,4 +1,4 @@
-import { classNames } from '../../utils/libs/classNames/classNames';
+import { classNames } from '@/src/utils/libs/classNames/classNames';
 import { ButtonHTMLAttributes, FC } from 'react';
 import cls from './Button.module.scss';
 import { memo } from 'react';

@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import cls from './Input.module.scss';
-import { classNames } from '../../utils/libs/classNames/classNames';
+import { classNames } from '@/src/utils/libs/classNames/classNames';
 import { memo } from 'react';
 
 interface IInputProps
