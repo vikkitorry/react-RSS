@@ -5,12 +5,41 @@ import { useState, useEffect, useCallback } from 'react';
 import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { viewSlice } from '../store/reducers/ViewSlice';
 import { useAppDispatch } from '../store/hooks/redux';
+import { useSearchParams } from 'next/navigation'
+import { fetchAllShowsData } from '../services/getShows';
+import { fetchShowData } from '../services/getShow';
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import { DetailedShowSchema, ShowSchema } from '../services/types/serviceTypes';
 
 const inter = Inter({ subsets: ['latin'] })
 
- const Home = () => {
+type MainPageProps = {
+  data: {
+    allShowsData: ShowSchema[];
+    showData: DetailedShowSchema | null;
+  };
+}
+
+export const getServerSideProps: GetServerSideProps<MainPageProps> = async (context) => {
+  // Получаем данные из строки запроса
+  const { page, showId } = context.query
+
+  const showData: DetailedShowSchema | null = showId ? await fetchShowData(Number(showId)) : null
+  const allShowsData: ShowSchema[] = await fetchAllShowsData({page: Number(page), query: '', pageSize: 30})
+
+  // Передаем данные на страницу через объект props
+  return { props: { data: {
+    allShowsData,
+    showData,
+  }}}
+}
+
+const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const {allShowsData, showData} = data
   // const [searchParams, setSearchParams] = useSearchParams();
   const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(false);
+  const searchParams = useSearchParams()
+  const isShowOpen = searchParams.get('search')
   // const isShowOpen = searchParams.get(MainPageRoutes.SHOW);
   const dispatch = useAppDispatch();
   const { setShowId } = viewSlice.actions;
@@ -26,6 +55,8 @@ const inter = Inter({ subsets: ['latin'] })
   //     setSearchParams(searchParams);
   //   }
   // }, [isDetailedOpen, setSearchParams, searchParams]);
+
+  console.log('isShowOpen', isShowOpen);
 
   const closeDetailed = () => {
     console.log('click')

@@ -54,37 +54,37 @@ export const service = createApi({
       },
     }),
 
-    getShow: build.query<ResponseShow, IShowQueryParams>({
-      query: ({ showId }) => ({
-        url: '',
-        method: METHOD.post,
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept-Language': lang,
-        },
-        body: {
-          jsonrpc,
-          method: METHOD.getShow,
-          params: {
-            showId: showId ?? 0,
-            withEpisodes: true,
-          },
-          id,
-        },
-      }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        const { setisDetaledLoad } = loadSlice.actions;
-        dispatch(setisDetaledLoad(true));
-        try {
-          await queryFulfilled;
-        } catch (err) {
-          throw new Error(ERROR_MESSAGE);
-        } finally {
-          dispatch(setisDetaledLoad(false));
-        }
-      },
-    }),
+    // getShow: build.query<ResponseShow, IShowQueryParams>({
+    //   query: ({ showId }) => ({
+    //     url: '',
+    //     method: METHOD.post,
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Accept-Language': lang,
+    //     },
+    //     body: {
+    //       jsonrpc,
+    //       method: METHOD.getShow,
+    //       params: {
+    //         showId: showId ?? 0,
+    //         withEpisodes: true,
+    //       },
+    //       id,
+    //     },
+    //   }),
+    //   async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+    //     const { setisDetaledLoad } = loadSlice.actions;
+    //     dispatch(setisDetaledLoad(true));
+    //     try {
+    //       await queryFulfilled;
+    //     } catch (err) {
+    //       throw new Error(ERROR_MESSAGE);
+    //     } finally {
+    //       dispatch(setisDetaledLoad(false));
+    //     }
+    //   },
+    // }),
   }),
 });
-
-export const { useGetPageDataQuery, useGetShowQuery } = service;
+// useGetShowQuery
+export const { useGetPageDataQuery } = service;
