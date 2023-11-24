@@ -10,6 +10,7 @@ import { fetchAllShowsData } from '../services/getShows';
 import { fetchShowData } from '../services/getShow';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { DetailedShowSchema, ShowSchema } from '../services/types/serviceTypes';
+import { DetailedCard } from '@/components/Card/Detailed/Detailed';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +38,7 @@ export const getServerSideProps: GetServerSideProps<MainPageProps> = async (cont
 const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const {allShowsData, showData} = data
   // const [searchParams, setSearchParams] = useSearchParams();
+  //использую для закрытия страницы
   const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(false);
   const searchParams = useSearchParams()
   const isShowOpen = searchParams.get('search')
@@ -56,8 +58,6 @@ const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) =>
   //   }
   // }, [isDetailedOpen, setSearchParams, searchParams]);
 
-  console.log('isShowOpen', isShowOpen);
-
   const closeDetailed = () => {
     console.log('click')
   }
@@ -67,8 +67,9 @@ const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) =>
       <CardsHandler
         onClick={closeDetailed}
         data-testid={'cardsHandler'}
-        size={isDetailedOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
+        size={showData ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
       />
+      {showData && <DetailedCard data={showData} />}
     </div>
   );
 }

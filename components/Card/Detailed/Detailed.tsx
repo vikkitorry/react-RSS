@@ -1,23 +1,29 @@
 import cls from './Detailed.module.scss';
-import { useSearchParams } from 'react-router-dom';
-import { MainPageRoutes } from '../../../app/router/routeConfig/routeConfig';
+// import { useSearchParams } from 'react-router-dom';
+// import { MainPageRoutes } from '../../../app/router/routeConfig/routeConfig';
 import React, { memo } from 'react';
-import { Loader, LoaderTheme } from '../../widgets/Loader/Loader';
+import { Loader, LoaderTheme } from '@/components/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
-import { service } from '../../../app/services/service';
-import { useAppSelector } from '../../../store/hooks/redux';
+import { service } from '@/src/services/service';
+import { useAppSelector } from '@/src/store/hooks/redux';
+import { DetailedShowSchema } from '@/src/services/types/serviceTypes';
 
-export const DetailedCard = memo(() => {
+interface IDetailedCard {
+  data: DetailedShowSchema
+}
+
+export const DetailedCard = (props: IDetailedCard) => {
+  const {data} = props;
   const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
   const { showId } = useAppSelector((state) => state.viewReducer);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data } = service.useGetShowQuery({
-    showId,
-  });
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const { data } = service.useGetShowQuery({
+  //   showId,
+  // });
 
   const onClick = async () => {
-    searchParams.delete(MainPageRoutes.SHOW);
-    setSearchParams(searchParams);
+    // searchParams.delete(MainPageRoutes.SHOW);
+    // setSearchParams(searchParams);
   };
 
   return (
@@ -34,42 +40,42 @@ export const DetailedCard = memo(() => {
       ) : (
         <div className={cls.Card}>
           <img
-            src={data?.result?.image}
+            src={data?.image}
             alt="character photo"
             data-testid={'load'}
             className={cls.image}
           />
-          <div className={cls.title}>{data?.result?.title}</div>
+          <div className={cls.title}>{data?.title}</div>
           <p>
             Year:
-            <span>{data?.result?.year}</span>
+            <span>{data?.year}</span>
           </p>
           <p>
             Country:
-            <span>{data?.result?.country}</span>
+            <span>{data?.country}</span>
           </p>
           <p>
             Started:
-            <span>{data?.result?.started}</span>
+            <span>{data?.started}</span>
           </p>
           <p>
             Ended:
-            <span>{data?.result?.ended}</span>
+            <span>{data?.ended}</span>
           </p>
           <p>
             Status:
-            <span>{data?.result?.status}</span>
+            <span>{data?.status}</span>
           </p>
           <p>
             Imdb:
-            <span>{data?.result?.imdbRating}</span>
+            <span>{data?.imdbRating}</span>
           </p>
           <p>
             Kinopoisk:
-            <span>{data?.result?.kinopoiskRating}</span>
+            <span>{data?.kinopoiskRating}</span>
           </p>
         </div>
       )}
     </div>
   );
-});
+};
