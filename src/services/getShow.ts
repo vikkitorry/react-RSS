@@ -3,8 +3,7 @@ import {
   id,
   jsonrpc,
   METHOD,
-  lang,
-  ERROR_MESSAGE,
+  lang
 } from './variables/variables';
 import {
   RequestShow,

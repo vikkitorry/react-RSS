@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
 
 interface ISearchState {
   search: string;

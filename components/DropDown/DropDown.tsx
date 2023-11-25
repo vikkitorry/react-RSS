@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, memo } from 'react';
+import { ChangeEvent, useMemo } from 'react';
 import cls from './DropDown.module.scss';
 
 interface IDropDownProps {

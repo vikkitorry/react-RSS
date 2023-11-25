@@ -1,11 +1,5 @@
 import cls from './Detailed.module.scss';
-import React, { memo } from 'react';
-import { Loader, LoaderTheme } from '@/components/Loader/Loader';
 import { Button, ButtonSize } from '../../Button/Button';
-import { service } from '@/src/services/service';
-import { useAppSelector } from '@/src/store/hooks/redux';
-import { MainPageRoutes } from '@/src/pages';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { DetailedShowSchema } from '@/src/services/types/serviceTypes';
 
@@ -15,16 +9,13 @@ interface IDetailedCard {
 
 export const DetailedCard = (props : IDetailedCard) => {
   const { data } = props;
-  const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
-  const searchParams = useSearchParams();
-  const showId = searchParams.get(MainPageRoutes.show);
   const router = useRouter();
+  const { query, page, limit } = router.query;
 
   const onClick = async () => {
-    const { pathname, query } = router;
-    delete query.show;
-    const updatedUrl = { pathname, query };
-    router.replace(updatedUrl);
+    router.push({
+      query: { query, page, limit},
+    });
   };
 
   return (
@@ -36,9 +27,6 @@ export const DetailedCard = (props : IDetailedCard) => {
       >
         X
       </Button>
-      {isDetaledLoad ? (
-        <Loader color={LoaderTheme.BACKGROUND_LIGHT} />
-      ) : (
         <div className={cls.Card}>
           <img
             src={data?.image}
@@ -76,7 +64,6 @@ export const DetailedCard = (props : IDetailedCard) => {
             <span>{data?.kinopoiskRating}</span>
           </p>
         </div>
-      )}
     </div>
   );
 };

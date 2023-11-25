@@ -5,8 +5,6 @@ import { MainPageRoutes } from '@/src/pages';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
-import { useAppDispatch } from '@/src/store/hooks/redux';
-import { viewSlice } from '@/src/store/reducers/ViewSlice';
 
 interface ICard {
   cardData: ShowSchema;
