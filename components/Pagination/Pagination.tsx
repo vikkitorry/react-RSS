@@ -1,22 +1,19 @@
 import { classNames } from '@/src/utils/libs/classNames/classNames';
 import cls from './Pagination.module.scss';
 import { Button, ButtonSize } from '../Button/Button';
-import { MainPageRoutes } from '@/src/pages';
 import { useRouter } from 'next/router';
-import { usePathname } from 'next/navigation';
 
-interface IPaginationProps {
-  page: number;
-  createQueryString: (name: string, value: string) => void
-}
+export const Pagination = () => {
+  const router = useRouter();
 
-export const Pagination = (props: IPaginationProps) => {
-  const { page, createQueryString } = props;
-  const router = useRouter()
-  const pathname = usePathname()
+  const {query, limit, page} = router.query;
 
   const changePage = (switcher: number) => {
-    router.push(pathname + '?' + createQueryString(MainPageRoutes.page, `${page + switcher}`))
+    if (page) {
+      router.push({
+        query: { query, page: Number(page) + switcher, limit},
+      });
+    }
   };
 
   return (
@@ -25,7 +22,7 @@ export const Pagination = (props: IPaginationProps) => {
         data-testid="prev-btn"
         className=""
         size={ButtonSize.M}
-        onClick={() => page > 1 && changePage(-1)}
+        onClick={() => page && Number(page) > 1 && changePage(-1)}
       >
         &#8701;
       </Button>

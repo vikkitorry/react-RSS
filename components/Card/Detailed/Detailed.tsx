@@ -7,15 +7,18 @@ import { useAppSelector } from '@/src/store/hooks/redux';
 import { MainPageRoutes } from '@/src/pages';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
+import { DetailedShowSchema } from '@/src/services/types/serviceTypes';
 
-export const DetailedCard = () => {
+interface IDetailedCard {
+  data: DetailedShowSchema | null;
+}
+
+export const DetailedCard = (props : IDetailedCard) => {
+  const { data } = props;
   const { isDetaledLoad } = useAppSelector((state) => state.loadReducer);
   const searchParams = useSearchParams();
   const showId = searchParams.get(MainPageRoutes.show);
   const router = useRouter();
-  const { data } = service.useGetShowQuery({
-    showId: showId ? +showId : null,
-  });
 
   const onClick = async () => {
     const { pathname, query } = router;
@@ -38,39 +41,39 @@ export const DetailedCard = () => {
       ) : (
         <div className={cls.Card}>
           <img
-            src={data?.result?.image}
+            src={data?.image}
             alt="character photo"
             data-testid={'load'}
             className={cls.image}
           />
-          <div className={cls.title}>{data?.result?.title}</div>
+          <div className={cls.title}>{data?.title}</div>
           <p>
             Year:
-            <span>{data?.result?.year}</span>
+            <span>{data?.year}</span>
           </p>
           <p>
             Country:
-            <span>{data?.result?.country}</span>
+            <span>{data?.country}</span>
           </p>
           <p>
             Started:
-            <span>{data?.result?.started}</span>
+            <span>{data?.started}</span>
           </p>
           <p>
             Ended:
-            <span>{data?.result?.ended}</span>
+            <span>{data?.ended}</span>
           </p>
           <p>
             Status:
-            <span>{data?.result?.status}</span>
+            <span>{data?.status}</span>
           </p>
           <p>
             Imdb:
-            <span>{data?.result?.imdbRating}</span>
+            <span>{data?.imdbRating}</span>
           </p>
           <p>
             Kinopoisk:
-            <span>{data?.result?.kinopoiskRating}</span>
+            <span>{data?.kinopoiskRating}</span>
           </p>
         </div>
       )}

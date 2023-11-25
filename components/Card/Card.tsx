@@ -17,8 +17,6 @@ export const Card = memo((props: ICard) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const dispatch = useAppDispatch();
-  const { setShowId } = viewSlice.actions;
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -30,9 +28,11 @@ export const Card = memo((props: ICard) => {
   )
 
   const onClick = async () => {
-    const id = cardData.id || 0;
-    router.push(pathname + '?' + createQueryString(MainPageRoutes.show, `${id}`))
-    dispatch(setShowId(id))
+    const isShowOpen = searchParams.get(MainPageRoutes.show);
+    if (!isShowOpen) {
+      const id = cardData.id || 0;
+      router.push(pathname + '?' + createQueryString(MainPageRoutes.show, `${id}`))
+    }
   };
 
   return (

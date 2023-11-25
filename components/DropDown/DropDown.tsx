@@ -6,7 +6,7 @@ interface IDropDownProps {
   onChange?: (value: string) => void;
 }
 
-export const DropDown = memo((props: IDropDownProps) => {
+export const DropDown = (props: IDropDownProps) => {
   const { values, onChange } = props;
 
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -32,4 +32,4 @@ export const DropDown = memo((props: IDropDownProps) => {
       </select>
     </div>
   );
-});
+};

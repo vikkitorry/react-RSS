@@ -1,10 +1,8 @@
 import { Inter } from 'next/font/google'
 import cls from '@/src/styles/Home.module.css';
 import CardsHandler from '../../components/CardsHandler/CardsHandler';
-import { useState, useEffect, useCallback } from 'react';
 import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { viewSlice } from '../store/reducers/ViewSlice';
-import { useAppDispatch } from '../store/hooks/redux';
 import { useSearchParams } from 'next/navigation'
 import { fetchAllShowsData } from '../services/getShows';
 import { fetchShowData } from '../services/getShow';
@@ -30,13 +28,11 @@ type MainPageProps = {
 }
 
 export const getServerSideProps: GetServerSideProps<MainPageProps> = async (context) => {
-  // Получаем данные из строки запроса
-  const { query, page, showId, limit } = context.query
+  const { query, page, limit, show, } = context.query
 
-  const showData: DetailedShowSchema | null = showId ? await fetchShowData(Number(showId)) : null
+  const showData: DetailedShowSchema | null = show ? await fetchShowData(Number(show)) : null
   const allShowsData: ShowSchema[] = await fetchAllShowsData({page: Number(page), query, pageSize: Number(limit) || 30})
 
-  // Передаем данные на страницу через объект props
   return { props: { data: {
     allShowsData,
     showData,
@@ -45,26 +41,10 @@ export const getServerSideProps: GetServerSideProps<MainPageProps> = async (cont
 
 const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const {allShowsData, showData} = data
-  // const [searchParams, setSearchParams] = useSearchParams();
-  //использую для закрытия страницы
-  const [isDetailedOpen, setIsDetailedOpen] = useState<boolean>(false);
   const searchParams = useSearchParams()
   const router = useRouter()
   const isShowOpen = searchParams.get(MainPageRoutes.show);
-  const dispatch = useAppDispatch();
   const { setShowId } = viewSlice.actions;
-
-  // useEffect(() => {
-  //   setIsDetailedOpen(Boolean(isShowOpen));
-  //   Boolean(isShowOpen) && dispatch(setShowId(isShowOpen ? +isShowOpen : null));
-  // }, [isShowOpen, dispatch, setShowId]);
-
-  // const closeDetailed = useCallback(() => {
-  //   if (isDetailedOpen) {
-  //     searchParams.delete(MainPageRoutes.SHOW);
-  //     setSearchParams(searchParams);
-  //   }
-  // }, [isDetailedOpen, setSearchParams, searchParams]);
 
   const closeDetailed = () => {
     if (isShowOpen) {
@@ -83,9 +63,41 @@ const Home = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) =>
         data-testid={'cardsHandler'}
         size={isShowOpen ? CardsHandlerSize.LEFT : CardsHandlerSize.FULL}
       />
-      {isShowOpen && <DetailedCard />}
+      {isShowOpen && <DetailedCard data={showData} />}
     </div>
   );
 }
 
 export default Home;
+
+
+// import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+// import Head from 'next/head';
+
+// export default function PageName({
+//   prop1,
+//   prop2,
+//   ...  ,
+//   propN,
+// }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+//   return (
+//     <>
+//       <Head>
+//         ...
+//       </Head>
+//       <main>
+//         ...
+//       </main>
+//     </>
+//   );
+// }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     ...получаю данные и преобразую их
+
+//     return {
+//       props: { prop1, prop2, ..., propN },
+//     };
+//   }
+// ) satisfies GetServerSideProps;
