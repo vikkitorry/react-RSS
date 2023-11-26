@@ -1,9 +1,9 @@
 const Show = () => {
-    return (
-      <>
-        <p>Show</p>
-      </>
-    )
-  }
+  return (
+    <>
+      <p>Show</p>
+    </>
+  );
+};
 
-  export default Show;
+export default Show;

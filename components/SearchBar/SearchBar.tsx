@@ -10,24 +10,24 @@ const NUM_OF_ITEMS_VALUES = [defaultPageSize.toString(), '20', '10', '5'];
 
 export const SearchBar = () => {
   const [query, setQuery] = useState<string>('');
-  const router = useRouter()
+  const router = useRouter();
 
   const onBlur = useCallback((value: string) => {
     setQuery(value || '');
   }, []);
 
   const onSubmit = () => {
-    const {limit} = router.query
+    const { limit } = router.query;
     router.push({
-      query: { query, page: 1, limit},
+      query: { query, page: 1, limit },
     });
-  }
+  };
 
   const onSelectNumOfItems = (limit: string) => {
     router.push({
-      query: { query, page: 1, limit},
+      query: { query, page: 1, limit },
     });
-  }
+  };
 
   return (
     <div className={cls.SearchBar}>

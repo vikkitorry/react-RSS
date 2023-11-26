@@ -4,7 +4,6 @@ import { render, screen } from '@testing-library/react';
 
 describe('CardsList', () => {
   it('displays an appropriate message if no cards are present', () => {
-
     beforeEach(() => {
       vi.clearAllMocks();
     });
@@ -18,9 +17,7 @@ describe('CardsList', () => {
       }),
     }));
 
-    render(
-      <CardsList shows={undefined} />
-    );
+    render(<CardsList shows={undefined} />);
 
     const expectedText = 'Not found';
 
@@ -35,9 +32,7 @@ describe('CardsList', () => {
       { id: 2, title: 'Show 2' },
     ];
 
-    render(
-      <CardsList shows={mockShows} />
-    );
+    render(<CardsList shows={mockShows} />);
 
     const parent = screen.getByTestId('grid');
 

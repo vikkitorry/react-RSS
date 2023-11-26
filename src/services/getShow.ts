@@ -1,17 +1,13 @@
-import {
-  BASE_URL,
-  id,
-  jsonrpc,
-  METHOD,
-  lang
-} from './variables/variables';
+import { BASE_URL, id, jsonrpc, METHOD, lang } from './variables/variables';
 import {
   RequestShow,
   ResponseShow,
   DetailedShowSchema,
 } from './types/serviceTypes';
 
-export async function fetchShowData(showId: number = 0): Promise<DetailedShowSchema> {
+export async function fetchShowData(
+  showId: number = 0
+): Promise<DetailedShowSchema> {
   const body: RequestShow = {
     jsonrpc,
     method: METHOD.getShow,
@@ -21,7 +17,6 @@ export async function fetchShowData(showId: number = 0): Promise<DetailedShowSch
     },
     id,
   };
-
 
   const resp = await fetch(BASE_URL, {
     method: METHOD.post,

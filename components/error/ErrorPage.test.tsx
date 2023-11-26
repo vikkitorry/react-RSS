@@ -18,9 +18,7 @@ describe('Error Page', () => {
   }));
 
   test('renders without bugs', () => {
-    render(
-  <ErrorPage />
-    );
+    render(<ErrorPage />);
 
     expect(screen.getByText('You should reload page')).toBeInTheDocument();
   });

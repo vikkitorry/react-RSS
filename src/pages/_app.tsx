@@ -6,11 +6,13 @@ import { Layout } from '@/components/Layout/Layout';
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <ErrorBoundary>
-  <Provider store={setupStore()}>
-  <Layout>
-  <Component {...pageProps} />
-  </Layout>
-  </Provider>
-  </ErrorBoundary>
+  return (
+    <ErrorBoundary>
+      <Provider store={setupStore()}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </ErrorBoundary>
+  );
 }

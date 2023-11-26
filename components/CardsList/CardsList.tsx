@@ -1,4 +1,4 @@
-import { Card } from '../Card/Card'
+import { Card } from '../Card/Card';
 import cls from './CardsList.module.scss';
 import { memo } from 'react';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
@@ -15,12 +15,7 @@ export const CardsList = memo((props: ICardsList) => {
       {shows?.length ? (
         <div className={cls.gridContainer}>
           <div className={cls.grid} data-testid={'grid'}>
-            {shows?.map((el) => (
-              <Card
-                key={el.id}
-                cardData={el}
-              />
-            ))}
+            {shows?.map((el) => <Card key={el.id} cardData={el} />)}
           </div>
         </div>
       ) : (

@@ -17,11 +17,10 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text'],
       include: ['**/*.tsx'],
-      exclude: ['**/main.tsx', '**/test-utils.tsx', '**/pages', '**/CardsHandler'],
+      exclude: ['**/test-utils.tsx', '**/pages', '**/CardsHandler'],
     },
   },
   resolve: {
     alias: [{ find: '@', replacement: '/' }],
   },
 });
-

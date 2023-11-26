@@ -6,11 +6,11 @@ interface ILayout {
   children?: ReactNode;
 }
 
-export const Layout: FC<ILayout> = (props ) => {
+export const Layout: FC<ILayout> = (props) => {
   return (
     <>
-    <Navbar />
-    {props.children}
+      <Navbar />
+      {props.children}
     </>
   );
 };

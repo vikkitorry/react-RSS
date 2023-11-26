@@ -9,7 +9,6 @@ import { DetailedCard } from './Detailed';
 vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('Tests for the Pagination component', () => {
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -28,30 +27,23 @@ describe('Tests for the Pagination component', () => {
 
   test('check URL while mount component', async () => {
     mockRouter.push('/?query=test&page=1&limit=30&show=11');
-    render(
-      <DetailedCard data={mockCardData}/>,
-      {
-        wrapper: MemoryRouterProvider,
-      }
-    );
+    render(<DetailedCard data={mockCardData} />, {
+      wrapper: MemoryRouterProvider,
+    });
     expect(mockRouter.asPath).toBe('/?query=test&page=1&limit=30&show=11');
     cleanup();
-  })
+  });
 
   test('clicking the close button hides the component', async () => {
     mockRouter.push('/?query=test&page=1&limit=30&show=11');
-    render(
-      <DetailedCard data={mockCardData}/>,
-      {
-        wrapper: MemoryRouterProvider,
-      }
-    );
+    render(<DetailedCard data={mockCardData} />, {
+      wrapper: MemoryRouterProvider,
+    });
 
     const button = screen.getByTestId('detailed-btn');
     fireEvent.click(button);
 
     expect(mockRouter.asPath).toBe('/?query=test&page=1&limit=30');
     cleanup();
-  })
+  });
 });
-

@@ -5,12 +5,11 @@ import { expect, vi, test, describe, beforeEach } from 'vitest';
 import ErrorBoundary from '../../ErrorBoundary/ErrorBoundary';
 
 describe('BugButton', () => {
-
   beforeEach(() => {
     vi.clearAllMocks();
     const mockRouter = {
       pathname: '/',
-      push: vi.fn()
+      push: vi.fn(),
     };
     vi.mock('next/router', () => ({ useRouter: () => mockRouter }));
   });

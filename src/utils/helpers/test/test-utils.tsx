@@ -4,13 +4,9 @@ import type { RenderOptions } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import type { PreloadedState } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-
 import { AppStore, RootState } from '../../../store/store';
-import viewReducer from '../../../store/reducers/ViewSlice';
-import loadReducer from '../../../store/reducers/LoadSlice';
-import searchReducer from '../../../store/reducers/SearchSlice';
 import showsReducer from '../../../store/reducers/ShowsSlice';
-import { service } from '../../../app/services/service';
+import { service } from '@/src/services/service';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>;
@@ -23,10 +19,7 @@ export function renderWithProviders(
     preloadedState = {},
     store = configureStore({
       reducer: {
-        loadReducer,
-        searchReducer,
         showsReducer,
-        viewReducer,
         [service.reducerPath]: service.reducer,
       },
       middleware: (getDefaultMiddleware) =>

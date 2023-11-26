@@ -3,7 +3,7 @@ const Shows = () => {
     <>
       <p>Shows</p>
     </>
-  )
-}
+  );
+};
 
 export default Shows;

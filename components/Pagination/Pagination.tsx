@@ -6,12 +6,12 @@ import { useRouter } from 'next/router';
 export const Pagination = () => {
   const router = useRouter();
 
-  const {query, limit, page} = router.query;
+  const { query, limit, page } = router.query;
 
   const changePage = (switcher: number) => {
     if (page) {
       router.push({
-        query: { query, page: Number(page) + switcher, limit},
+        query: { query, page: Number(page) + switcher, limit },
       });
     }
   };

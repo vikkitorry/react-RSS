@@ -9,40 +9,33 @@ import { Pagination } from './Pagination';
 vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('Tests for the Pagination component', () => {
-
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('updates URL query parameter when click prev button', async () => {
     mockRouter.push('/?query=undefined&page=4&limit=30');
-    render(
-      <Pagination />,
-      {
-        wrapper: MemoryRouterProvider,
-      }
-    );
+    render(<Pagination />, {
+      wrapper: MemoryRouterProvider,
+    });
 
     const prevButton = screen.getByTestId('prev-btn');
     fireEvent.click(prevButton);
 
     expect(mockRouter.asPath).toBe('/?query=undefined&page=3&limit=30');
     cleanup();
-  })
+  });
 
   it('updates URL query parameter when click next button', async () => {
     mockRouter.push('/?query=undefined&page=4&limit=30');
-    render(
-      <Pagination />,
-      {
-        wrapper: MemoryRouterProvider,
-      }
-    );
+    render(<Pagination />, {
+      wrapper: MemoryRouterProvider,
+    });
 
     const prevButton = screen.getByTestId('next-btn');
     fireEvent.click(prevButton);
 
     expect(mockRouter.asPath).toBe('/?query=undefined&page=5&limit=30');
     cleanup();
-  })
+  });
 });

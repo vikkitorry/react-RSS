@@ -21,8 +21,8 @@ interface ICardsHandlerProps {
 
 const CardsHandler = memo((props: ICardsHandlerProps) => {
   const { size, onClick, dataCards } = props;
-  const router = useRouter()
-  const {page} = router.query
+  const router = useRouter();
+  const { page } = router.query;
   const startPage = page ? +page : 1;
 
   const mods: Record<string, boolean> = {
@@ -32,10 +32,10 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
   useEffect(() => {
     if (!page) {
       router.push({
-        query: { query: '', page: startPage, limit: defaultPageSize},
+        query: { query: '', page: startPage, limit: defaultPageSize },
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startPage]);
 
   return (

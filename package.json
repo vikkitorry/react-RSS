@@ -10,7 +10,8 @@
     "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix",
     "prepare": "husky install",
     "coverage": "vitest run --coverage",
-    "test": "vitest"
+    "test": "vitest",
+    "format:fix": "prettier . --write"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",

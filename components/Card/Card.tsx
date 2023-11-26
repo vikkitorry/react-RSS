@@ -11,10 +11,10 @@ export const Card = (props: ICard) => {
   const router = useRouter();
 
   const onClick = async () => {
-    const {query, page, limit, show} = router.query
+    const { query, page, limit, show } = router.query;
     if (!show) {
       router.push({
-        query: { query, page, limit, show: cardData.id || 0},
+        query: { query, page, limit, show: cardData.id || 0 },
       });
     }
   };
