@@ -17,7 +17,7 @@ describe('CardsList', () => {
       }),
     }));
 
-    render(<CardsList shows={undefined} />);
+    render(<CardsList shows={null} />);
 
     const expectedText = 'Not found';
 
