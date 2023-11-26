@@ -8,6 +8,15 @@ describe('Card', () => {
     vi.clearAllMocks();
   });
 
+  vi.mock('next/router', () => ({
+    useRouter: () => ({
+      route: '/',
+      pathname: '',
+      query: '',
+      push: vi.fn(),
+    }),
+  }));
+
   const mockCardData = {
     id: 1,
     title: 'title',
@@ -29,7 +38,7 @@ describe('Card', () => {
   });
 
   test('card component renders the relevant card data', () => {
-    render(<Card cardData={mockCardData} setSearchParams={vi.fn()} />);
+    render(<Card cardData={mockCardData} />);
 
     expect(screen.getByText(mockCardData.title)).toBeInTheDocument();
     expect(screen.getByText(mockCardData.status)).toBeInTheDocument();
@@ -38,7 +47,7 @@ describe('Card', () => {
   });
 
   test('that clicking on a card opens a detailed card component', async () => {
-    render(<Card cardData={mockCardData} setSearchParams={vi.fn()} />);
+    render(<Card cardData={mockCardData} />);
 
     await act(() => {
       const btn = screen.getByTestId('card');
@@ -52,7 +61,7 @@ describe('Card', () => {
   });
 
   test('clicking triggers an additional API call to fetch detailed information', async () => {
-    render(<Card cardData={mockCardData} setSearchParams={vi.fn()} />);
+    render(<Card cardData={mockCardData} />);
 
     await act(() => {
       const btn = screen.getByTestId('card');

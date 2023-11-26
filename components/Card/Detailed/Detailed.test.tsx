@@ -1,23 +1,17 @@
 import React from 'react';
-import { screen, act, fireEvent } from '@testing-library/react';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen, cleanup } from '@testing-library/react';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import { DetailedCard } from './Detailed';
-import { expect, vi, test, describe, beforeEach, beforeAll } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
-import { renderWithProviders } from '../../../utils/helpers/test/test-utils';
-import { service } from '../../../app/services/service';
 
-describe('Detailed', () => {
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
+
+describe('Tests for the Pagination component', () => {
+
   beforeEach(() => {
-    vi.clearAllTimers();
     vi.clearAllMocks();
-  });
-
-  beforeAll(async () => {
-    vi.spyOn(service, 'useGetPageDataQuery').mockReturnValue({
-      data: mockCardData,
-      isLoading: true,
-      refetch: vi.fn(),
-    });
   });
 
   const mockCardData = {
@@ -32,142 +26,32 @@ describe('Detailed', () => {
     imdbRating: 6,
   };
 
-  vi.mock('../../../app/services/getShow', () => ({
-    getShow: vi.fn().mockResolvedValue(setTimeout(() => mockCardData, 1000)),
-  }));
-
-  test('detailed card component correctly displays the detailed card data', async () => {
-    await act(async () => {
-      renderWithProviders(
-        <BrowserRouter>
-          <DetailedCard />
-        </BrowserRouter>,
-        {
-          preloadedState: {
-            loadReducer: { isDetaledLoad: false, isListLoad: false },
-            viewReducer: { showId: 1 },
-          },
-        }
-      );
-    });
-
-    await (() => {
-      expect(screen.getByText(mockCardData.title)).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.status)).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.country)).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.started)).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.ended)).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.year)).toBeInTheDocument();
-      expect(
-        screen.getByText(mockCardData.kinopoiskRating)
-      ).toBeInTheDocument();
-      expect(screen.getByText(mockCardData.imdbRating)).toBeInTheDocument();
-    });
-  });
+  test('check URL while mount component', async () => {
+    mockRouter.push('/?query=test&page=1&limit=30&show=11');
+    render(
+      <DetailedCard data={mockCardData}/>,
+      {
+        wrapper: MemoryRouterProvider,
+      }
+    );
+    expect(mockRouter.asPath).toBe('/?query=test&page=1&limit=30&show=11');
+    cleanup();
+  })
 
   test('clicking the close button hides the component', async () => {
-    await act(async () => {
-      renderWithProviders(
-        <BrowserRouter>
-          <DetailedCard />
-        </BrowserRouter>,
-        {
-          preloadedState: {
-            loadReducer: { isDetaledLoad: false, isListLoad: false },
-            viewReducer: { showId: 1 },
-          },
-        }
-      );
-    });
-
-    const closeButton = screen.getByText<HTMLButtonElement>('X');
-
-    await act(async () => {
-      fireEvent.click(closeButton);
-    });
-
-    await (() => {
-      expect(screen.getByTestId('detailedCard')).not.toBeInTheDocument();
-    });
-  });
-
-  test('displays loading indicator while fetching data', async () => {
-    const wrapper = renderWithProviders(
-      <BrowserRouter>
-        <DetailedCard />
-      </BrowserRouter>,
+    mockRouter.push('/?query=test&page=1&limit=30&show=11');
+    render(
+      <DetailedCard data={mockCardData}/>,
       {
-        preloadedState: {
-          loadReducer: { isDetaledLoad: false, isListLoad: false },
-          viewReducer: { showId: 1 },
-        },
+        wrapper: MemoryRouterProvider,
       }
     );
 
-    expect(wrapper.getByTestId('loader')).toBeInTheDocument();
+    const button = screen.getByTestId('detailed-btn');
+    fireEvent.click(button);
 
-    await (() => {
-      expect(screen.getByTestId('detailedCard')).toBeInTheDocument();
-    });
-  });
-
-  test('updates URL query parameter when close detailed card', async () => {
-    const initialPage = 3;
-
-    vi.mock('react-router-dom', async () => {
-      const mod = (await vi.importActual('react-router-dom')) as object;
-      return {
-        ...mod,
-        useParams: () => ({
-          page: initialPage,
-          show: 1,
-        }),
-      };
-    });
-
-    renderWithProviders(
-      <BrowserRouter>
-        <DetailedCard />
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          loadReducer: { isDetaledLoad: false, isListLoad: false },
-          viewReducer: { showId: 1 },
-        },
-      }
-    );
-    const closeButton = screen.getByText<HTMLButtonElement>('X');
-
-    await act(async () => {
-      fireEvent.click(closeButton);
-    });
-
-    await (() => {
-      expect(location.search).toBe(`?page=${initialPage}`);
-    });
-  });
-
-  test('error ocured while fetch data', async () => {
-    vi.spyOn(service, 'useGetPageDataQuery').mockReturnValue({
-      data: undefined,
-      isLoading: true,
-      refetch: vi.fn(),
-    });
-
-    renderWithProviders(
-      <BrowserRouter>
-        <DetailedCard />
-      </BrowserRouter>,
-      {
-        preloadedState: {
-          loadReducer: { isDetaledLoad: false, isListLoad: false },
-          viewReducer: { showId: 1 },
-        },
-      }
-    );
-
-    await (() => {
-      expect(screen.getByTestId('detailedCard')).toBeInTheDocument();
-    });
-  });
+    expect(mockRouter.asPath).toBe('/?query=test&page=1&limit=30');
+    cleanup();
+  })
 });
+

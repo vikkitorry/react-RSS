@@ -1,36 +1,48 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen, cleanup } from '@testing-library/react';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import { Pagination } from './Pagination';
-import { expect, vi, test, describe, beforeEach } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
 
-describe('Pagination', () => {
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
+
+describe('Tests for the Pagination component', () => {
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test('updates URL query parameter when page changes', () => {
-    const initialPage = 3;
-
-    vi.mock('react-router-dom', async () => {
-      const mod = (await vi.importActual('react-router-dom')) as object;
-      return {
-        ...mod,
-        useParams: () => ({
-          page: initialPage,
-        }),
-      };
-    });
-
+  it('updates URL query parameter when click prev button', async () => {
+    mockRouter.push('/?query=undefined&page=4&limit=30');
     render(
-      <BrowserRouter>
-        <Pagination page={initialPage} />
-      </BrowserRouter>
+      <Pagination />,
+      {
+        wrapper: MemoryRouterProvider,
+      }
     );
 
     const prevButton = screen.getByTestId('prev-btn');
     fireEvent.click(prevButton);
 
-    expect(location.search).toBe(`?page=${initialPage - 1}`);
-  });
+    expect(mockRouter.asPath).toBe('/?query=undefined&page=3&limit=30');
+    cleanup();
+  })
+
+  it('updates URL query parameter when click next button', async () => {
+    mockRouter.push('/?query=undefined&page=4&limit=30');
+    render(
+      <Pagination />,
+      {
+        wrapper: MemoryRouterProvider,
+      }
+    );
+
+    const prevButton = screen.getByTestId('next-btn');
+    fireEvent.click(prevButton);
+
+    expect(mockRouter.asPath).toBe('/?query=undefined&page=5&limit=30');
+    cleanup();
+  })
 });

@@ -1,66 +1,41 @@
-import { screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
-import { describe, beforeEach, expect, vi, test } from 'vitest';
+import React from 'react';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen, cleanup, act } from '@testing-library/react';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 import { SearchBar } from './SearchBar';
-import { SEARCH_LOCALSTORAGE_KEY } from '../../utils/constants/Constants';
-import { MemoryRouter } from 'react-router';
-import { renderWithProviders } from '../../utils/helpers/test/test-utils';
+import userEvent from '@testing-library/user-event';
 
-describe('SearchBar', () => {
-  const mock = vi.fn();
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
+
+describe('Tests for the Pagination component', () => {
 
   beforeEach(() => {
-    localStorage.clear();
+    vi.clearAllMocks();
   });
 
-  test('clicking the Search button saves the entered value to local storage', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <SearchBar setSearchParams={mock} />
-      </MemoryRouter>,
+  test('updates URL query parameter while submit', async () => {
+    mockRouter.push('/?query=undefined&page=4&limit=30');
+    render(
+      <SearchBar />,
       {
-        preloadedState: {
-          searchReducer: { search: '' },
-          showsReducer: { numOfShows: 30 },
-        },
+        wrapper: MemoryRouterProvider,
       }
     );
 
     const inputElement = screen.getByTestId<HTMLInputElement>('input');
 
     await act(async () => {
-      await userEvent.type(inputElement, 'Test Show');
-
+    await userEvent.type(inputElement, 'test');
       inputElement.blur();
     });
 
     const searchButton = screen.getByTestId('btn');
-
     fireEvent.click(searchButton);
 
-    expect(localStorage.getItem(SEARCH_LOCALSTORAGE_KEY)).toBe('Test Show');
-  });
-
-  test('component retrieves value from local storage upon mounting', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <SearchBar setSearchParams={mock} />
-      </MemoryRouter>,
-      {
-        preloadedState: {
-          searchReducer: { search: 'Test Value' },
-          showsReducer: { numOfShows: 30 },
-        },
-      }
-    );
-
-    let inputElement = screen.getByTestId<HTMLInputElement>('input');
-
-    await act(async () => {
-      inputElement = await screen.getByTestId<HTMLInputElement>('input');
-    });
-
-    expect(inputElement.value).toBe('Test Value');
-  });
+    expect(mockRouter.asPath).toBe('/?query=test&page=1&limit=30');
+    cleanup();
+  })
 });
+

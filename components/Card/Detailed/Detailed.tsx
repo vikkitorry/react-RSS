@@ -24,6 +24,7 @@ export const DetailedCard = (props : IDetailedCard) => {
         className={cls.btnPositionEnd}
         size={ButtonSize.S}
         onClick={onClick}
+        data-testid="detailed-btn"
       >
         X
       </Button>

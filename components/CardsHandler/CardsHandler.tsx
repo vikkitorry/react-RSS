@@ -3,9 +3,7 @@ import cls from './CardsHandler.module.scss';
 import React, { useEffect, memo } from 'react';
 import { CardsList } from '../CardsList/CardsList';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { Loader, LoaderTheme } from '../Loader/Loader';
 import { Pagination } from '../Pagination/Pagination';
-import { useAppSelector } from '@/src/store/hooks/redux';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
 import { useRouter } from 'next/router';
 import { defaultPageSize } from '@/src/services/variables/variables';
@@ -23,7 +21,6 @@ interface ICardsHandlerProps {
 
 const CardsHandler = memo((props: ICardsHandlerProps) => {
   const { size, onClick, dataCards } = props;
-  const { isListLoad } = useAppSelector((state) => state.loadReducer);
   const router = useRouter()
   const {page} = router.query
   const startPage = page ? +page : 1;
@@ -44,12 +41,8 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
   return (
     <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
       <SearchBar />
-      {isListLoad ? (
-        <Loader color={LoaderTheme.BACKGROUND_DARK} />
-      ) : (
-        <CardsList shows={dataCards} />
-      )}
-      {!isListLoad && <Pagination />}
+      <CardsList shows={dataCards} />
+      {dataCards.length && <Pagination />}
     </div>
   );
 });

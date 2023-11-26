@@ -13,7 +13,7 @@ export const SearchBar = () => {
   const router = useRouter()
 
   const onBlur = useCallback((value: string) => {
-    setQuery(value);
+    setQuery(value || '');
   }, []);
 
   const onSubmit = () => {

@@ -13,7 +13,6 @@ import {
   ResponseShow,
 } from './types/serviceTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { loadSlice } from '../store/reducers/LoadSlice';
 
 export const service = createApi({
   reducerPath: 'service',
@@ -41,15 +40,11 @@ export const service = createApi({
           id: 1,
         },
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        const { setisListLoad } = loadSlice.actions;
-        dispatch(setisListLoad(true));
+      async onQueryStarted(arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (err) {
           throw new Error(ERROR_MESSAGE);
-        } finally {
-          dispatch(setisListLoad(false));
         }
       },
     }),
@@ -72,15 +67,11 @@ export const service = createApi({
           id,
         },
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        const { setisDetaledLoad } = loadSlice.actions;
-        dispatch(setisDetaledLoad(true));
+      async onQueryStarted(arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
         } catch (err) {
           throw new Error(ERROR_MESSAGE);
-        } finally {
-          dispatch(setisDetaledLoad(false));
         }
       },
     }),

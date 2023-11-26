@@ -1,35 +1,21 @@
 import cls from './Card.module.scss';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
-import React, { memo, useCallback } from 'react';
-import { MainPageRoutes } from '@/src/pages';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { usePathname } from 'next/navigation';
 
 interface ICard {
   cardData: ShowSchema;
 }
 
-export const Card = memo((props: ICard) => {
+export const Card = (props: ICard) => {
   const { cardData } = props;
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams)
-      params.set(name, value)
-      return params.toString()
-    },
-    [searchParams]
-  )
 
   const onClick = async () => {
-    const isShowOpen = searchParams.get(MainPageRoutes.show);
-    if (!isShowOpen) {
-      const id = cardData.id || 0;
-      router.push(pathname + '?' + createQueryString(MainPageRoutes.show, `${id}`))
+    const {query, page, limit, show} = router.query
+    if (!show) {
+      router.push({
+        query: { query, page, limit, show: cardData.id || 0},
+      });
     }
   };
 
@@ -55,4 +41,4 @@ export const Card = memo((props: ICard) => {
       </p>
     </div>
   );
-});
+};

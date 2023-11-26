@@ -1,16 +1,28 @@
 import { CardsList } from './CardsList';
-import { it, describe, expect, vi } from 'vitest';
+import { it, describe, expect, beforeEach, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 describe('CardsList', () => {
   it('displays an appropriate message if no cards are present', () => {
-    const mockSetSearchParams = vi.fn();
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    vi.mock('next/router', () => ({
+      useRouter: () => ({
+        route: '/',
+        pathname: '',
+        query: '',
+        push: vi.fn(),
+      }),
+    }));
 
     render(
-      <CardsList setSearchParams={mockSetSearchParams} shows={undefined} />
+      <CardsList shows={undefined} />
     );
 
-    const expectedText = 'There is nothing';
+    const expectedText = 'Not found';
 
     const value = screen.getByText(expectedText);
 
@@ -23,10 +35,8 @@ describe('CardsList', () => {
       { id: 2, title: 'Show 2' },
     ];
 
-    const mockSetSearchParams = vi.fn();
-
     render(
-      <CardsList setSearchParams={mockSetSearchParams} shows={mockShows} />
+      <CardsList shows={mockShows} />
     );
 
     const parent = screen.getByTestId('grid');
