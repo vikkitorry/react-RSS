@@ -16,7 +16,7 @@ export enum CardsHandlerSize {
 interface ICardsHandlerProps {
   size: CardsHandlerSize;
   onClick: () => void;
-  dataCards: ShowSchema[];
+  dataCards: ShowSchema[] | null;
 }
 
 const CardsHandler = memo((props: ICardsHandlerProps) => {
@@ -42,7 +42,7 @@ const CardsHandler = memo((props: ICardsHandlerProps) => {
     <div className={classNames(cls.Cards, mods, [])} onClick={onClick}>
       <SearchBar />
       <CardsList shows={dataCards} />
-      {dataCards.length && <Pagination />}
+      {dataCards?.length && <Pagination />}
     </div>
   );
 });

@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { ShowSchema } from '@/src/services/types/serviceTypes';
 
 interface ICardsList {
-  shows: ShowSchema[] | undefined;
+  shows: ShowSchema[] | null;
 }
 
 export const CardsList = memo((props: ICardsList) => {

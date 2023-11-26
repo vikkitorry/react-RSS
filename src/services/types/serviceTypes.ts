@@ -78,10 +78,10 @@ export type ShowSchema = {
 
 export interface IShowsQueryParams {
   page: number;
-  query: string | undefined | string[];
-  pageSize: number;
+  query: string | null | string[];
+  limit: number;
 }
 
 export interface IShowQueryParams {
-  showId: number | null;
+  show: number | null;
 }

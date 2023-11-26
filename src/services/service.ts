@@ -1,11 +1,4 @@
-import {
-  BASE_URL,
-  id,
-  jsonrpc,
-  METHOD,
-  lang,
-  ERROR_MESSAGE,
-} from './variables/variables';
+import { BASE_URL, id, jsonrpc, METHOD, lang } from './variables/variables';
 import {
   IShowQueryParams,
   IShowsQueryParams,
@@ -13,13 +6,19 @@ import {
   ResponseShow,
 } from './types/serviceTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { HYDRATE } from 'next-redux-wrapper';
+import { showsSlice } from '../store/reducers/ShowsSlice';
 
 export const service = createApi({
-  reducerPath: 'service',
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (build) => ({
     getPageData: build.query<Response, IShowsQueryParams>({
-      query: ({ page, query, pageSize }) => ({
+      query: ({ page, query, limit }) => ({
         url: '',
         method: METHOD.post,
         headers: {
@@ -35,22 +34,27 @@ export const service = createApi({
             },
             //api pages start from 0
             page: !page ? page : page - 1,
-            pageSize,
+            pageSize: limit,
           },
           id: 1,
         },
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const { setAllShows } = showsSlice.actions;
         try {
-          await queryFulfilled;
+          const resp = await queryFulfilled;
+          if (!resp.data.result.length) {
+            throw new Error();
+          }
+          dispatch(setAllShows(resp.data.result));
         } catch (err) {
-          throw new Error(ERROR_MESSAGE);
+          console.log();
         }
       },
     }),
 
     getShow: build.query<ResponseShow, IShowQueryParams>({
-      query: ({ showId }) => ({
+      query: ({ show }) => ({
         url: '',
         method: METHOD.post,
         headers: {
@@ -61,21 +65,27 @@ export const service = createApi({
           jsonrpc,
           method: METHOD.getShow,
           params: {
-            showId: showId ?? 0,
+            showId: show ?? 0,
             withEpisodes: true,
           },
           id,
         },
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const { setShow } = showsSlice.actions;
         try {
-          await queryFulfilled;
+          const resp = await queryFulfilled;
+          if (!resp.data.result) {
+            throw new Error();
+          }
+          dispatch(setShow(resp.data.result));
         } catch (err) {
-          throw new Error(ERROR_MESSAGE);
+          console.log();
         }
       },
     }),
   }),
 });
 
+export const { getShow, getPageData } = service.endpoints;
 export const { useGetPageDataQuery, useGetShowQuery } = service;

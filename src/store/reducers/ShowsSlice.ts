@@ -1,20 +1,28 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { defaultPageSize } from '@/src/services/variables/variables';
+import {
+  ShowSchema,
+  DetailedShowSchema,
+} from '@/src/services/types/serviceTypes';
 
 interface IShowsState {
-  numOfShows: number;
+  allShows: ShowSchema[] | null;
+  show: DetailedShowSchema | null;
 }
 
 const initialState: IShowsState = {
-  numOfShows: defaultPageSize,
+  allShows: null,
+  show: null,
 };
 
 export const showsSlice = createSlice({
   name: 'shows',
   initialState,
   reducers: {
-    setNumOfShows(state, action: PayloadAction<number>) {
-      state.numOfShows = action.payload;
+    setAllShows(state, action: PayloadAction<ShowSchema[] | null>) {
+      state.allShows = action.payload;
+    },
+    setShow(state, action: PayloadAction<DetailedShowSchema | null>) {
+      state.show = action.payload;
     },
   },
 });

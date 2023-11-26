@@ -2,12 +2,12 @@ import cls from '@/src/styles/Home.module.css';
 import CardsHandler from '../../components/CardsHandler/CardsHandler';
 import { CardsHandlerSize } from '../../components/CardsHandler/CardsHandler';
 import { useSearchParams } from 'next/navigation';
-import { fetchAllShowsData } from '../services/getShows';
-import { fetchShowData } from '../services/getShow';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { DetailedShowSchema, ShowSchema } from '../services/types/serviceTypes';
 import { DetailedCard } from '@/components/Card/Detailed/Detailed';
 import { useRouter } from 'next/router';
+import { wrapper } from '../store/store';
+import { service } from '../services/service';
 
 export const enum MainPageRoutes {
   show = 'show',
@@ -18,34 +18,40 @@ export const enum MainPageRoutes {
 
 type MainPageProps = {
   data: {
-    allShowsData: ShowSchema[];
+    allShowsData: ShowSchema[] | null;
     showData: DetailedShowSchema | null;
   };
 };
 
-export const getServerSideProps: GetServerSideProps<MainPageProps> = async (
-  context
-) => {
-  const { query, page, limit, show } = context.query;
+export const getServerSideProps: GetServerSideProps<MainPageProps> =
+  wrapper.getServerSideProps((store) => async (context) => {
+    const { query, page, limit, show } = context.query;
 
-  const showData: DetailedShowSchema | null = show
-    ? await fetchShowData(Number(show))
-    : null;
-  const allShowsData: ShowSchema[] = await fetchAllShowsData({
-    page: Number(page),
-    query,
-    pageSize: Number(limit) || 30,
-  });
+    store.dispatch(
+      service.endpoints.getPageData.initiate({
+        query: query || '',
+        page: Number(page) || 1,
+        limit: Number(limit) || 30,
+      })
+    );
 
-  return {
-    props: {
-      data: {
-        allShowsData,
-        showData,
+    store.dispatch(
+      service.endpoints.getShow.initiate({
+        show: Number(show) || null,
+      })
+    );
+
+    await Promise.all(store.dispatch(service.util.getRunningQueriesThunk()));
+
+    return {
+      props: {
+        data: {
+          allShowsData: store.getState().showsReducer.allShows,
+          showData: store.getState().showsReducer.show,
+        },
       },
-    },
-  };
-};
+    };
+  });
 
 const Home = ({
   data,
