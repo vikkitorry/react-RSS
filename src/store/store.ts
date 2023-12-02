@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import countryReducer from './reducers/CountrySlice';
+import dataReducer from './reducers/DataSlice';
 
 const rootReducer = combineReducers({
   countryReducer,
+  dataReducer,
 });
 
 export const setupStore = () => {

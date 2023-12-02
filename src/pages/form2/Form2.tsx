@@ -10,16 +10,36 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../../utils/helpers/validation/validation';
 import { FormKeys } from '../../utils/constants/Constants';
 import DataList from '../../components/DataList/DataList';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../store/hooks/redux';
+import { dataSlice } from '../../store/reducers/DataSlice';
 
 export const Form2 = () => {
   const {
     register,
     formState: { isValid, errors },
+    handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(validationSchema) });
-  const onSubmit = () => {
-    console.log('onSubmit', errors);
-  };
-  console.log(errors, isValid);
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { setNewData, setUpdateData } = dataSlice.actions;
+
+  const onSubmit = handleSubmit((data) => {
+    dispatch(
+      setNewData({
+        name: data.name,
+        age: data.age.toString(),
+        email: data.email,
+        password: data.password,
+        gender: data.gender,
+        country: data.country,
+      })
+    );
+    dispatch(setUpdateData());
+    navigate('/');
+  });
+
   return (
     <form onSubmit={onSubmit}>
       Use English please ^^

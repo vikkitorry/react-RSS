@@ -245,10 +245,10 @@ const initialState: ICountryState = {
   ],
 };
 
-export const loadSlice = createSlice({
+export const countrySlice = createSlice({
   name: 'country',
   initialState,
   reducers: {},
 });
 
-export default loadSlice.reducer;
+export default countrySlice.reducer;

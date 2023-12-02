@@ -1,7 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 import cls from './DataList.module.scss';
 import { classNames } from '../../utils/libs/classNames/classNames';
-import { memo } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { FormKeys } from '../../utils/constants/Constants';
 import { useAppSelector } from '../../store/hooks/redux';
@@ -17,7 +16,7 @@ interface IDataListProps
   registerName: FormKeys;
 }
 
-export const DataList = memo((props: IDataListProps) => {
+export const DataList = (props: IDataListProps) => {
   const { label, placeholder, error, register, registerName } = props;
   const { countries } = useAppSelector((state) => state.countryReducer);
 
@@ -41,6 +40,6 @@ export const DataList = memo((props: IDataListProps) => {
       <p className={cls.error}>{error}</p>
     </div>
   );
-});
+};
 
 export default DataList;
