@@ -1,6 +1,5 @@
 import { AppLink, AppLinkTheme } from '../../Link/AppLink';
 import cls from './Navbar.module.scss';
-import { BugButton } from '../../Button/BugButton/BugButton';
 import { RoutePath } from '../../../app/router/routeConfig/routeConfig';
 
 export const Navbar = () => {
@@ -27,7 +26,6 @@ export const Navbar = () => {
       >
         <span className={cls.link}>Form 2</span>
       </AppLink>
-      <BugButton></BugButton>
     </div>
   );
 };
