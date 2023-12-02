@@ -4,29 +4,32 @@ import { classNames } from '../../utils/libs/classNames/classNames';
 import { memo } from 'react';
 
 interface IInputProps
-  extends Omit<InputHTMLAttributes<HTMLElement>, 'value' | 'onBlur'> {
-  className: string;
-  theme: string;
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onBlur'> {
+  className?: string;
+  theme?: string;
+  label?: string;
   onBlur?: (value: string) => void;
   defaultValue?: string;
   placeholder?: string;
 }
 
 export const Input = memo((props: IInputProps) => {
-  const { className, theme, defaultValue, placeholder, onBlur, ...otherProps } =
-    props;
+  const { label, defaultValue, placeholder, onBlur, ...otherProps } = props;
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     onBlur?.(e.target.value);
   };
 
   return (
-    <input
-      className={classNames(cls.Input, { [cls[theme]]: true }, [className])}
-      onBlur={onBlurHandler}
-      defaultValue={defaultValue}
-      placeholder={placeholder}
-      {...otherProps}
-    ></input>
+    <div className={cls.container}>
+      {label ? <>{label}</> : <></>}
+      <input
+        className={classNames(cls.Input, {}, [])}
+        onBlur={onBlurHandler}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        {...otherProps}
+      />
+    </div>
   );
 });
 
