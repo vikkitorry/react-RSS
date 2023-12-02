@@ -9,18 +9,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./src/setupTests.ts'],
     watch: false,
-    coverage: {
-      enabled: true,
-      all: true,
-      provider: 'v8',
-      reporter: ['text'],
-      include: ['**/*.tsx'],
-      exclude: ['**/test-utils.tsx', '**/pages', '**/CardsHandler'],
-    },
-  },
-  resolve: {
-    alias: [{ find: '@', replacement: '/' }],
   },
 });

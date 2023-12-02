@@ -1,10 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import loadReducer from './reducers/LoadSlice';
+import searchReducer from './reducers/SearchSlice';
 import showsReducer from './reducers/ShowsSlice';
-import { service } from '../services/service';
-import { createWrapper } from 'next-redux-wrapper';
+import viewReducer from './reducers/ViewSlice';
+import { service } from '../app/services/service';
 
 const rootReducer = combineReducers({
+  loadReducer,
+  searchReducer,
   showsReducer,
+  viewReducer,
   [service.reducerPath]: service.reducer,
 });
 
@@ -19,4 +24,3 @@ export const setupStore = () => {
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
-export const wrapper = createWrapper<AppStore>(setupStore, { debug: false });
