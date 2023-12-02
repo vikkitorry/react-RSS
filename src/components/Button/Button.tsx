@@ -18,17 +18,21 @@ export enum ButtonSize {
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   theme?: ButtonTheme;
   size: ButtonSize;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 export const Button: FC<IButtonProps> = memo((props) => {
   const {
     className,
     children,
+    type,
     theme = ButtonTheme.BACKGROUND_DARK,
     size = ButtonSize.M,
+    disabled,
     ...otherProps
   } = props;
 
@@ -39,8 +43,9 @@ export const Button: FC<IButtonProps> = memo((props) => {
 
   return (
     <button
-      type="button"
+      type={type || 'button'}
       className={classNames(cls.Button, mods, [className])}
+      disabled={disabled}
       {...otherProps}
     >
       {children}

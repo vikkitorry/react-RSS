@@ -6,8 +6,8 @@ export const validationSchema = Yup.object().shape({
     .matches(/^[A-Z][a-z]+$/, 'Name should start with an uppercase letter'),
   age: Yup.number()
     .required('Age is required')
-    .positive('Age should be a positive number')
-    .integer('Age should be a whole number'),
+    .typeError('Age should be a number')
+    .positive('Age should be a positive number'),
   email: Yup.string()
     .required('Email is required')
     .email('Invalid email address'),
@@ -25,18 +25,16 @@ export const validationSchema = Yup.object().shape({
     [true],
     'You must accept the terms and conditions'
   ),
-  picture: Yup.mixed<File>()
+  picture: Yup.mixed<FileList>()
     .required('Picture is required')
     .test('fileRequired', 'Picture is required', (value) => Boolean(value))
-    .test(
-      'fileSize',
-      'File size should be less than 2MB',
-      (value) => value && value.size <= 2097152
-    )
+    .test('fileSize', 'File size should be less than 2MB', (value) => {
+      return value[0] && value[0].size <= 2 * 1024 * 1024;
+    })
     .test(
       'fileFormat',
       'Invalid file format. Please upload a PNG or JPEG image',
-      (value) => value && ['image/jpeg', 'image/png'].includes(value.type)
+      (value) => value[0] && ['image/jpeg', 'image/png'].includes(value[0].type)
     ),
   country: Yup.string().required('Country is required'),
 });

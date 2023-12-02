@@ -1,17 +1,15 @@
 import React, { InputHTMLAttributes } from 'react';
-import cls from './Input.module.scss';
+import cls from './DataList.module.scss';
 import { classNames } from '../../utils/libs/classNames/classNames';
 import { memo } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import { FormKeys } from '../../utils/constants/Constants';
+import { useAppSelector } from '../../store/hooks/redux';
 
-interface IInputProps
+interface IDataListProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onBlur'> {
-  className?: string;
-  type?: string;
   theme?: string;
   label?: string;
-  onBlur?: (value: string) => void;
   defaultValue?: string;
   placeholder?: string;
   error?: string | undefined;
@@ -19,38 +17,30 @@ interface IInputProps
   registerName: FormKeys;
 }
 
-export const Input = memo((props: IInputProps) => {
-  const {
-    label,
-    defaultValue,
-    placeholder,
-    onBlur,
-    error,
-    register,
-    type,
-    registerName,
-    ...otherProps
-  } = props;
-  const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    onBlur?.(e.target.value);
-  };
+export const DataList = memo((props: IDataListProps) => {
+  const { label, placeholder, error, register, registerName } = props;
+  const { countries } = useAppSelector((state) => state.countryReducer);
 
   return (
     <div className={cls.container}>
-      <label htmlFor={registerName}>{label}</label>
+      <label>{label}</label>
       <input
+        // id={FormKeys.country}
         className={classNames(cls.Input, {}, [])}
-        onBlur={onBlurHandler}
-        defaultValue={defaultValue}
         placeholder={placeholder}
-        type={type || 'text'}
-        id={registerName}
+        list={registerName}
         {...(register && { ...register(registerName) })}
-        {...otherProps}
       />
+      <datalist id={registerName}>
+        {countries.map((country, index) => (
+          <option key={index} value={country}>
+            {country}
+          </option>
+        ))}
+      </datalist>
       <p className={cls.error}>{error}</p>
     </div>
   );
 });
 
-export default Input;
+export default DataList;

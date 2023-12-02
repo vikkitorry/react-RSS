@@ -3,10 +3,14 @@
   align-items: center;
   justify-content: center;
   user-select: none;
+  color: aliceblue;
+  font-size: 14px;
+  line-height: 14px;
+  gap: 10px;
 }
 
 .select {
   cursor: pointer;
-  width: 40px;
+  width: 80px;
   height: 40px;
 }
