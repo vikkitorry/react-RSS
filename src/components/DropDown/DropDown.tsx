@@ -1,4 +1,4 @@
-import { ChangeEvent, useMemo, memo } from 'react';
+import React, { ChangeEvent, useMemo, memo } from 'react';
 import cls from './DropDown.module.scss';
 import { FormKeys } from '../../utils/constants/Constants';
 import { UseFormRegisterReturn } from 'react-hook-form';
@@ -9,10 +9,13 @@ interface IDropDownProps {
   register?: (name: FormKeys) => UseFormRegisterReturn<FormKeys>;
   registerName: FormKeys;
   label: string;
+  error?: string;
+  innerref?: React.RefObject<HTMLSelectElement>;
 }
 
 export const DropDown = memo((props: IDropDownProps) => {
-  const { values, onChange, registerName, register, label } = props;
+  const { values, onChange, innerref, registerName, register, label, error } =
+    props;
 
   const onChangeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     if (onChange) {
@@ -36,10 +39,12 @@ export const DropDown = memo((props: IDropDownProps) => {
       <select
         className={cls.select}
         onChange={onChangeHandler}
+        ref={innerref}
         {...(register && { ...register(registerName) })}
       >
         {optionsList}
       </select>
+      <p className={cls.error}>{error}</p>
     </div>
   );
 });

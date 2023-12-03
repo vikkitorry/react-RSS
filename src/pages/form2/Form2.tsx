@@ -25,18 +25,26 @@ export const Form2 = () => {
   const dispatch = useAppDispatch();
   const { setNewData, setUpdateData } = dataSlice.actions;
 
-  const onSubmit = handleSubmit((data) => {
-    dispatch(
-      setNewData({
-        name: data.name,
-        age: data.age.toString(),
-        email: data.email,
-        password: data.password,
-        gender: data.gender,
-        country: data.country,
-      })
-    );
-    dispatch(setUpdateData());
+  const onSubmit = handleSubmit(async (data) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(data.picture[0]);
+    reader.onloadend = async () => {
+      const strPicture = reader.result;
+      if (typeof strPicture === 'string') {
+        dispatch(
+          setNewData({
+            name: data.name,
+            age: data.age.toString(),
+            email: data.email,
+            password: data.password,
+            gender: data.gender,
+            country: data.country,
+            picture: strPicture,
+          })
+        );
+        dispatch(setUpdateData());
+      }
+    };
     navigate('/');
   });
 
@@ -79,6 +87,7 @@ export const Form2 = () => {
           values={gender}
           register={register}
           registerName={FormKeys.gender}
+          error={errors.gender?.message}
         />
         <Input
           label={'Accept T&C'}
@@ -91,6 +100,7 @@ export const Form2 = () => {
           type={'file'}
           register={register}
           registerName={FormKeys.picture}
+          error={errors.picture?.message}
         />
         <DataList registerName={FormKeys.country} register={register} />
         <Button

@@ -1,0 +1,24 @@
+.container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 10px;
+  margin-top: 10px;
+  p {
+    font-weight: 800;
+  }
+  span {
+    font-weight: 400;
+    margin-left: 5px;
+  }
+}
+
+.current {
+  border-color: green;
+}
+
+.standart {
+  border-color: black;
+}

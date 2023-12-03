@@ -7,6 +7,7 @@ export interface IUserData {
   password: string;
   gender: string;
   country: string;
+  picture: string;
 }
 
 interface IData {
@@ -23,6 +24,7 @@ const initialState: IData = {
     password: '',
     gender: '',
     country: '',
+    picture: '',
   },
 };
 

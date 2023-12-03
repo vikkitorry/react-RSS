@@ -1,0 +1,16 @@
+.Form {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 650px;
+  padding: 20px 40px;
+  background-color: black;
+}

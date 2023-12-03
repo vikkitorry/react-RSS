@@ -14,9 +14,10 @@ interface IInputProps
   onBlur?: (value: string) => void;
   defaultValue?: string;
   placeholder?: string;
-  error?: string | undefined;
+  error?: string;
   register?: (name: FormKeys) => UseFormRegisterReturn<FormKeys>;
   registerName: FormKeys;
+  innerref?: React.RefObject<HTMLInputElement>;
 }
 
 export const Input = memo((props: IInputProps) => {
@@ -29,6 +30,7 @@ export const Input = memo((props: IInputProps) => {
     register,
     type,
     registerName,
+    innerref,
     ...otherProps
   } = props;
   const onBlurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
@@ -45,6 +47,7 @@ export const Input = memo((props: IInputProps) => {
         placeholder={placeholder}
         type={type || 'text'}
         id={registerName}
+        ref={innerref}
         {...(register && { ...register(registerName) })}
         {...otherProps}
       />

@@ -21,7 +21,7 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'button' | 'submit' | 'reset' | undefined;
   theme?: ButtonTheme;
   size: ButtonSize;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }
 

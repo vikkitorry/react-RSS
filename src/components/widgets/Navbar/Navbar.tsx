@@ -17,14 +17,14 @@ export const Navbar = () => {
         className={cls.item}
         theme={AppLinkTheme.DARK}
       >
-        <span className={cls.link}>Form 1</span>
+        <span className={cls.link}>Uncontrolled</span>
       </AppLink>
       <AppLink
         to={RoutePath.form_two}
         className={cls.item}
         theme={AppLinkTheme.DARK}
       >
-        <span className={cls.link}>Form 2</span>
+        <span className={cls.link}>Controlled</span>
       </AppLink>
     </div>
   );
