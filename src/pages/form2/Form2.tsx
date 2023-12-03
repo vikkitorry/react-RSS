@@ -25,8 +25,7 @@ export const Form2 = () => {
 
   const [progress, setProgress] = useState(0);
   const [progressRepeat, setProgressRepeat] = useState(0);
-  const watchPassword = watch(['password']);
-  const watchPasswordRepeat = watch(['passwordRepeat']);
+  const watchPasswords = watch(['password', 'passwordRepeat']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { setNewData, setUpdateData } = dataSlice.actions;
@@ -52,9 +51,9 @@ export const Form2 = () => {
   });
 
   useEffect(() => {
-    setProgress(checkPassword(...watchPassword));
-    setProgressRepeat(checkPassword(...watchPasswordRepeat));
-  }, [watchPassword, watchPasswordRepeat]);
+    setProgress(checkPassword(watchPasswords[0]));
+    setProgressRepeat(checkPassword(watchPasswords[1]));
+  }, [watchPasswords]);
 
   return (
     <form onSubmit={onSubmit} className={cls.container}>
