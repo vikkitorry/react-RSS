@@ -8,6 +8,14 @@
     1px 1px 5px rgb(5, 5, 5);
 }
 
+.Button:disabled {
+  background: rgb(53, 52, 52);
+}
+
+.Button:disabled:hover {
+  opacity: 1;
+}
+
 .Button:hover {
   opacity: 0.8;
 }

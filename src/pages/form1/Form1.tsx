@@ -73,7 +73,7 @@ export const Form1 = () => {
   const addDataToRedux = (userData: IFormAfterValid) => {
     const reader = new FileReader();
     reader.readAsDataURL(userData.picture[0]);
-    reader.onloadend = async () => {
+    reader.onload = async () => {
       if (typeof reader.result === 'string') {
         dispatch(
           setNewData({

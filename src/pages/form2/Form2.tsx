@@ -34,18 +34,13 @@ export const Form2 = () => {
   const onSubmit = handleSubmit(async (data) => {
     const reader = new FileReader();
     reader.readAsDataURL(data.picture[0]);
-    reader.onloadend = async () => {
-      const strPicture = reader.result;
-      if (typeof strPicture === 'string') {
+    reader.onload = async () => {
+      if (typeof reader.result === 'string') {
         dispatch(
           setNewData({
-            name: data.name,
+            ...data,
             age: data.age.toString(),
-            email: data.email,
-            password: data.password,
-            gender: data.gender,
-            country: data.country,
-            picture: strPicture,
+            picture: reader.result,
             acceptTC: true,
             typeOfForm: typeOfForm.controlled,
           })
