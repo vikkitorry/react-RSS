@@ -16,14 +16,13 @@ import {
   IFormAfterValid,
 } from '../../utils/types/types';
 import { ValidationError } from 'yup';
-import { useAppSelector } from '../../store/hooks/redux';
 import { errMssgInitial } from '../../utils/constants/Constants';
 import { checkPassword } from '../../utils/helpers/validation/checkPassword';
+import DataList from '../../components/DataList/DataList';
 
 export const Form1 = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { countries } = useAppSelector((state) => state.countryReducer);
   const { setNewData, setUpdateData } = dataSlice.actions;
   const [errors, setErrors] = useState<IFormErrors>(errMssgInitial);
   const [progress, setProgress] = useState(0);
@@ -36,7 +35,7 @@ export const Form1 = () => {
   const genderRef = useRef<HTMLSelectElement>(null);
   const acceptTCRef = useRef<HTMLInputElement>(null);
   const pictureRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLSelectElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = async (e: FormEvent) => {
@@ -60,13 +59,13 @@ export const Form1 = () => {
       addDataToRedux(userDataAfterValidation);
     } catch (err) {
       if (err instanceof ValidationError) {
-        const error: Record<string, string> = {};
+        const errorsMssg: { [key: string]: string } = {};
         err.inner.forEach((e) => {
           if (e.path && typeof e.path === 'string') {
-            error[e.path] = e.message;
+            errorsMssg[e.path] = e.message;
           }
         });
-        setErrors(error);
+        setErrors(errorsMssg);
       }
     }
   };
@@ -75,13 +74,12 @@ export const Form1 = () => {
     const reader = new FileReader();
     reader.readAsDataURL(userData.picture[0]);
     reader.onloadend = async () => {
-      const strPicture = reader.result;
-      if (typeof strPicture === 'string') {
+      if (typeof reader.result === 'string') {
         dispatch(
           setNewData({
             ...userData,
             typeOfForm: typeOfForm.uncontrolled,
-            picture: strPicture,
+            picture: reader.result,
           })
         );
         dispatch(setUpdateData());
@@ -94,6 +92,7 @@ export const Form1 = () => {
     <form onSubmit={onSubmit} ref={formRef} className={cls.container}>
       Use English please ^^
       <div className={classNames(cls.Form, {}, [])}>
+        <p className={cls.titlle}>Uncontrolled form</p>
         <Input
           label={'Name'}
           error={errors.name}
@@ -147,12 +146,10 @@ export const Form1 = () => {
           error={errors.picture}
           innerref={pictureRef}
         />
-        <DropDown
-          label={'Countries'}
-          values={countries}
+        <DataList
           registerName={FormKeys.country}
-          error={errors.country}
           innerref={countryRef}
+          error={errors.country}
         />
         <Button className="" type="submit" size={ButtonSize.M}>
           {'Submit'}

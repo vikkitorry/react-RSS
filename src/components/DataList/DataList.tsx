@@ -14,7 +14,7 @@ interface IDataListProps
   error?: string | undefined;
   register?: (name: FormKeys) => UseFormRegisterReturn<FormKeys>;
   registerName: FormKeys;
-  innerref?: React.RefObject<HTMLSelectElement>;
+  innerref?: React.RefObject<HTMLInputElement>;
 }
 
 export const DataList = (props: IDataListProps) => {
@@ -28,9 +28,10 @@ export const DataList = (props: IDataListProps) => {
         className={classNames(cls.Input, {}, [])}
         placeholder={placeholder}
         list={registerName}
+        ref={innerref}
         {...(register && { ...register(registerName) })}
       />
-      <datalist id={registerName} ref={innerref}>
+      <datalist id={registerName}>
         {countries.map((country, index) => (
           <option key={index} value={country}>
             {country}

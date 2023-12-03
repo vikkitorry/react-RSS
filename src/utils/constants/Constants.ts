@@ -1,6 +1,6 @@
 import { IFormErrors } from '../types/types';
 
-export const gender = ['mail', 'femail'];
+export const gender = ['', 'mail', 'femail'];
 
 export enum FormKeys {
   name = 'name',

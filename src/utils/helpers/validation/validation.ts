@@ -36,5 +36,7 @@ export const validationSchema = Yup.object().shape({
       'Invalid file format. Please upload a PNG or JPEG image',
       (value) => value[0] && ['image/jpeg', 'image/png'].includes(value[0].type)
     ),
-  country: Yup.string().required('Country is required'),
+  country: Yup.string()
+    .required('Country is required')
+    .matches(/^[A-Za-z\s]*$/, 'Select country'),
 });

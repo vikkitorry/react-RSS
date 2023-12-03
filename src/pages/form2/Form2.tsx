@@ -65,6 +65,7 @@ export const Form2 = () => {
     <form onSubmit={onSubmit} className={cls.container}>
       Use English please ^^
       <div className={classNames(cls.Form, {}, [])}>
+        <p className={cls.titlle}>Controlled form</p>
         <Input
           label={'Name'}
           error={errors.name?.message}
@@ -118,7 +119,11 @@ export const Form2 = () => {
           registerName={FormKeys.picture}
           error={errors.picture?.message}
         />
-        <DataList registerName={FormKeys.country} register={register} />
+        <DataList
+          registerName={FormKeys.country}
+          register={register}
+          error={errors.country?.message}
+        />
         <Button
           className=""
           type="submit"
