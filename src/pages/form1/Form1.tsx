@@ -18,6 +18,7 @@ import {
 import { ValidationError } from 'yup';
 import { useAppSelector } from '../../store/hooks/redux';
 import { errMssgInitial } from '../../utils/constants/Constants';
+import { checkPassword } from '../../utils/helpers/validation/checkPassword';
 
 export const Form1 = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ export const Form1 = () => {
   const { countries } = useAppSelector((state) => state.countryReducer);
   const { setNewData, setUpdateData } = dataSlice.actions;
   const [errors, setErrors] = useState<IFormErrors>(errMssgInitial);
+  const [progress, setProgress] = useState(0);
+  const [progressRepeat, setProgressRepeat] = useState(0);
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -50,6 +53,8 @@ export const Form1 = () => {
       country: countryRef.current?.value,
     };
     try {
+      setProgress(checkPassword(userData.password));
+      setProgressRepeat(checkPassword(userData.passwordRepeat));
       await validationSchema.validate({ ...userData }, { abortEarly: false });
       const userDataAfterValidation = userData as IFormAfterValid;
       addDataToRedux(userDataAfterValidation);
@@ -112,12 +117,14 @@ export const Form1 = () => {
           error={errors.password}
           registerName={FormKeys.password}
           innerref={passwordRef}
+          progress={progress}
         />
         <Input
           label={'Repeat Password'}
           error={errors.passwordRepeat}
           registerName={FormKeys.passwordRepeat}
           innerref={passwordRepeatRef}
+          progress={progressRepeat}
         />
         <DropDown
           label={'Gender'}

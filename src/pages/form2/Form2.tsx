@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { classNames } from '../../utils/libs/classNames/classNames';
 import cls from './Form2.module.scss';
 import { useForm } from 'react-hook-form';
@@ -13,14 +13,20 @@ import DataList from '../../components/DataList/DataList';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../store/hooks/redux';
 import { dataSlice, typeOfForm } from '../../store/reducers/DataSlice';
+import { checkPassword } from '../../utils/helpers/validation/checkPassword';
 
 export const Form2 = () => {
   const {
     register,
     formState: { isValid, errors },
     handleSubmit,
+    watch,
   } = useForm({ mode: 'onChange', resolver: yupResolver(validationSchema) });
 
+  const [progress, setProgress] = useState(0);
+  const [progressRepeat, setProgressRepeat] = useState(0);
+  const watchPassword = watch(['password']);
+  const watchPasswordRepeat = watch(['passwordRepeat']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { setNewData, setUpdateData } = dataSlice.actions;
@@ -50,6 +56,11 @@ export const Form2 = () => {
     navigate('/');
   });
 
+  useEffect(() => {
+    setProgress(checkPassword(...watchPassword));
+    setProgressRepeat(checkPassword(...watchPasswordRepeat));
+  }, [watchPassword, watchPasswordRepeat]);
+
   return (
     <form onSubmit={onSubmit} className={cls.container}>
       Use English please ^^
@@ -77,12 +88,14 @@ export const Form2 = () => {
           error={errors.password?.message}
           register={register}
           registerName={FormKeys.password}
+          progress={progress}
         />
         <Input
           label={'Repeat Password'}
           error={errors.passwordRepeat?.message}
           register={register}
           registerName={FormKeys.passwordRepeat}
+          progress={progressRepeat}
         />
         <DropDown
           label={'Gender'}

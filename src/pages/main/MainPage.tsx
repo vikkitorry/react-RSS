@@ -8,7 +8,7 @@ export const MainPage = () => {
 
   return (
     <div className={cls.MainPage}>
-      {data.length && (
+      {data.length ? (
         <div className={cls.dataContainer}>
           {data.map((userData, i) => (
             <UserInfo
@@ -22,6 +22,8 @@ export const MainPage = () => {
             />
           ))}
         </div>
+      ) : (
+        <p>{'No cards =('}</p>
       )}
     </div>
   );
