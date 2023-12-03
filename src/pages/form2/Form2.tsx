@@ -49,7 +49,7 @@ export const Form2 = () => {
   });
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={cls.container}>
       Use English please ^^
       <div className={classNames(cls.Form, {}, [])}>
         <Input
@@ -93,6 +93,7 @@ export const Form2 = () => {
           label={'Accept T&C'}
           type={'checkbox'}
           register={register}
+          error={errors.acceptTC?.message}
           registerName={FormKeys.acceptTC}
         />
         <Input
@@ -110,7 +111,7 @@ export const Form2 = () => {
           onClick={onSubmit}
           disabled={!isValid}
         >
-          {'Submit'}
+          Submit
         </Button>
       </div>
     </form>

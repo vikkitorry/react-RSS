@@ -1,4 +1,4 @@
-export const SEARCH_LOCALSTORAGE_KEY = 'react-rss-vikkitorry-version.2.22';
+import { IFormErrors } from '../types/types';
 
 export const gender = ['mail', 'femail'];
 
@@ -14,38 +14,14 @@ export enum FormKeys {
   country = 'country',
 }
 
-export interface IFormKeys {
-  name?: string;
-  age?: string;
-  email?: string;
-  password?: string;
-  passwordRepeat?: string;
-  gender?: string;
-  acceptTC?: boolean;
-  picture?: FileList | null;
-  country?: string;
-}
-
-export interface IFormErrors {
-  name?: string;
-  age?: string;
-  email?: string;
-  password?: string;
-  passwordRepeat?: string;
-  gender?: string;
-  acceptTC?: string;
-  picture?: string;
-  country?: string;
-}
-
-export interface IFormAfterValid {
-  name: string;
-  age: string;
-  email: string;
-  password: string;
-  passwordRepeat: string;
-  gender: string;
-  acceptTC: boolean;
-  picture: FileList;
-  country: string;
-}
+export const errMssgInitial: IFormErrors = {
+  name: '',
+  age: '',
+  email: '',
+  password: '',
+  passwordRepeat: '',
+  country: '',
+  acceptTC: '',
+  picture: '',
+  gender: '',
+};

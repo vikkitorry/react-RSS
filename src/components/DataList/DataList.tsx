@@ -25,7 +25,6 @@ export const DataList = (props: IDataListProps) => {
     <div className={cls.container}>
       <label>{label}</label>
       <input
-        // id={FormKeys.country}
         className={classNames(cls.Input, {}, [])}
         placeholder={placeholder}
         list={registerName}

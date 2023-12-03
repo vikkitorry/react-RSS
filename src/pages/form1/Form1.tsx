@@ -9,32 +9,21 @@ import { validationSchema } from '../../utils/helpers/validation/validation';
 import { FormKeys } from '../../utils/constants/Constants';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../store/hooks/redux';
-import { dataSlice } from '../../store/reducers/DataSlice';
+import { uncontrolledDataSlice } from '../../store/reducers/UncontrolledSlice';
 import {
   IFormKeys,
   IFormErrors,
   IFormAfterValid,
-} from '../../utils/constants/Constants';
+} from '../../utils/types/types';
 import { ValidationError } from 'yup';
 import { useAppSelector } from '../../store/hooks/redux';
-
-const errMssgInitial: IFormErrors = {
-  name: '',
-  age: '',
-  email: '',
-  password: '',
-  passwordRepeat: '',
-  country: '',
-  acceptTC: '',
-  picture: '',
-  gender: '',
-};
+import { errMssgInitial } from '../../utils/constants/Constants';
 
 export const Form1 = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { countries } = useAppSelector((state) => state.countryReducer);
-  const { setNewData, setUpdateData } = dataSlice.actions;
+  const { setNewData, setUpdateData } = uncontrolledDataSlice.actions;
   const [errors, setErrors] = useState<IFormErrors>(errMssgInitial);
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -96,7 +85,7 @@ export const Form1 = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} ref={formRef}>
+    <form onSubmit={onSubmit} ref={formRef} className={cls.container}>
       Use English please ^^
       <div className={classNames(cls.Form, {}, [])}>
         <Input
@@ -140,6 +129,7 @@ export const Form1 = () => {
           label={'Accept T&C'}
           type={'checkbox'}
           registerName={FormKeys.acceptTC}
+          error={errors.acceptTC}
           innerref={acceptTCRef}
         />
         <Input

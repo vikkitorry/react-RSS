@@ -8,6 +8,7 @@ export interface IUserData {
   gender: string;
   country: string;
   picture: string;
+  acceptTC: boolean;
 }
 
 interface IData {
@@ -25,6 +26,7 @@ const initialState: IData = {
     gender: '',
     country: '',
     picture: '',
+    acceptTC: false,
   },
 };
 

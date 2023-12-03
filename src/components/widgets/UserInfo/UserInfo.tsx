@@ -46,6 +46,10 @@ export const UserInfo = (props: IUserInfo) => {
         Password:
         <span>{data.password}</span>
       </p>
+      <p>
+        Accept T&C:
+        <span>Yes</span>
+      </p>
     </div>
   );
 };
