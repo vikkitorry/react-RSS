@@ -36,7 +36,6 @@ export const Form1 = () => {
   const acceptTCRef = useRef<HTMLInputElement>(null);
   const pictureRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -89,7 +88,7 @@ export const Form1 = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} ref={formRef} className={cls.container}>
+    <form onSubmit={onSubmit} className={cls.container}>
       Use English please ^^
       <div className={classNames(cls.Form, {}, [])}>
         <p className={cls.titlle}>Uncontrolled form</p>
