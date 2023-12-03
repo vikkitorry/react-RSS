@@ -1,0 +1,56 @@
+.Button {
+  cursor: pointer;
+  color: var(--primary-color);
+  padding: 5px 15px;
+  border-radius: 5px;
+  box-shadow:
+    inset 2px 2px 5px rgba(154, 147, 140, 0.5),
+    1px 1px 5px rgb(5, 5, 5);
+}
+
+.Button:disabled {
+  cursor: not-allowed;
+  background: rgb(53, 52, 52);
+}
+
+.Button:disabled:hover {
+  opacity: 1;
+}
+
+.Button:hover {
+  opacity: 0.8;
+}
+
+.backgroundLight {
+  background: var(--bg-color);
+  color: var(--primary-color);
+  border: none;
+}
+
+.backgroundDark {
+  background: var(--inverted-bg-color);
+  color: var(--secondary-color);
+  border: none;
+}
+
+.backgroundError {
+  background: var(--error-color);
+  color: var(--inverted-primary-color);
+  border: none;
+}
+
+.size_s {
+  font: var(--font-s);
+}
+
+.size_m {
+  font: var(--font-m);
+}
+
+.size_l {
+  font: var(--font-l);
+}
+
+.size_xl {
+  font: var(--font-xl);
+}
