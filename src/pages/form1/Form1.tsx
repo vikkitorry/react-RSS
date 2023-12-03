@@ -9,7 +9,7 @@ import { validationSchema } from '../../utils/helpers/validation/validation';
 import { FormKeys } from '../../utils/constants/Constants';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../store/hooks/redux';
-import { uncontrolledDataSlice } from '../../store/reducers/UncontrolledSlice';
+import { dataSlice, typeOfForm } from '../../store/reducers/DataSlice';
 import {
   IFormKeys,
   IFormErrors,
@@ -23,7 +23,7 @@ export const Form1 = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { countries } = useAppSelector((state) => state.countryReducer);
-  const { setNewData, setUpdateData } = uncontrolledDataSlice.actions;
+  const { setNewData, setUpdateData } = dataSlice.actions;
   const [errors, setErrors] = useState<IFormErrors>(errMssgInitial);
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -75,6 +75,7 @@ export const Form1 = () => {
         dispatch(
           setNewData({
             ...userData,
+            typeOfForm: typeOfForm.uncontrolled,
             picture: strPicture,
           })
         );

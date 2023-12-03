@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export enum typeOfForm {
+  controlled = 'controlled',
+  uncontrolled = 'uncontrolled',
+}
+
 export interface IUserData {
   name: string;
   age: string;
@@ -9,6 +14,7 @@ export interface IUserData {
   country: string;
   picture: string;
   acceptTC: boolean;
+  typeOfForm: typeOfForm;
 }
 
 interface IData {
@@ -27,6 +33,7 @@ const initialState: IData = {
     country: '',
     picture: '',
     acceptTC: false,
+    typeOfForm: typeOfForm.controlled,
   },
 };
 

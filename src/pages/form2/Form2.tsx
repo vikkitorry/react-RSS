@@ -12,7 +12,7 @@ import { FormKeys } from '../../utils/constants/Constants';
 import DataList from '../../components/DataList/DataList';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../store/hooks/redux';
-import { dataSlice } from '../../store/reducers/DataSlice';
+import { dataSlice, typeOfForm } from '../../store/reducers/DataSlice';
 
 export const Form2 = () => {
   const {
@@ -40,6 +40,8 @@ export const Form2 = () => {
             gender: data.gender,
             country: data.country,
             picture: strPicture,
+            acceptTC: true,
+            typeOfForm: typeOfForm.controlled,
           })
         );
         dispatch(setUpdateData());

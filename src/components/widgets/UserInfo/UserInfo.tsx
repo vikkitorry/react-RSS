@@ -21,6 +21,10 @@ export const UserInfo = (props: IUserInfo) => {
 
   return (
     <div className={classNames(cls.container, mods, [])}>
+      <p>
+        Type of Form:
+        <span>{data.typeOfForm}</span>
+      </p>
       <img src={data.picture} alt="image" />
       <p>
         Name:
