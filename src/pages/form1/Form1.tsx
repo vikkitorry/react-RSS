@@ -113,6 +113,7 @@ export const Form1 = () => {
         />
         <Input
           label={'Password'}
+          type={'password'}
           error={errors.password}
           registerName={FormKeys.password}
           innerref={passwordRef}
@@ -120,6 +121,7 @@ export const Form1 = () => {
         />
         <Input
           label={'Repeat Password'}
+          type={'password'}
           error={errors.passwordRepeat}
           registerName={FormKeys.passwordRepeat}
           innerref={passwordRepeatRef}

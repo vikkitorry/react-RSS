@@ -81,6 +81,7 @@ export const Form2 = () => {
         />
         <Input
           label={'Password'}
+          type={'password'}
           error={errors.password?.message}
           register={register}
           registerName={FormKeys.password}
@@ -88,6 +89,7 @@ export const Form2 = () => {
         />
         <Input
           label={'Repeat Password'}
+          type={'password'}
           error={errors.passwordRepeat?.message}
           register={register}
           registerName={FormKeys.passwordRepeat}
